@@ -68,6 +68,8 @@ The visual style of our game takes inspiration from It Takes Two - stylised, sli
 
 Objects along the path in the scene - such as pencils, books, soda cans - maintain exaggerated, oversized forms to emphasize the miniature theme. Their textures evolve alongisde the player's progress in the game - dull and worn in the beginningm, then gradually infused with brightness, saturation and playful colors as the world evolves into a warm tone. 
 
+Visual References from *It Takes Two*
+
 | ![Visual 1](images/it-takes-two1.png) | ![Visual 2](images/it-takes-two2.png) |
 |----------------------------------------|----------------------------------------|
 | *Visual 1*                          | *Visual 2*                          |
@@ -82,12 +84,12 @@ We will use a combination of custom-created, AI-generated, and sourced assets.
 Sound - Freesound (https://freesound.org) for sound effects and ambiences, OpenGameArt (https://opengameart.org)
 
 ### Technology and Tools
-Unity 6.1x - core engine for development of game
-Github - version control, merge codes, code reviews
-Slack - daily team communications and task assignments
-Mixamo - quick rigging and character animations 
-Tripo AI - generate base 3D models from concepts 
-Blender - optimise mesges , refine textures, and polish models 
+•	Unity 6.1x - core engine for development of game
+•	Github - version control, merge codes, code reviews
+•	Slack - daily team communications and task assignments
+•	Mixamo - quick rigging and character animations 
+•	Tripo AI - generate base 3D models from concepts 
+•	Blender - optimise mesges , refine textures, and polish models 
 
 ### Team Communication
 We will use Slack as our main communication platform for daily updates, discussion, organising and assigning tasks. All communication will be in English to ensure inclusivity and transparency for both the team and teaching staff.
