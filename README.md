@@ -62,6 +62,48 @@ Falling into void areas or outside the playable world results in an immediate re
 •	Interaction Logic:
 All physics-based interactions are mediated through color. The player’s ability to stand, push, or activate an object depends entirely on matching color states. This creates a unique and intuitive rule system, making color-switching both a mechanical challenge and a core part of the narrative identity.
 
+### Art and Audio
+•	Art Style:
+The visual style of our game takes inspiration from It Takes Two - stylised, slightly surreal, and handcrafted , giving the world a playful yet emotionally impactful atmosphere. The overall color palette of our scene changes as the game progresses. It begins with cold, muted blues and greys symbolising sadness. As the player collects new colors, warmer tones gradually infuse the scene, visually representing healing and growth. The final scene will be orange in color representing triumph and renewal. 
+
+Objects along the path in the scene - such as pencils, books, soda cans - maintain exaggerated, oversized forms to emphasize the miniature theme. Their textures evolve alongisde the player's progress in the game - dull and worn in the beginningm, then gradually infused with brightness, saturation and playful colors as the world evolves into a warm tone. 
+
+| ![Visual 1](images/it-takes-two1.png) | ![Visual 2](images/it-takes-two2.png) |
+|----------------------------------------|----------------------------------------|
+| *Visual 1*                          | *Visual 2*                          |
+
+•	Sound and Music:
+The game's sound design is deliberately tied to the player's emotional progression and the color-based puzzle mechanic. In early stages, the maze feels hollow and fragile filled with soft wind, and sparse piano notes to reinforce the sense of emptiness and sadness. As new colors are collected, the environment grows richer, so does the music. Gentle chimes, faint hums, and brighter harmonies layer into the soundscape. By the final stage, the world is filled with uplifting and lively ambiences - sparkling tones and birdsong, symbolising renewal and hope.
+
+•	Assets:
+We will use a combination of custom-created, AI-generated, and sourced assets. 
+
+3D Models - Rigged and animated player character through Mixamo and surrounding objects and collectibles sourced through Unity asset store
+Sound - Freesound (https://freesound.org) for sound effects and ambiences, OpenGameArt (https://opengameart.org)
+
+### Technology and Tools
+Unity 6.1x - core engine for development of game
+Github - version control, merge codes, code reviews
+Slack - daily team communications and task assignments
+Mixamo - quick rigging and character animations 
+Tripo AI - generate base 3D models from concepts 
+Blender - optimise mesges , refine textures, and polish models 
+
+### Team Communication
+We will use Slack as our main communication platform for daily updates, discussion, organising and assigning tasks. All communication will be in English to ensure inclusivity and transparency for both the team and teaching staff.
+
+•	Timeline:
+Week 6-7: Discuss and finalise game design document
+Week 8-10: Assets integration and imported to unity, core gameplay loop developed (jumping, movements, challenges)
+Week 11: Work on gameplay video and upload to youtube 
+Week 12: Final polishes to the game 
+
+### Possible Challenges
+•	WebGL Performance: Models generated through Tripo may be too heavy causing longer loading times
+    Plan: optimise assets using Blender (compress textures)
+•	Time Constraints: limited weeks to complete the project
+    Plan: keep scope tight - focus on one single long scene and polish it instead of having multiple unpolished scene
+
 
 ### Emojis and Icons
 
