@@ -15,11 +15,20 @@ Below are examples of markdown features available on GitHub that might be useful
 - [Maths and Diagrams](#maths-and-diagrams)
 - [References](#references)
 
-### Introduction
+### Game Overview
+**•	Core Concept**: Our game is a color-based puzzle-platformer where the player navigates a miniature, dreamlike world by collecting and switching between colors. The unique mechanic is that player can only interact with objects that share their current active color. The platforms and switches become solid or intangible depending on the chosen color. This mechanic transforms simple movement into a constantly evolving puzzle, where success depends on mastering color switch,timing and spatial reasoning. The player's role is to journey through this environment, gradually restoring colorfulness and life to the world, with progression symbolized through colors collected along the way. 
+**•	Related genre**: The game is a 3D puzzle-platformer genre, with influences from narrative-driven exploration games. Similar games includes It Takes Two (for stylized world and cooperative puzzle feeling) and Monument Valley (for spatial puzzles). Unlike other puzzle-platformers, this game features a unique color-matching mechanic in which colors shape both the world’s physics and the player’s progression. It blends the precision of platforming with a symbolic narrative of emotional healing.
+**•	Target Audience**: The target audience is casual players who enjoy puzzle-platformers and atmospheric experiences. The game is especially suited for teenagers and university students who appreciate immersive gameplay and symbolic storytelling. 
+**•	Unique Selling Points (USPs)**: 
+• Color matching system - Platforms and switches exist only when matched with the player’s active color, creating fresh spatial puzzles.
+• Evolving palette - The world shifts from muted blues to vibrant oranges, visually reflecting emotional growth.
+• Story mechanic integration – Collecting colors ties emotional healing directly into gameplay.
+• Replayability – Time trials encourage speedrunning and mastery beyond the first playthrough.
 
-_Exciting title_ is a first-person shooter (FPS) set in... we're not sure yet. It's a bit like _Doom_ meets _Animal Crossing_, but with a twist. The player must...
+### Story and Narrative
+**•	Backstory**: The world was vibrant and full of color, but a mysterious event drained it, leaving only muted blues and greys. In this fragile, miniature landscape, the player awakens as a small spirit-like figure carrying only one remaining color. Their journey is both literal and symbolic: to recollect the lost color and restore vibrancy to the world. With each color recovered, the environment gradually transforms, reflecting emotional healing and growth. The conflict is not against a villain but against darkness and despair, as the player overcomes challenges that resist the return of light. By the end of the journey, the world shines again in warm, symbolizing victory and renewal.
 
-> "This is a quote from the game designer, explaining why this game is going to be the best thing since sliced bread." - Game Designer
+**•	Characters**: In our game, there is only one character—the player character, named Luma. Luma is a small, spirit-like figure that represents the player’s emotions. As colors gradually return to the world, Luma’s appearance subtly transforms, such as a brighter outfit or a soft glow. His personality is defined by innocence, determination, and adaptability. The player’s purpose through Luma is to restore vibrancy and color to the world.
 
 ### Gameplay and Mechanics
 •	Player Perspective:
@@ -90,6 +99,12 @@ Sound - Freesound (https://freesound.org) for sound effects and ambiences, OpenG
 •	Mixamo - quick rigging and character animations 
 •	Tripo AI - generate base 3D models from concepts 
 •	Blender - optimise mesges , refine textures, and polish models 
+
+### Introduction
+
+_Exciting title_ is a first-person shooter (FPS) set in... we're not sure yet. It's a bit like _Doom_ meets _Animal Crossing_, but with a twist. The player must...
+
+> "This is a quote from the game designer, explaining why this game is going to be the best thing since sliced bread." - Game Designer
 
 ### Team Communication
 We will use Slack as our main communication platform for daily updates, discussion, organising and assigning tasks. All communication will be in English to ensure inclusivity and transparency for both the team and teaching staff.
