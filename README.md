@@ -100,7 +100,7 @@ We will use a combination of custom-created, AI-generated, and sourced assets.
 Sound - Freesound (https://freesound.org) for sound effects and ambiences, OpenGameArt (https://opengameart.org)
 
 ### UI/UX Design
-## 1. 📖 Information Architecture
+1. 📖 Information Architecture
 - **Main Menu**
   - Game Start
   - Chapter Select
@@ -111,14 +111,14 @@ Sound - Freesound (https://freesound.org) for sound effects and ambiences, OpenG
 - **Navigation Logic**
   - In-game → Pause Menu → Return to Chapter / Continue
 	
-## 2. 🎯 HUD (Minimalist Style)
+2. 🎯 HUD (Minimalist Style)
 Minimalist style (almost no HUD, only necessary hints).
 
 - Tap feedback (light spark)  
 - Path guidance arrows  
 - Level complete prompt (minimal text / icon)
 
-## 3. 🖥 Menus & Screens
+3. 🖥 Menus & Screens
 - **Main Menu**
   - Minimal logo + "Start" button (centered)
   - Soft background music
@@ -132,7 +132,7 @@ Minimalist style (almost no HUD, only necessary hints).
   - Continue
   - Return to Chapter
 
-## 4. 🎮 Interaction Design
+4. 🎮 Interaction Design
 - **Controls**
   - Tap: Move character
   - Swipe/Rotate: Manipulate structures
@@ -143,10 +143,10 @@ Minimalist style (almost no HUD, only necessary hints).
   - Scene changes → smooth fade-in/out
   - Menus → scale/fade transitions
 
-## 5. 💡 User Experience 
+5. 💡 User Experience 
 - **Onboarding:** first level serves as natural tutorial  
 
-## 6. 🎨 UI Visual Style Guide
+6. 🎨 UI Visual Style Guide
 - **Color Palette:** soft pastel tones  
 - **Typography:** minimalist sans-serif 
 
