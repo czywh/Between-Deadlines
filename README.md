@@ -99,6 +99,53 @@ We will use a combination of custom-created, AI-generated, and sourced assets.
 3D Models - Rigged and animated player character through Mixamo and surrounding objects and collectibles sourced through Unity asset store
 Sound - Freesound (https://freesound.org) for sound effects and ambiences, OpenGameArt (https://opengameart.org)
 
+### UI/UX Design###
+1. 📖 Information Archiecture 
+	• **Main Menue** 
+		• Game Start 
+		• Chapter Selects
+		• Settign (Volume/)
+	• **Game Flow** 
+		• Player enters -> Selects Chapter -> In-game Interaction 
+	• **Naviation Logic** 
+		• In-game -> Pasuse menu -> Return to chapter select/ Back to Main /Continue
+	
+2. 🎯 HUD
+	• **Minimalist Style**: (almost no HUD, only necessary hints)
+	• **Essential elements**:
+		• Tap feedback(light Spark)
+		• Path Guidance Arrows
+		• Level Complete Promote (minimal text/ icon)
+
+3. 🖥 Menue & Screens
+	• **Main Menue** 
+		• Minimal logo + "Start" button 
+		• Soft Background music 
+	• Chapter Select
+		• Locked vs. unlocked distinction (bright vs. graycale)
+	• **Seetings** 
+		• Volume Slider
+	• **Pause Menue** 
+		• Continue 
+		• Reutrn to Chapter
+		• Return to Main Menue
+4. 🎮 Interaction Design 
+	• **Controls**:
+		• keybords ("WASD"): To move 
+		• Tap: Swipe Color 
+	• **Feedback** 
+		• Valid tap area -> relatively light spark light 
+	• **Transitions** 
+		• Scene changes -> smooth fade-in/out
+		• Menues -> scale/ fade transitions 
+5. 💡 User Experience 
+	• **OnBoadrding**: First Level serves as natural tutorial 
+6. 🎨 UI Visual Style Guide 
+	• **Color Palette**: soft pastel tones
+	• **Typography**:  minimalist, clear
+
+
+
 ### Technology and Tools
 •	Unity 6.1x - core engine for development of game
 •	Github - version control, merge codes, code reviews
