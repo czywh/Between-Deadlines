@@ -99,50 +99,56 @@ We will use a combination of custom-created, AI-generated, and sourced assets.
 3D Models - Rigged and animated player character through Mixamo and surrounding objects and collectibles sourced through Unity asset store
 Sound - Freesound (https://freesound.org) for sound effects and ambiences, OpenGameArt (https://opengameart.org)
 
-### UI/UX Design###
-1. 📖 Information Archiecture 
-	• **Main Menue** 
-		• Game Start 
-		• Chapter Selects
-		• Settign (Volume/)
-	• **Game Flow** 
-		• Player enters -> Selects Chapter -> In-game Interaction 
-	• **Naviation Logic** 
-		• In-game -> Pasuse menu -> Return to chapter select/ Back to Main /Continue
+### UI/UX Design
+## 1. 📖 Information Architecture
+- **Main Menu**
+  - Game Start
+  - Chapter Select
+  - Settings (Volume / Language)
+  - About (Credits)
+- **Game Flow**
+  - Player enters → Select Chapter → In-game → Complete Level → Return to Chapter Menu
+- **Navigation Logic**
+  - In-game → Pause Menu → Return to Chapter / Continue
 	
-2. 🎯 HUD
-	• **Minimalist Style**: (almost no HUD, only necessary hints)
-	• **Essential elements**:
-		• Tap feedback(light Spark)
-		• Path Guidance Arrows
-		• Level Complete Promote (minimal text/ icon)
+## 2. 🎯 HUD (Minimalist Style)
+Minimalist style (almost no HUD, only necessary hints).
 
-3. 🖥 Menue & Screens
-	• **Main Menue** 
-		• Minimal logo + "Start" button 
-		• Soft Background music 
-	• Chapter Select
-		• Locked vs. unlocked distinction (bright vs. graycale)
-	• **Seetings** 
-		• Volume Slider
-	• **Pause Menue** 
-		• Continue 
-		• Reutrn to Chapter
-		• Return to Main Menue
-4. 🎮 Interaction Design 
-	• **Controls**:
-		• keybords ("WASD"): To move 
-		• Tap: Swipe Color 
-	• **Feedback** 
-		• Valid tap area -> relatively light spark light 
-	• **Transitions** 
-		• Scene changes -> smooth fade-in/out
-		• Menues -> scale/ fade transitions 
-5. 💡 User Experience 
-	• **OnBoadrding**: First Level serves as natural tutorial 
-6. 🎨 UI Visual Style Guide 
-	• **Color Palette**: soft pastel tones
-	• **Typography**:  minimalist, clear
+- Tap feedback (light spark)  
+- Path guidance arrows  
+- Level complete prompt (minimal text / icon)
+
+## 3. 🖥 Menus & Screens
+- **Main Menu**
+  - Minimal logo + "Start" button (centered)
+  - Soft background music
+- **Chapter Select**
+  - Card-style thumbnails (geometric architecture illustrations)
+  - Locked vs. unlocked distinction (bright vs. grayscale)
+- **Settings**
+  - Volume slider
+  - Language switch
+- **Pause Menu**
+  - Continue
+  - Return to Chapter
+
+## 4. 🎮 Interaction Design
+- **Controls**
+  - Tap: Move character
+  - Swipe/Rotate: Manipulate structures
+- **Feedback**
+  - Valid tap area → light spark feedback
+  - Mechanisms → animation + sound
+- **Transitions**
+  - Scene changes → smooth fade-in/out
+  - Menus → scale/fade transitions
+
+## 5. 💡 User Experience 
+- **Onboarding:** first level serves as natural tutorial  
+
+## 6. 🎨 UI Visual Style Guide
+- **Color Palette:** soft pastel tones  
+- **Typography:** minimalist sans-serif 
 
 
 
