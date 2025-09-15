@@ -38,28 +38,28 @@ Below are examples of markdown features available on GitHub that might be useful
 **•	Characters**: In our game, there is only one character—the player character, named Luma. Luma is a small, spirit-like figure that represents the player’s emotions. As colors gradually return to the world, Luma’s appearance subtly transforms, such as a brighter outfit or a soft glow. His personality is defined by innocence, determination, and adaptability. The player’s purpose through Luma is to restore vibrancy and color to the world.
 
 ### Gameplay and Mechanics
-•	Player Perspective:
+**•	Player Perspective**:
 The game adopts a third-person perspective. The camera is positioned behind the player character and follows their movements smoothly, providing both spatial awareness of the environment and precise control for platforming.  
 
-•	Controls:
+**•	Controls**:
 The player uses WASD keys for movement, Space to jump, and the left mouse button to switch colors once a color has been collected. The control scheme is intentionally minimalistic to allow players to focus on puzzle-solving rather than complex input sequences.
 
-•	Progression and Objectives:
+**•	Progression and Objectives**:
 Players must collect and utilize colors to solve puzzles and advance through the environment. As progression continues, puzzles require the use of multiple colors and rapid switching between them. Falling outside the scene results in the player’s “death,” after which they respawn at the latest checkpoint. Upon reaching the final destination, a timer is displayed to indicate total completion time, encouraging replayability and optimization.
 
-•	Core Mechanics:
+**•	Core Mechanics**:
 The central mechanic is color-based interaction. The player can only physically interact with objects in the scene that share the same active color. For example, a blue character can stand on blue platforms, push blue blocks, or activate blue switches. Non-matching objects behave as intangible, creating the illusion of phasing through them. This mechanic is the foundation of both puzzle design and progression.
  
 ### Levels and World Design
-•	Game World:
+**•	Game World**:
 The game world consists of one large 3D environment rather than segmented levels. The design emphasizes exploration and continuity, with checkpoints strategically placed to reduce frustration after failure. Although no map system is provided, navigation signs and environmental cues guide players toward their objectives.
 
-•	Objects and Assets:
+**•	Objects and Assets**:
 The world features two main categories of objects:
 1.	Decorative Objects: Large-scale props, such as oversized cans or static scenery, reinforce the miniature-world theme. These objects cannot be moved and do not interact with the player beyond serving as environmental boundaries or visual storytelling elements.
 2.	Puzzle Objects: Interactive objects that respond to the player’s current color. These include platforms, blocks, switches, and moving elements, each requiring correct color alignment to function as intended.
 
-•	Puzzle and Challenge Design:
+**•	Puzzle and Challenge Design**:
 Early puzzles introduce simple color-matching mechanics, while later challenges demand mastery of quick color switching, timed jumps, and multi-step problem solving. Some puzzles incorporate moving platforms or timed events, requiring both precision and strategy. Difficulty ramps up gradually, ensuring players are taught mechanics progressively before being tested on more complex combinations.
  
 ### Physics
@@ -79,7 +79,7 @@ Falling into void areas or outside the playable world results in an immediate re
 All physics-based interactions are mediated through color. The player’s ability to stand, push, or activate an object depends entirely on matching color states. This creates a unique and intuitive rule system, making color-switching both a mechanical challenge and a core part of the narrative identity.
 
 ### Art and Audio
-•	Art Style:
+**•	Art Style**:
 The visual style of our game takes inspiration from It Takes Two - stylised, slightly surreal, and handcrafted , giving the world a playful yet emotionally impactful atmosphere. The overall color palette of our scene changes as the game progresses. It begins with cold, muted blues and greys symbolising sadness. As the player collects new colors, warmer tones gradually infuse the scene, visually representing healing and growth. The final scene will be orange in color representing triumph and renewal. 
 
 Objects along the path in the scene - such as pencils, books, soda cans - maintain exaggerated, oversized forms to emphasize the miniature theme. Their textures evolve alongisde the player's progress in the game - dull and worn in the beginningm, then gradually infused with brightness, saturation and playful colors as the world evolves into a warm tone. 
@@ -90,10 +90,10 @@ Visual References from *It Takes Two*
 |----------------------------------------|----------------------------------------|
 | *Visual 1*                          | *Visual 2*                          |
 
-•	Sound and Music:
+**•	Sound and Music**:
 The game's sound design is deliberately tied to the player's emotional progression and the color-based puzzle mechanic. In early stages, the maze feels hollow and fragile filled with soft wind, and sparse piano notes to reinforce the sense of emptiness and sadness. As new colors are collected, the environment grows richer, so does the music. Gentle chimes, faint hums, and brighter harmonies layer into the soundscape. By the final stage, the world is filled with uplifting and lively ambiences - sparkling tones and birdsong, symbolising renewal and hope.
 
-•	Assets:
+**•	Assets**:
 We will use a combination of custom-created, AI-generated, and sourced assets. 
 
 3D Models - Rigged and animated player character through Mixamo and surrounding objects and collectibles sourced through Unity asset store
@@ -106,12 +106,6 @@ Sound - Freesound (https://freesound.org) for sound effects and ambiences, OpenG
 •	Mixamo - quick rigging and character animations 
 •	Tripo AI - generate base 3D models from concepts 
 •	Blender - optimise mesges , refine textures, and polish models 
-
-### Introduction
-
-_Exciting title_ is a first-person shooter (FPS) set in... we're not sure yet. It's a bit like _Doom_ meets _Animal Crossing_, but with a twist. The player must...
-
-> "This is a quote from the game designer, explaining why this game is going to be the best thing since sliced bread." - Game Designer
 
 ### Team Communication
 We will use Slack as our main communication platform for daily updates, discussion, organising and assigning tasks. All communication will be in English to ensure inclusivity and transparency for both the team and teaching staff.
