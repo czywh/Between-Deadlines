@@ -1,10 +1,5 @@
 # Game Design Document (GDD)
 
-Read the [project specification](https://github.com/feit-comp30019/project-2-specification) for details on what _actually_ needs to be covered here. While you should (obviously) delete everything here and replace it with an actual GDD before submitting your project, you may wish to keep a copy of it as a cheat sheet for how to use "GitHub flavoured markdown".
-
-Ensure that _your game design document_ is `well written` and formatted **appropriately**.
-Below are examples of markdown features available on GitHub that might be useful, though this is not an exhaustive list, nor is it required that you use all of these features.
-
 ### Table of contents
 
 - [Game Overview](#game-overview)
