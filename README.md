@@ -100,55 +100,54 @@ We will use a combination of custom-created, AI-generated, and sourced assets.
 Sound - Freesound (https://freesound.org) for sound effects and ambiences, OpenGameArt (https://opengameart.org)
 
 ### UI/UX Design
-1. 📖 Information Architecture
-- **Main Menu**
+1. 📖 **Information Architecture**
+- Main Menu
   - Game Start
   - Chapter Select
   - Settings (Volume / Language)
   - About (Credits)
-- **Game Flow**
+- Game Flow
   - Player enters → Select Chapter → In-game → Complete Level → Return to Chapter Menu
-- **Navigation Logic**
+- Navigation Logic
   - In-game → Pause Menu → Return to Chapter / Continue
 	
-2. 🎯 HUD (Minimalist Style)
-Minimalist style (almost no HUD, only necessary hints).
-
+2. 🎯 **HUD (Minimalist Style)**
+- Minimalist style (almost no HUD, only necessary hints).
 - Tap feedback (light spark)  
 - Path guidance arrows  
 - Level complete prompt (minimal text / icon)
 
-3. 🖥 Menus & Screens
-- **Main Menu**
+3. 🖥 **Menus & Screens**
+- Main Menu
   - Minimal logo + "Start" button (centered)
   - Soft background music
-- **Chapter Select**
+- Chapter Select
   - Card-style thumbnails (geometric architecture illustrations)
   - Locked vs. unlocked distinction (bright vs. grayscale)
-- **Settings**
+- Settings
   - Volume slider
   - Language switch
-- **Pause Menu**
+- Pause Menu
   - Continue
   - Return to Chapter
 
-4. 🎮 Interaction Design
-- **Controls**
+4. 🎮 **Interaction Design**
+- Controls
   - Tap: Move character
   - Swipe/Rotate: Manipulate structures
-- **Feedback**
+- Feedback
   - Valid tap area → light spark feedback
   - Mechanisms → animation + sound
-- **Transitions**
+- Transitions
   - Scene changes → smooth fade-in/out
   - Menus → scale/fade transitions
 
-5. 💡 User Experience 
+5. 💡**User Experience**
 - **Onboarding:** first level serves as natural tutorial  
 
-6. 🎨 UI Visual Style Guide
-- **Color Palette:** soft pastel tones  
-- **Typography:** minimalist sans-serif 
+6. 🎨**UI Visual Style Guide**
+- Color Palette: soft pastel tones  
+- Typography: minimalist sans-serif 
 
 
 
