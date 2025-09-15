@@ -23,9 +23,13 @@ Below are examples of markdown features available on GitHub that might be useful
 **•	Target Audience**: The target audience is casual players who enjoy puzzle-platformers and atmospheric experiences. The game is especially suited for teenagers and university students who appreciate immersive gameplay and symbolic storytelling. 
 
 **•	Unique Selling Points (USPs)**: 
+
 • Color matching system - Platforms and switches exist only when matched with the player’s active color, creating fresh spatial puzzles.
+
 • Evolving palette - The world shifts from muted blues to vibrant oranges, visually reflecting emotional growth.
+
 • Story mechanic integration – Collecting colors ties emotional healing directly into gameplay.
+
 • Replayability – Time trials encourage speedrunning and mastery beyond the first playthrough.
 
 ### Story and Narrative
