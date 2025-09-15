@@ -7,13 +7,17 @@ Below are examples of markdown features available on GitHub that might be useful
 
 ### Table of contents
 
-- [Introduction](#introduction)
-- [Emojis and Icons :boom:](#emojis-and-icons)
-- [Using Images](#using-images)
-- [Code Snipets](#code-snippets)
-- [Tables and Lists](#tables-and-lists)
-- [Maths and Diagrams](#maths-and-diagrams)
-- [References](#references)
+- [Game Overview](#game-overview)
+- [Story and Narrative](#story-and-narrative)
+- [Gameplay and Mechanics](#gameplay-and-mechanics)
+- [Levels and World Design](#levels-and-world-design)
+- [Physics](#physics)
+- [Art and Audio](#art-and-audio)
+- [UI/UX Design](#uiux-design)
+- [Technology and Tools](#technology-and-tools)
+- [Team Communication](#team-communication)
+- [Possible Challenges](#possible-challenges)
+
 
 ### Game Overview
 **•	Core Concept**: Our game is a color-based puzzle-platformer where the player navigates a miniature, dreamlike world by collecting and switching between colors. The unique mechanic is that player can only interact with objects that share their current active color. The platforms and switches become solid or intangible depending on the chosen color. This mechanic transforms simple movement into a constantly evolving puzzle, where success depends on mastering color switch,timing and spatial reasoning. The player's role is to journey through this environment, gradually restoring colorfulness and life to the world, with progression symbolized through colors collected along the way. 
@@ -149,116 +153,26 @@ Sound - Freesound (https://freesound.org) for sound effects and ambiences, OpenG
 - Color Palette: soft pastel tones  
 - Typography: minimalist sans-serif 
 
-
-
 ### Technology and Tools
-•	Unity 6.1x - core engine for development of game
-•	Github - version control, merge codes, code reviews
-•	Slack - daily team communications and task assignments
-•	Mixamo - quick rigging and character animations 
-•	Tripo AI - generate base 3D models from concepts 
-•	Blender - optimise mesges , refine textures, and polish models 
+- Unity 6.1x - core engine for development of game
+- Github - version control, merge codes, code reviews
+- Slack - daily team communications and task assignments
+- Mixamo - quick rigging and character animations 
+- Tripo AI - generate base 3D models from concepts 
+- Blender - optimise mesges , refine textures, and polish models 
 
 ### Team Communication
 We will use Slack as our main communication platform for daily updates, discussion, organising and assigning tasks. All communication will be in English to ensure inclusivity and transparency for both the team and teaching staff.
 
-•	Timeline:
-Week 6-7: Discuss and finalise game design document
-Week 8-10: Assets integration and imported to unity, core gameplay loop developed (jumping, movements, challenges)
-Week 11: Work on gameplay video and upload to youtube 
-Week 12: Final polishes to the game 
+Timeline:
+- Week 6-7: Discuss and finalise game design document
+- Week 8-10: Assets integration and imported to unity, core gameplay loop developed (jumping, movements, challenges)
+- Week 11: Work on gameplay video and upload to youtube 
+- Week 12: Final polishes to the game 
 
 ### Possible Challenges
-•	WebGL Performance: Models generated through Tripo may be too heavy causing longer loading times
+- WebGL Performance: Models generated through Tripo may be too heavy causing longer loading times
     Plan: optimise assets using Blender (compress textures)
-•	Time Constraints: limited weeks to complete the project
+- Time Constraints: limited weeks to complete the project
     Plan: keep scope tight - focus on one single long scene and polish it instead of having multiple unpolished scene
 
-
-### Emojis and Icons
-
-Check out [this page](https://github-emoji-picker.rickstaa.dev/) for a list of emojis/icons that you can use in your markdown. For example, you can use :sparkles: to make things sparkle! Use them sparingly and selectively, as too many emojis can be distracting, and some aren't super appropriate for a GDD. :wink: :wink: :wink:
-
-### Using Images
-
-Remember that your GDD should be a very visual document! It's easy to include images or gifs in your markdown, like this:
-
-<p align="center">
-  <img src="Images/sample.gif" width="300">
-</p>
-
-### Code Snippets
-
-Code is unlikely to be needed much (if at all) in your GDD, but it's still handy to know how to embed it. If you do include any `code snippets`, be sure to explain them properly.
-
-```c#
-public class CameraController : MonoBehaviour
-{
-    void Start ()
-    {
-        // Do something...
-    }
-}
-```
-
-### Tables and Lists
-
-You can create tables using markdown, though it's a bit fiddly and not super customisable. Here's an example:
-
-| Column 1 | Column 2 | Column 3 |
-| -------- | -------- | -------- |
-| Row 1    | Row 1    | Row 1    |
-| Row 2    | Row 2    | Row 2    |
-| Row 3    | Row 3    | Row 3    |
-
-You can also create lists, like this:
-
-- Item 1
-- Item 2
-- Item 3
-
-Or like this:
-
-1. Item 1
-2. Item 2
-3. Item 3
-
-Or even nested lists like this:
-
-1. Item 1
-   - Item 1.1
-   - Item 1.2
-2. Item 2
-   - Item 2.1
-   - Item 2.2
-
-### Maths and Diagrams
-
-Like code, maths probably won't feature much in your GDD, but it's worth knowing that you can use LaTeX to write equations, and have them automatically render in your markdown:
-
-$$\left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)$$
-
-... [look here](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/writing-mathematical-expressions) if you want to learn more about this.
-
-It's also possible to [create diagrams](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/creating-diagrams) via GitHub flavoured markdown using an integrated tool called Mermaid. This is a pretty powerful tool, and it's worth checking out [this](https://mermaid.js.org/intro/) guide for more information on what it can do. As a quick example, here's a flowchart:
-
-```mermaid
-graph LR
-    A[Hard edge] -->|Link text| B(Round edge)
-    B --> C{Decision}
-    C -->|One| D[Result one]
-    C -->|Two| E[Result two]
-```
-
-Pretty neat, huh? You can also create sequence diagrams, Gantt charts, class diagrams, and more. Check out the [Mermaid Live Editor](https://mermaid-js.github.io/mermaid-live-editor/) to see what's possible.
-
-### References
-
-Need more help? Check out these resources, which everything in this document is based on:
-
-- [GitHub Flavoured Markdown](https://guides.github.com/features/mastering-markdown/) (official guide)
-- [GitHub LaTeX](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/writing-mathematical-expressions)
-- [GitHub Diagrams](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/creating-diagrams)
-- [Mermaid Docs](https://mermaid-js.github.io/mermaid/#/)
-- [Mermaid Live Editor](https://mermaid-js.github.io/mermaid-live-editor/)
-- [Emoji Picker](https://github-emoji-picker.rickstaa.dev/)
