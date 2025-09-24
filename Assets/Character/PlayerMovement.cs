@@ -3,10 +3,10 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 5f;
-    public float jumpForce = 2f;
+    public float speed = 3f;
+    public float jumpForce = 1f;
     public float gravity = -20f;
-    public float rotationSpeed = 240f;
+    public float rotationSpeed = 360f;
     private CharacterController controller;
     private Animator animator;
     private Vector3 velocity;
@@ -29,18 +29,20 @@ public class PlayerMovement : MonoBehaviour
             velocity.y = -2f;
         }
 
-        // player movement input 
-        float moveX = Input.GetAxis("Horizontal"); // A or D keys
-        float moveZ = Input.GetAxis("Vertical"); // W or S keys 
+        // player movement input
+        float moveX = Input.GetAxisRaw("Horizontal"); // A or D keys
+        float moveZ = Input.GetAxisRaw("Vertical"); // W or S keys 
 
-        // rotate left or right
-        if (Mathf.Abs(moveX) > 0.1f)
-        {
-            transform.Rotate(Vector3.up * moveX * rotationSpeed * Time.deltaTime);
-        }
-
-        Vector3 move = transform.forward * moveZ;
+        // movement direction from both inputs
+        Vector3 move = new Vector3(moveX, 0, moveZ).normalized;
         controller.Move(move * speed * Time.deltaTime);
+
+        // rotate to face direction of movement
+        if (move.magnitude > 0.1f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(move);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        }
 
         // jumping movement
         if (Input.GetButtonDown("Jump") && onGround)
@@ -66,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
 
-        float movementMagnitude = new Vector3(move.x, 0, move.z).magnitude;
-        animator.SetFloat("Speed", movementMagnitude);
+        float movementMag = new Vector3(move.x, 0, move.z).magnitude;
+        animator.SetFloat("Speed", movementMag);
     }
 }
