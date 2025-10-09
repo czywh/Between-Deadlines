@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Movable
+  - invisible
   layers:
   - Default
   - TransparentFX
@@ -16,6 +18,11 @@ TagManager:
   - 
   - 
   - 
+  - 'Player '
+  - 'World A '
+  - 'World B '
+  - 'World B only '
+  - 'Portal Sphere '
   - 
   - 
   - 
