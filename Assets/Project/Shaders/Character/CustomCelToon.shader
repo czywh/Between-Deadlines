@@ -253,6 +253,7 @@ Shader "Custom/URP/CustomCelToon"
             }
             ENDHLSL
         }
+        UsePass "Universal Render Pipeline/Lit/ShadowCaster"
     }
 
     FallBack Off
