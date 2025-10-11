@@ -14,20 +14,15 @@ TagManager:
   - Water
   - UI
   - Hittable
-  - 
-  - 
-  - 
-  - 
-  - 'Player '
   - 'World A '
-  - 'World B '
+  - World B
   - 'World B only '
-  - 'Portal Sphere '
+  - Portal Sphere
+  - 'Player '
   - 
+  - ' '
   - 
-  - 
-  - 
-  - 
+  - ' '
   - 
   - 
   - 
