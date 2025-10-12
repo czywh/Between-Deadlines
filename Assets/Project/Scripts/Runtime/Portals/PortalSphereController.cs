@@ -11,19 +11,19 @@ public class PortalSphereController : MonoBehaviour
     public Transform player;
     public Camera mainCamera;
     public Camera portalCamera;
-    public Renderer[] sphereVisuals;   // 球体表面（采样 RT 的材质）
-    public Transform worldBOnlyRoot;   // WorldBOnly 物体的根节点
+    public Renderer[] sphereVisuals;  
+    public Transform worldBOnlyRoot;   
 
 
 	[Header("Portal Lifecycle")]
 	public KeyCode toggleKey = KeyCode.Q;
-	public float maxRadius = 5f;   // MaxRadius of portal sphere
+	public float maxRadius = 3f;   // MaxRadius of portal sphere
 	public float expandSpeed = 3f;   // Expanding speed of portal 
-	public float duration = 5f;   // sustain duration of portal
+	public float duration = 10f;   // sustain duration of portal
 	public float cooldown = 2f;   // coold down for portal re-open
 
 	[Header("World & Layer Settings")]
-	public string worldBLayerName = "WorldBOnly";
+	public string worldBLayerName = "World B only ";
 	public LayerMask portalCameraCulling;
 	public bool useDistanceFade = true;
 
@@ -43,13 +43,6 @@ public class PortalSphereController : MonoBehaviour
     public Volume volumeColor;
 
 
-	public float outerBlendStartOffset = 0.5f;                          // the offset where outside sphere color blend start 
-	[Range(0f, 0.5f)] public float edgeFeatherPct = 0.12f;				// 
-	[Range(0f, 20f)] public float weightSmoothLerp = 8f;				// corresponding ratio of Volume weight change 
-	private float _TargetGrayWeight = 1f, _TargetColorWeight = 0f;
-
-
-
 	// Lifecycle paramerters 
 	private enum State { Idle, Expanding, Sustaining, Collapsing, Cooldown }
     private State _state = State.Idle;
@@ -58,8 +51,6 @@ public class PortalSphereController : MonoBehaviour
 	// Relavent touched Wolrd B only object
 	private readonly HashSet<Transform> _activeB = new();
     private int _worldBLayer = -1;
-
-
 
 
 	private SphereCollider _triggerCollider;
@@ -388,7 +379,6 @@ public class PortalSphereController : MonoBehaviour
 		if (volumeColor) volumeColor.enabled = colorful;
 		Shader.SetGlobalFloat("_PortalColorBlend", colorful ? 1f : 0f);
 	}
-
 
 
 	private void OnTriggerEnter(Collider other)

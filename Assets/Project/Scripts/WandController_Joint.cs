@@ -63,7 +63,7 @@ public class WandController_Joint : MonoBehaviour
         var anchorGO = new GameObject("GrabAnchor");
         _anchor = anchorGO.transform;
         _anchorRB = anchorGO.AddComponent<Rigidbody>();
-        _anchorRB.isKinematic = true;
+        // _anchorRB.isKinematic = true;
 
         _holdDistance = Mathf.Clamp(defaultHoldDistance, minHoldDistance, maxHoldDistance);
     }
@@ -132,7 +132,7 @@ public class WandController_Joint : MonoBehaviour
 
         _target = cand;
         _rb = cand.GetComponent<Rigidbody>();
-        _rb.useGravity = true;
+        //_rb.useGravity = true;
         _rb.interpolation = RigidbodyInterpolation.Interpolate;
         _rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
 
