@@ -7817,7 +7817,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1264943061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7892,7 +7892,7 @@ Camera:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1264943060}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
@@ -9494,7 +9494,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1482570818}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbe43d662878a7c43bcd44d43c9e2094, type: 3}
   m_Name: 
@@ -11825,9 +11825,6 @@ MonoBehaviour:
   _currentPath: 0
   volumeGray: {fileID: 0}
   volumeColor: {fileID: 0}
-  outerBlendStartOffset: 0.5
-  edgeFeatherPct: 0.12
-  weightSmoothLerp: 8
 --- !u!33 &1922419955
 MeshFilter:
   m_ObjectHideFlags: 0
