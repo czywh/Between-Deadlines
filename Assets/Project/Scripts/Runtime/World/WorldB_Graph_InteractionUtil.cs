@@ -4,16 +4,17 @@ public enum RenderPath { RT, Clip }
 
 public struct RenderPathContext
 {
-	public Camera mainCamera;              // 主相机
-	public Camera portalCamera;            // Portal 相机（只渲 WorldBOnly）
-	public int worldBLayer;                // WorldBOnly 层索引（LayerMask.NameToLayer）
-	public bool useRenderTexture;          // 是否启用 RT 路径
-	public string sphereRTProperty;        // RT 属性名，如 "_PortalRT"
+	public Camera mainCamera;              // Main Camera 
+	public Camera portalCamera;            // Portal Camera  (World B Only）
+	public int worldBLayer;                // World B Only Layer（LayerMask）
+
+	public LayerMask portalCameraCulling;  // Portal 相机的 cullingMask（只包含 WorldBOnly）
+	public string sphereRTProperty;        // name of Render Texture "_PortalRT"
 	public RenderTexture portalRT;         // RT 对象（若为 null，主流程里创建）
 	public Material sphereMaterialForRT;   // 球体材质（用于采样 RT）
-	public LayerMask portalCameraCulling;  // Portal 相机的 cullingMask（只包含 WorldBOnly）
-	public bool useDistanceFade;           // 软/硬边（传给 Shader Global）
 	public float rtResolutionScale; 		// Resolution Scale ratio for RT 
+	public bool useDistanceFade;           
+	public bool useRenderTexture;  
 }
 
 
@@ -91,28 +92,23 @@ public static class WorldB_Graph_InteractionUtil
 		else if (path == RenderPath.RT && (portalRT == null || ctx.portalCamera == null || ctx.portalCamera.targetTexture == null))
 		{
 			// ★ 路径没变的兜底：一开始就是 RT，但还没创建/绑定时，要创建并绑定
-			EnsureRTCreatedAndBound(ref portalRT, in ctx);
+			
+			// reconstract render texure 
+			CheckOrRecreateRT( ref portalRT, ctx.portalCamera, ctx.useRenderTexture, Mathf.Clamp01(ctx.rtResolutionScale <= 0 ? 1f : ctx.rtResolutionScale), ctx.sphereMaterialForRT,
+				string.IsNullOrEmpty(ctx.sphereRTProperty) ? "_PortalRT" : ctx.sphereRTProperty);
+
+			// give render texture to portal 
+			if (ctx.portalCamera.targetTexture != portalRT)
+				ctx.portalCamera.targetTexture = portalRT;
+
+
+			// maker sure portal camera is enabled 
+			ctx.portalCamera.enabled = true;
 		}
 		
 
 
 		return path;
-	}
-
-	public static void EnsureRTCreatedAndBound(ref RenderTexture rt, in RenderPathContext ctx)
-	{
-		if (!ctx.useRenderTexture || !ctx.portalCamera) return;
-
-		// 创建或重建 RT（若为空或尺寸不符）
-		CheckOrRecreateRT( ref rt, ctx.portalCamera, ctx.useRenderTexture, Mathf.Clamp01(ctx.rtResolutionScale <= 0 ? 1f : ctx.rtResolutionScale), ctx.sphereMaterialForRT,
-			string.IsNullOrEmpty(ctx.sphereRTProperty) ? "_PortalRT" : ctx.sphereRTProperty);
-
-		// 兜底：把 RT 绑到 portal 相机
-		if (ctx.portalCamera.targetTexture != rt)
-			ctx.portalCamera.targetTexture = rt;
-
-		// 兜底：启用 portal 相机
-		ctx.portalCamera.enabled = true;
 	}
 
 	public static void ApplyMaterialPath(Transform worldBOnlyRoot, int worldBLayer, RenderPath path)

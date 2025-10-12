@@ -16,7 +16,7 @@ TagManager:
   - Hittable
   - 'World A '
   - World B
-  - 'World B only '
+  - World B only
   - Portal Sphere
   - 'Player '
   - 

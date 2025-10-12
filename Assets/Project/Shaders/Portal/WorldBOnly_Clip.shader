@@ -48,10 +48,10 @@ Shader "Portal/WorldB_Clip_Unlit"
                 float  _EdgeSoftness;
             CBUFFER_END
 
-            // —— 由控制器每帧设置的全局参数 —— //
-            float4 _PortalCenter;           // xyz=中心（世界空间）
-            float  _PortalRadius;           // 半径
-            float  _UsePortalDistanceFade;  // 0=硬边，1=软边
+            // Portal Golbal Paramter 
+            float4 _PortalCenter;           
+            float  _PortalRadius;           
+            float  _UsePortalDistanceFade;  
 
             struct Attributes
             {

@@ -23,7 +23,7 @@ public class PortalSphereController : MonoBehaviour
 	public float cooldown = 2f;   // coold down for portal re-open
 
 	[Header("World & Layer Settings")]
-	public string worldBLayerName = "World B only ";
+	public string worldBOnlyLayerName = "World B only";
 	public LayerMask portalCameraCulling;
 	public bool useDistanceFade = true;
 
@@ -50,7 +50,7 @@ public class PortalSphereController : MonoBehaviour
 
 	// Relavent touched Wolrd B only object
 	private readonly HashSet<Transform> _activeB = new();
-    private int _worldBLayer = -1;
+    private int _worldBOnlyLayer = -1;
 
 
 	private SphereCollider _triggerCollider;
@@ -67,9 +67,6 @@ public class PortalSphereController : MonoBehaviour
 	void Awake()
 	{
 		_worldBisActive = false;
-		_triggerCollider = GetComponent<SphereCollider>();
-		_triggerCollider.isTrigger = true;
-
 
 		if (!TryGetComponent<Rigidbody>(out var rb))
 		{
@@ -78,9 +75,13 @@ public class PortalSphereController : MonoBehaviour
 			rb.useGravity = false;
 		}
 
-		_worldBLayer = LayerMask.NameToLayer(worldBLayerName);
-		if (_worldBLayer == -1)
-			Debug.LogError($"UnSetting Layer '{worldBLayerName}', Adding 'Tags and Layer' in project setting");
+		if (!TryGetComponent<SphereCollider>(out _triggerCollider))
+			_triggerCollider = gameObject.AddComponent<SphereCollider>();
+			_triggerCollider.isTrigger = true;
+
+		_worldBOnlyLayer = LayerMask.NameToLayer(worldBOnlyLayerName);
+		if (_worldBOnlyLayer == -1)
+			Debug.LogError($"UnSetting Layer '{worldBOnlyLayerName}', Adding 'Tags and Layer' in project setting");
 
 
 		// Camera Setting: Portal Camera is cloased initially and only render WorldB
@@ -142,7 +143,7 @@ public class PortalSphereController : MonoBehaviour
 		// 3. Updating Render Texture 
 		if (_currentPath != prevPath)
         {
-            WorldB_Graph_InteractionUtil.ApplyMaterialPath(worldBOnlyRoot, _worldBLayer, _currentPath);
+            WorldB_Graph_InteractionUtil.ApplyMaterialPath(worldBOnlyRoot, _worldBOnlyLayer, _currentPath);
 
             if (_currentPath == RenderPath.RT) {
                 WorldB_Graph_InteractionUtil.CheckOrRecreateRT(ref portalRT, portalCamera, useRenderTexture, rtResolutionScale, sphereMaterialForRT, sphereRTProperty);
@@ -329,7 +330,7 @@ public class PortalSphereController : MonoBehaviour
 		WorldB_Graph_InteractionUtil.ClearRTBinding(portalCamera, sphereMaterialForRT, sphereRTProperty, false);
 		WorldB_Graph_InteractionUtil.ReleaseRT(ref portalRT, portalCamera);
 
-		if (mainCamera) mainCamera.cullingMask &= ~(1 << _worldBLayer);
+		if (mainCamera) mainCamera.cullingMask &= ~(1 << _worldBOnlyLayer);
 		_worldBisActive = false;
 	}
 
@@ -361,7 +362,7 @@ public class PortalSphereController : MonoBehaviour
 		{
 			mainCamera = mainCamera,
 			portalCamera = portalCamera,
-			worldBLayer = _worldBLayer,
+			worldBLayer = _worldBOnlyLayer,
 			useRenderTexture = useRenderTexture,
 			portalRT = portalRT,
 			sphereMaterialForRT = sphereMaterialForRT,
@@ -381,15 +382,26 @@ public class PortalSphereController : MonoBehaviour
 	}
 
 
+	private Transform FindTargetLayer(Transform t, int targetLayer)
+	{
+		while (t != null)
+		{
+			if (t.gameObject.layer == targetLayer)
+				return t;
+			t = t.parent;
+		}
+		return null;
+	}
+
 	private void OnTriggerEnter(Collider other)
 	{
 		if (!_worldBisActive) return;
 
-		var root = other.transform.root;
-		if (root.gameObject.layer != _worldBLayer) return;
+		var bRoot = FindTargetLayer(other.transform, _worldBOnlyLayer);
+		if (!bRoot) return;
 
-		_activeB.Add(root);
-		WorldB_Graph_InteractionUtil.SetInteractive(root, true);
+		_activeB.Add(bRoot);
+		WorldB_Graph_InteractionUtil.SetInteractive(bRoot, true);
 	}
 
 
@@ -397,11 +409,11 @@ public class PortalSphereController : MonoBehaviour
 	{
 		if (!_worldBisActive) return;
 
-		var root = other.transform.root;
-		if (root.gameObject.layer != _worldBLayer) return;
+		var bRoot = FindTargetLayer(other.transform, _worldBOnlyLayer);
+		if (!bRoot) return;
 
-		_activeB.Remove(root);
-		WorldB_Graph_InteractionUtil.SetInteractive(root, false);
+		_activeB.Remove(bRoot);
+		WorldB_Graph_InteractionUtil.SetInteractive(bRoot, false);
 	}
 
 }
