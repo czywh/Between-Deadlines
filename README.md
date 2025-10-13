@@ -15,39 +15,37 @@
 
 
 ### Game Overview
-**•	Core Concept**: Our game is a color-based puzzle-platformer where the player navigates a miniature, dreamlike world by collecting and switching between colors. The unique mechanic is that player can only interact with objects that share their current active color. The platforms and switches become solid or intangible depending on the chosen color. This mechanic transforms simple movement into a constantly evolving puzzle, where success depends on mastering color switch,timing and spatial reasoning. The player's role is to journey through this environment, gradually restoring colorfulness and life to the world, with progression symbolized through colors collected along the way. 
+**•	Core Concept**: The core concept of the game is escaping a miniature dual-world that represents the mental state of a student rushing to finish an assignment. The player takes on the role of a University of Melbourne student who has been mysteriously shrunken and trapped on his own study desk as the deadline approaches. To return to normal size and restore color to his world, he must navigate between two contrasting miniature realities — the grey, rainy World A, symbolizing stress and pressure, and the colorful World B, representing relief and clarity after completing the task. By switching between these two worlds, solving puzzles, and overcoming platforming challenges, the player symbolically experiences the journey of overcoming academic stress and finding balance again.
 
-**•	Related genre**: The game is a 3D puzzle-platformer genre, with influences from narrative-driven exploration games. Similar games includes It Takes Two (for stylized world and cooperative puzzle feeling) and Monument Valley (for spatial puzzles). Unlike other puzzle-platformers, this game features a unique color-matching mechanic in which colors shape both the world’s physics and the player’s progression. It blends the precision of platforming with a symbolic narrative of emotional healing.
+**•	Related genre**: The game is a 3D puzzle-platformer genre, with influences from narrative-driven exploration games. Similar games includes It Takes Two (for stylized world and cooperative puzzle feeling) and Monument Valley (for spatial puzzles). Unlike other puzzle-platformers, this game has the combination of world switching, levitation based interaction, and the symbolic contrast between the grey “due world” and the colorful “after-due world” gives the game a distinct emotional and visual identity that ties everyday student struggles to a creative and immersive gameplay experience.
 
 **•	Target Audience**: The target audience is casual players who enjoy puzzle-platformers and atmospheric experiences. The game is especially suited for teenagers and university students who appreciate immersive gameplay and symbolic storytelling. 
 
 **•	Unique Selling Points (USPs)**: 
 
-• Color matching system - Platforms and switches exist only when matched with the player’s active color, creating fresh spatial puzzles.
+• World-switching system – Objects, platforms, and bridges appear or disappear depending on the active world (A or B), creating dynamic and perspective based spatial puzzles.
 
-• Evolving palette - The world shifts from muted blues to vibrant oranges, visually reflecting emotional growth.
-
-• Story mechanic integration – Collecting colors ties emotional healing directly into gameplay.
+• Emotional storytelling integration – The transition from the grey, rainy world to the colorful world symbolizes the player’s emotional journey from stress to relief as the assignment nears completion.
 
 • Replayability – Time trials encourage speedrunning and mastery beyond the first playthrough.
 
 ### Story and Narrative
-**•	Backstory**: The world was vibrant and full of color, but a mysterious event drained it, leaving only muted blues and greys. In this fragile, miniature landscape, the player awakens as a small spirit-like figure carrying only one remaining color. Their journey is both literal and symbolic: to recollect the lost color and restore vibrancy to the world. With each color recovered, the environment gradually transforms, reflecting emotional healing and growth. The conflict is not against a villain but against darkness and despair, as the player overcomes challenges that resist the return of light. By the end of the journey, the world shines again in warm, symbolizing victory and renewal.
+**•	Backstory**: The story follows a University of Melbourne student who has been mysteriously shrunken and trapped within a miniature version of his study desk. As the deadline for his assignment approaches, his mind fractures the world into two contrasting realities — World A, a grey, stormy space that mirrors his stress and exhaustion, and World B, a colorful, peaceful world representing focus and relief after finishing his work. The entire game takes place on a miniature study desk world, where everyday objects like books, stationery, coffee mugs, and papers become giant structures, platforms, and obstacles. Rain, reflections, and lighting effects help distinguish the emotional tone of each world.
 
-**•	Characters**: In our game, there is only one character—the player character, named Luma. Luma is a small, spirit-like figure that represents the player’s emotions. As colors gradually return to the world, Luma’s appearance subtly transforms, such as a brighter outfit or a soft glow. His personality is defined by innocence, determination, and adaptability. The player’s purpose through Luma is to restore vibrancy and color to the world.
+**•	Characters**: In our game, there is only one character—the player character, named Luma. Luma is a University of Melbourne student, a hardworking but overwhelmed individual trapped in a miniature version of his study desk. He wears simple everyday clothes — a hoodie, jeans, and sneakers — and his appearance reflects his emotional state: dull and desaturated in World A, colorful and lively in World B. His motivation is to finish his assignment and escape the stormy, stressful world that represents his anxiety. The student’s journey symbolizes determination, perseverance, and emotional growth through self-discipline and problem-solving.
 
 ### Gameplay and Mechanics
 **•	Player Perspective**:
 The game adopts a third-person perspective. The camera is positioned behind the player character and follows their movements smoothly, providing both spatial awareness of the environment and precise control for platforming.  
 
 **•	Controls**:
-The player uses WASD keys for movement, Space to jump, and the left mouse button to switch colors once a color has been collected. The control scheme is intentionally minimalistic to allow players to focus on puzzle-solving rather than complex input sequences.
+The player uses WASD to move, Space to jump, Q switch between world A and world B, the left mouse button to control the camera, and the right mouse button to levitate levitatable objects. The control scheme is intentionally minimalistic to allow players to focus on puzzle-solving rather than complex input sequences.
 
 **•	Progression and Objectives**:
-Players must collect and utilize colors to solve puzzles and advance through the environment. As progression continues, puzzles require the use of multiple colors and rapid switching between them. Falling outside the scene results in the player’s “death,” after which they respawn at the latest checkpoint. Upon reaching the final destination, a timer is displayed to indicate total completion time, encouraging replayability and optimization.
+Players must solve puzzles and advance through the environment. As progression continues, puzzles require the use of multiple colors and rapid switching between them. Falling outside the scene results in the player’s “death,” after which they respawn at the latest checkpoint. Upon reaching the final destination, a timer is displayed to indicate total completion time, encouraging replayability and optimization.
 
 **•	Core Mechanics**:
-The central mechanic is color-based interaction. The player can only physically interact with objects in the scene that share the same active color. For example, a blue character can stand on blue platforms, push blue blocks, or activate blue switches. Non-matching objects behave as intangible, creating the illusion of phasing through them. This mechanic is the foundation of both puzzle design and progression.
+The game is a puzzle–platformer where the player switches between two parallel worlds to overcome obstacles and reach the goal. In the grey, rainy World A, colors have faded, while in the vibrant World B, the environment is restored and new structures like bridges appear. The player can move, jump, switch worlds, and use telekinetic levitation to lift and reposition objects to solve puzzles or create new paths. The core rule of the game is that some objects only exist in one world at a time, and switching worlds changes the environment’s layout without altering physics or player position. The main fun comes from combining world-switching and object manipulation to discover hidden routes and solve creative challenges. 
  
 ### Levels and World Design
 **•	Game World**:
@@ -56,10 +54,10 @@ The game world consists of one large 3D environment rather than segmented levels
 **•	Objects and Assets**:
 The world features two main categories of objects:
 1.	Decorative Objects: Large-scale props, such as oversized cans or static scenery, reinforce the miniature-world theme. These objects cannot be moved and do not interact with the player beyond serving as environmental boundaries or visual storytelling elements.
-2.	Puzzle Objects: Interactive objects that respond to the player’s current color. These include platforms, blocks, switches, and moving elements, each requiring correct color alignment to function as intended.
+2.	Puzzle Objects: Interactive objects that respond to the player’s current world state. These include platforms, blocks, switches, and moving elements.
 
 **•	Puzzle and Challenge Design**:
-Early puzzles introduce simple color-matching mechanics, while later challenges demand mastery of quick color switching, timed jumps, and multi-step problem solving. Some puzzles incorporate moving platforms or timed events, requiring both precision and strategy. Difficulty ramps up gradually, ensuring players are taught mechanics progressively before being tested on more complex combinations.
+Early puzzles introduce simple world-switching mechanics, teaching players how objects appear or disappear between the two worlds. As the game progresses, challenges become more complex, combining timed jumps, object levitation, and multi-step interactions that require switching worlds at the right moment. Some puzzles involve moving platforms or timed environmental changes, demanding both precision and planning. The difficulty increases gradually, ensuring players learn each mechanic before being tested on more advanced combinations of movement, timing, and spatial reasoning.
  
 ### Physics
 •	Gravity and Jumping:
