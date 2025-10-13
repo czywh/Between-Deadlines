@@ -22,5 +22,10 @@
       "github": "jasonWu1019",
       "email": "jason.wu@student.unimelb.edu.au"
     }
-  ]
+  ],
+
+  "gameTitle": "Between Deadlines",
+  "gameBlurb": "Between Deadlines is a miniature puzzle–platformer set on a University of Melbourne student’s study desk. As the deadline approaches, the student becomes trapped in a tiny version of his workspace, split into two contrasting worlds. World A is grey and stormy, symbolizing stress and exhaustion, while World B is colorful and calm, representing relief after completing the task. Players switch between worlds, solve puzzles, and use levitation to move objects made from everyday desk items. Each level reflects a step toward finishing the assignment and restoring balance to the student’s mind."
+
+
 }
