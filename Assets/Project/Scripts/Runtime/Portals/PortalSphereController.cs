@@ -42,6 +42,8 @@ public class PortalSphereController : MonoBehaviour
     public Volume volumeGray;
     public Volume volumeColor;
 
+	public MusicManager musicManager;
+
 
 	// Lifecycle paramerters 
 	private enum State { Idle, Expanding, Sustaining, Collapsing, Cooldown }
@@ -301,6 +303,10 @@ public class PortalSphereController : MonoBehaviour
 	private void WorldB_ActiveStart()
 	{
 		SetPortalVisible(true);
+		
+		if (musicManager != null)
+			musicManager.OnSphereOpened();
+
 		_worldBisActive = true;
 
 		if (_triggerCollider) _triggerCollider.enabled = true;
@@ -315,6 +321,10 @@ public class PortalSphereController : MonoBehaviour
 	private void WorldB_ActiveEnd()
 	{
 		SetPortalVisible(false);
+
+		if (musicManager != null)
+    		musicManager.OnSphereClosed();
+
 		if (portalCamera) portalCamera.enabled = false;
 
 		// set all actived objects as non-interatable 
