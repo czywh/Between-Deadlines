@@ -46,6 +46,11 @@ public class WandController_Joint : MonoBehaviour
     private float _rbOldAngularDrag;
     private float _rbOldDrag;
 
+    // ★ ADDED: 保存“是否原本是 Kinematic”与老的插值/碰撞模式
+    private bool _rbWasKinematic = false;                               // ★ ADDED
+    private RigidbodyInterpolation _rbOldInterpolation;                 // ★ ADDED
+    private CollisionDetectionMode _rbOldCollisionDetectionMode;        // ★ ADDED
+
     private Transform _anchor;
     private Rigidbody _anchorRB;
     private Vector3 _anchorPrevPos;
@@ -63,6 +68,7 @@ public class WandController_Joint : MonoBehaviour
         var anchorGO = new GameObject("GrabAnchor");
         _anchor = anchorGO.transform;
         _anchorRB = anchorGO.AddComponent<Rigidbody>();
+        // 建议锚点刚体设为 Kinematic，这样可以安全用 transform 驱动（可自行打开）
         // _anchorRB.isKinematic = true;
 
         _holdDistance = Mathf.Clamp(defaultHoldDistance, minHoldDistance, maxHoldDistance);
@@ -122,8 +128,10 @@ public class WandController_Joint : MonoBehaviour
 
         var ray = cam.ScreenPointToRay(Input.mousePosition);
         if (!Physics.SphereCast(ray, aimSphereRadius, out RaycastHit hitInfo, maxRayDistance,
-            hittableLayers, QueryTriggerInteraction.Ignore)) return;
+    ~0, QueryTriggerInteraction.Ignore)) return;
 
+        // 只有带 HittableTag 的对象能被抓
+        if (!hitInfo.collider.GetComponentInParent<HittableTag>()) return;
         var cand = hitInfo.collider.GetComponentInParent<Levitatable>();
         if (cand == null) return;
 
@@ -133,8 +141,16 @@ public class WandController_Joint : MonoBehaviour
         _target = cand;
         _rb = cand.GetComponent<Rigidbody>();
         //_rb.useGravity = true;
-        _rb.interpolation = RigidbodyInterpolation.Interpolate;
-        _rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+
+        // ★ ADDED: 记录并设置插值/碰撞模式，以获得更稳定的抓取体验
+        _rbOldInterpolation = _rb.interpolation;                         // ★ ADDED
+        _rbOldCollisionDetectionMode = _rb.collisionDetectionMode;       // ★ ADDED
+        _rb.interpolation = RigidbodyInterpolation.Interpolate;          // ★ CHANGED (moved below with kinematic 设置)
+        _rb.collisionDetectionMode = CollisionDetectionMode.Continuous;  // ★ CHANGED
+
+        // ★ ADDED: 记录并临时取消 Kinematic（方案一的关键）
+        _rbWasKinematic = _rb.isKinematic;   // ★ ADDED
+        _rb.isKinematic = false;             // ★ ADDED 让关节/物理能驱动
 
         // Freeze rotation while holding to stop wobble/auto-spins
         _rbOldConstraints = _rb.constraints;
@@ -171,13 +187,23 @@ public class WandController_Joint : MonoBehaviour
 
         if (_rb)
         {
-            Vector3 throwVel = _anchorVelFiltered + cam.transform.forward * forwardThrowBoost;
-            _rb.linearVelocity = throwVel;
-            _rb.angularVelocity *= 0.8f;
+            // 若原本不是 Kinematic，则才有“丢掷”意义；Kinematic 会忽略速度
+            if (!_rbWasKinematic)                                             // ★ ADDED
+            {
+                Vector3 throwVel = _anchorVelFiltered + cam.transform.forward * forwardThrowBoost;
+                _rb.linearVelocity = throwVel;
+                _rb.angularVelocity *= 0.8f;
+            }
+
             // Restore original rotation freedoms and damping
             _rb.constraints = _rbOldConstraints;
             _rb.angularDamping = _rbOldAngularDrag;
             _rb.linearDamping = _rbOldDrag;
+
+            // ★ ADDED: 恢复 Kinematic/插值/碰撞模式为抓取前的值
+            _rb.isKinematic = _rbWasKinematic;                                // ★ ADDED
+            _rb.interpolation = _rbOldInterpolation;                          // ★ ADDED
+            _rb.collisionDetectionMode = _rbOldCollisionDetectionMode;        // ★ ADDED
         }
 
         _target.SetHighlighted(false);

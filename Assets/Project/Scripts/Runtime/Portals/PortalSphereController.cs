@@ -42,11 +42,37 @@ public class PortalSphereController : MonoBehaviour
     public Volume volumeGray;
     public Volume volumeColor;
 
+	public MusicManager musicManager;
+
 
 	// Lifecycle paramerters 
-	private enum State { Idle, Expanding, Sustaining, Collapsing, Cooldown }
-    private State _state = State.Idle;
-    private Coroutine _co;
+		public enum State { Idle, Expanding, Sustaining, Collapsing, Cooldown }
+		private State _state = State.Idle;
+		
+		// === Added for external state observation and events ===
+		public State CurrentState => _state;
+		public bool IsSustaining => _state == State.Sustaining;
+		public System.Action<State> OnStateChanged;
+    private void SetState(State s)
+    {
+        if (_state == s) return;
+        var prev = _state;
+        _state = s;
+
+        if (s == State.Sustaining && prev != State.Sustaining)
+        {
+            try { OnSustainingStarted?.Invoke(); } catch {}
+        }
+        if (prev == State.Sustaining && s != State.Sustaining)
+        {
+            try { OnSustainingEnded?.Invoke(); } catch {}
+        }
+        try { OnStateChanged?.Invoke(_state); } catch {}
+    }
+    public UnityEngine.Events.UnityEvent OnSustainingStarted;
+    public UnityEngine.Events.UnityEvent OnSustainingEnded;
+    // === End added ===
+private Coroutine _co;
 
 	// Relavent touched Wolrd B only object
 	private readonly HashSet<Transform> _activeB = new();
@@ -221,27 +247,27 @@ public class PortalSphereController : MonoBehaviour
 	private IEnumerator CoroutineLifecycle()
 	{
 		// 1. Expand
-		_state = State.Expanding;
+		SetState(State.Expanding);
 		WorldB_ActiveStart();
 		yield return CoroutineRadius(0f, maxRadius, expandSpeed);
 
 		// 2. Sustain
-		_state = State.Sustaining;
+		SetState(State.Sustaining);
 		yield return new WaitForSeconds(duration);
 
 
 		// 3. Collapse
-		_state = State.Collapsing;
+		SetState(State.Collapsing);
 		yield return CoroutineRadius(GetRadius(), 0f, expandSpeed);
 
 		WorldB_ActiveEnd();
 
 		// 4. Cooldown
-		_state = State.Cooldown;
+		SetState(State.Cooldown);
 		yield return new WaitForSeconds(cooldown);
 
 		// 5. Idel 
-		_state = State.Idle;
+		SetState(State.Idle);
 		_co = null;
 	}
 
@@ -263,18 +289,18 @@ public class PortalSphereController : MonoBehaviour
 	private IEnumerator EarlyCollapseCoroutine()
 	{
 		// 1. Collaps 
-		_state = State.Collapsing;
+		SetState(State.Collapsing);
 		yield return CoroutineRadius(GetRadius(), 0f, expandSpeed);
 
 		WorldB_ActiveEnd();
 
 		// 2. Cooldown 
-		_state = State.Cooldown;
+		SetState(State.Cooldown);
 		yield return new WaitForSeconds(cooldown);
 
 
 		// 3. Idel
-		_state = State.Idle;
+		SetState(State.Idle);
 		_co = null;
 	}
 
@@ -301,6 +327,10 @@ public class PortalSphereController : MonoBehaviour
 	private void WorldB_ActiveStart()
 	{
 		SetPortalVisible(true);
+		
+		if (musicManager != null)
+			musicManager.OnSphereOpened();
+
 		_worldBisActive = true;
 
 		if (_triggerCollider) _triggerCollider.enabled = true;
@@ -315,6 +345,10 @@ public class PortalSphereController : MonoBehaviour
 	private void WorldB_ActiveEnd()
 	{
 		SetPortalVisible(false);
+
+		if (musicManager != null)
+    		musicManager.OnSphereClosed();
+
 		if (portalCamera) portalCamera.enabled = false;
 
 		// set all actived objects as non-interatable 
