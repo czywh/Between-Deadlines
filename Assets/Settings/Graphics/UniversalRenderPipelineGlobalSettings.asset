@@ -62,18 +62,7 @@ MonoBehaviour:
       - rid: 2793109365128954126
       - rid: 2793109365128954127
     m_RuntimeSettings:
-      m_List:
-      - rid: 2793109365128954102
-      - rid: 2793109365128954108
-      - rid: 2793109365128954109
-      - rid: 2793109365128954111
-      - rid: 2793109365128954112
-      - rid: 2793109365128954113
-      - rid: 2793109365128954114
-      - rid: 2793109365128954117
-      - rid: 2793109365128954125
-      - rid: 2793109365128954126
-      - rid: 2793109365128954127
+      m_List: []
   m_AssetVersion: 8
   m_ObsoleteDefaultVolumeProfile: {fileID: 0}
   m_RenderingLayerNames:
@@ -225,7 +214,7 @@ MonoBehaviour:
       type: {class: RenderGraphSettings, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
       data:
         m_Version: 0
-        m_EnableRenderCompatibilityMode: 0
+        m_EnableRenderCompatibilityMode: 1
     - rid: 2793109365128954114
       type: {class: UniversalRenderPipelineRuntimeXRResources, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
       data:
@@ -299,8 +288,8 @@ MonoBehaviour:
       type: {class: RenderGraphGlobalSettings, ns: UnityEngine.Rendering, asm: Unity.RenderPipelines.Core.Runtime}
       data:
         m_version: 0
-        m_EnableCompilationCaching: 1
-        m_EnableValidityChecks: 1
+        m_EnableCompilationCaching: 0
+        m_EnableValidityChecks: 0
     - rid: 2793109365128954118
       type: {class: ProbeVolumeRuntimeResources, ns: UnityEngine.Rendering, asm: Unity.RenderPipelines.Core.Runtime}
       data:

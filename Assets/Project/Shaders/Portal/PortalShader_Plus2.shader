@@ -29,7 +29,7 @@ Shader "Custom/PortalSphere_RT_Toon_Simplified_ShakeDual"
         _WaveSizeComp("Wave Size Compensation", Range(-2,2)) = 1
 
         // 球内视角抖动（以像素为单位的幅度 + 强度）
-        _InsideShakeStrength ("Inside Shake Strength", Range(0,1)) = 0.3
+        _InsideShakeStrength ("Inside Shake Strength", Range(0,3)) = 1
         _ShakePixels ("Inside Shake Pixels", Range(0,16)) = 4
     }
 
