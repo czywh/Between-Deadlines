@@ -164,8 +164,13 @@ public static class WorldB_Graph_InteractionUtil
 		// Re-create render texture 
 		ReleaseRT(ref rt, portalCamera);
 
-		rt = new RenderTexture(w, h, depthBufferBits, format) { name = rtName, antiAliasing = Mathf.Max(QualitySettings.antiAliasing, 1),
-						useMipMap = false, autoGenerateMips = false };
+		rt = new RenderTexture(w, h, depthBufferBits, format)
+		{
+			name = rtName,
+			antiAliasing = Mathf.Max(QualitySettings.antiAliasing, 1),
+			useMipMap = false,
+			autoGenerateMips = false
+		};
 
 		rt.Create();
 		portalCamera.targetTexture = rt;
@@ -175,6 +180,8 @@ public static class WorldB_Graph_InteractionUtil
 
 		return true;
 	}
+	
+	
 
 
 
