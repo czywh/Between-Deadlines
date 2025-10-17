@@ -27,9 +27,8 @@ public class PlayerMovement : MonoBehaviour
     private bool onGround;
     private RaycastHit slopeHit;
 
-
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
-	void Start()
+    void Start()
 	{
 		controller = GetComponent<CharacterController>();
 		animator = GetComponent<Animator>();

@@ -57,7 +57,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NoiseTex:
-        m_Texture: {fileID: 2800000, guid: b256517f2b6b943e8b6f2bd28bdc682d, type: 3}
+        m_Texture: {fileID: 2800000, guid: 1784a375eb5304b43904d524934782e7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -108,23 +108,31 @@ Material:
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BumpScale: 1
+    - _ChromaticAberration: 0.427
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
     - _Cutoff: 0.5
-    - _DepthFadeDist: 3.37
+    - _DepthFadeDist: 5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DistortAmount: 0.18
+    - _DistortFreq: 2
+    - _DistortStrength: 0.02
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EdgeFeather: 0.08
     - _EnvironmentReflections: 1
-    - _FresnelBoost: 4.94
-    - _FresnelPow: 10
+    - _FresnelBoost: 2.14
+    - _FresnelPow: 4.96
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
+    - _HitAmp: 0.295
+    - _HitDecay: 3.68
+    - _HitFreq: 25.4
+    - _HitTime: 2
+    - _InnerFogDensity: 1.25
     - _Metallic: 0
     - _NoiseInfluence: 1
     - _NoiseSpeed: 0.5
@@ -135,24 +143,26 @@ Material:
     - _Parallax: 0.005
     - _PortalColorBlend: 1
     - _QueueOffset: 0
-    - _RampU: 0.13
+    - _RampU: 1
     - _ReceiveShadows: 1
     - _ReflectNoiseAmt: 0.2
     - _ReflectStrength: 1
-    - _RimBands: 10
+    - _RimBands: 3.54
+    - _RimSoftAdd: 0.65
     - _ScreenDistort: 0
     - _ScreenDistortScale: 0.5
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SparkleHi: 1
-    - _SparkleLo: 0.33
+    - _SparkleIntensity: 1
+    - _SparkleLo: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
     - _WorkflowMode: 1
-    - _WorldNoiseScale: 0.1
-    - _WorldNoiseTime: 0.05
+    - _WorldNoiseScale: 0
+    - _WorldNoiseTime: 1
     - _XRMotionVectorsPass: 1
     - _ZWrite: 1
     m_Colors:
@@ -160,10 +170,12 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _HitCenter: {r: 0, g: 0, b: 0, a: 0}
+    - _InnerFogColor: {r: 0.25, g: 0.55, b: 0.9, a: 1}
     - _RimColor: {r: 0.6, g: 0.9, b: 1, a: 0.6}
     - _SparkleColor: {r: 0.15944904, g: 0.065815255, b: 0.4811321, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
-    - _Tint: {r: 1, g: 1, b: 1, a: 1}
+    - _Tint: {r: 0.4339623, g: 0.2804379, b: 0.2804379, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &1749652256352727399
