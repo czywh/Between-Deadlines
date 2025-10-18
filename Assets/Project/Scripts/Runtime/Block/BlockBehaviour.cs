@@ -52,11 +52,11 @@ public class BlockBehaviour : MonoBehaviour
 
     void Update()
     {
-        if (canFloat && !IsBroken)
+        /* if (canFloat && !IsBroken)
         {
             float offset = Mathf.Sin(Time.time * floatSpeed) * floatAmplitude;
             transform.position = startPos + new Vector3(0, offset, 0);
-        }
+        } */
 
         Delta = transform.position - _lastPos;
         _lastPos = transform.position;

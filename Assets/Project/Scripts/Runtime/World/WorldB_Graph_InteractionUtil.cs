@@ -44,7 +44,7 @@ public static class WorldB_Graph_InteractionUtil
         foreach (var rb in rigidbodies)
         {
             if (!rb) continue;
-            rb.isKinematic = !interactive;
+            rb.isKinematic = interactive;
             if (!interactive)
             {
                 rb.angularVelocity = Vector3.zero;
