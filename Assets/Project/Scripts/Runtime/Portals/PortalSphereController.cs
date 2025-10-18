@@ -261,51 +261,63 @@ public class PortalSphereController : MonoBehaviour
         SetRadius(to);
     }
 
-    private void WorldB_ActiveStart()
-    {
-        SetPortalVisible(true);
+	private void WorldB_ActiveStart()
+	{
+		SetPortalVisible(true);
 
-        if (musicManager != null)
-            musicManager.OnSphereOpened();
+		if (musicManager != null)
+			musicManager.OnSphereOpened();
 
-        _worldBisActive = true;
+		_worldBisActive = true;
 
-        if (_triggerCollider) _triggerCollider.enabled = true;
+		if (_triggerCollider) _triggerCollider.enabled = true;
 
-        _currentPath = RenderPath.RT; // Using Render Texture method by default
+		_currentPath = RenderPath.RT; // Using Render Texture method by default
 
-        // ★ Always RT path on activation
-        var ctx = BuildRenderPathContext();
-        _currentPath = WorldB_Graph_InteractionUtil.UpdatePath_AlwaysRT(ref portalRT, in ctx); // ★
-        WorldB_Graph_InteractionUtil.EnsureRTBinding(ctx);
+		// ★ Always RT path on activation
+		var ctx = BuildRenderPathContext();
+		_currentPath = WorldB_Graph_InteractionUtil.UpdatePath_AlwaysRT(ref portalRT, in ctx); // ★
+		WorldB_Graph_InteractionUtil.EnsureRTBinding(ctx);
 
-        // ★ Optional: immediate material binding to avoid 1-frame delay
-        WorldB_Graph_InteractionUtil.ApplyMaterialPath(worldBOnlyRoot, _worldBOnlyLayer, _currentPath);
-        WorldB_Graph_InteractionUtil.BindRTToSphereMaterials(sphereVisuals, portalRT, sphereRTProperty, keepWhenNull: true);
+		// ★ Optional: immediate material binding to avoid 1-frame delay
+		WorldB_Graph_InteractionUtil.ApplyMaterialPath(worldBOnlyRoot, _worldBOnlyLayer, _currentPath);
+		WorldB_Graph_InteractionUtil.BindRTToSphereMaterials(sphereVisuals, portalRT, sphereRTProperty, keepWhenNull: true);
+		
+		foreach (var block in worldBOnlyRoot.GetComponentsInChildren<BlockBehaviour>())
+        {
+            block.OnPortalActive(true);
+        }
+
     }
 
-    private void WorldB_ActiveEnd()
-    {
-        SetPortalVisible(false);
+	private void WorldB_ActiveEnd()
+	{
+		SetPortalVisible(false);
 
-        if (musicManager != null)
-            musicManager.OnSphereClosed();
+		if (musicManager != null)
+			musicManager.OnSphereClosed();
 
-        if (portalCamera) portalCamera.enabled = false;
+		if (portalCamera) portalCamera.enabled = false;
 
-        // Reset interactive flags
-        foreach (var i in _activeB)
-            if (i) WorldB_Graph_InteractionUtil.SetInteractive(i, false);
-        _activeB.Clear();
+		// Reset interactive flags
+		foreach (var i in _activeB)
+			if (i) WorldB_Graph_InteractionUtil.SetInteractive(i, false);
+		_activeB.Clear();
 
-        if (_triggerCollider) _triggerCollider.enabled = false;
+		if (_triggerCollider) _triggerCollider.enabled = false;
 
-        // Back to World A: release RT & clear bindings
-        var ctx = BuildRenderPathContext();
-        WorldB_Graph_InteractionUtil.ReleaseRT(ref portalRT, portalCamera);
+		// Back to World A: release RT & clear bindings
+		var ctx = BuildRenderPathContext();
+		WorldB_Graph_InteractionUtil.ReleaseRT(ref portalRT, portalCamera);
 
-        if (mainCamera) mainCamera.cullingMask &= ~(1 << _worldBOnlyLayer);
-        _worldBisActive = false;
+		if (mainCamera) mainCamera.cullingMask &= ~(1 << _worldBOnlyLayer);
+		_worldBisActive = false;
+		
+		foreach (var block in worldBOnlyRoot.GetComponentsInChildren<BlockBehaviour>())
+        {
+            block.OnPortalActive(false);
+        }
+
     }
 
     private bool CheckCameraInsideSphere()

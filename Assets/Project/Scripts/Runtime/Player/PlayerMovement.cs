@@ -1,18 +1,18 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
-
-	[Header("Refs")]
+    [Header("Refs")]
     public Transform cameraTransform;
 
-	[Header("Movement")]
-	public float speed = 3f;
-	public float rotationSpeed = 10f;
+    [Header("Movement")]
+    public float speed = 3f;
+    public float rotationSpeed = 10f;
     public float sprintMultiplier = 2f;
 
-	[Header("Jump & Gravity")]
+    [Header("Jump & Gravity")]
     public float jumpForce = 1f;
     public float gravity = -20f;
 
@@ -21,37 +21,73 @@ public class PlayerMovement : MonoBehaviour
     public float slideSpeed = 4f;
     public float groundCheckDistance = 1.2f;
 
+    [Header("Ground Smoothing")]
+    [SerializeField] private float groundedBufferTime = 0.12f;
+
     private CharacterController controller;
     private Animator animator;
     private Vector3 velocity;
-    private bool onGround;
     private RaycastHit slopeHit;
 
-	// Start is called once before the first execution of Update after the MonoBehaviour is created
+    // Ground detection
+    private bool onGround;
+    private bool wasGrounded;
+    private float groundedGrace = 0f;
+
+    // Block tracking
+    private BlockBehaviour currentBlock;
+    private BlockBehaviour lastGroundedBlock;
+
+    // New tracking sets
+    private int lastActivatedBlockId = -1;         // which block we first landed on
+    private bool leftGroundAfterActivate = false;  // did we go airborne since activation?
+
+    private readonly HashSet<int> landedBlockIdsThisLanding = new();
+
     void Start()
-	{
-		controller = GetComponent<CharacterController>();
-		animator = GetComponent<Animator>();
-		
-		if (cameraTransform == null && Camera.main != null)
+    {
+        controller = GetComponent<CharacterController>();
+        animator = GetComponent<Animator>();
+
+        if (cameraTransform == null && Camera.main != null)
             cameraTransform = Camera.main.transform;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        // --- Ground Check ---
+        // --- Ground Check with Smoothing ---
         onGround = controller.isGrounded;
-        if (onGround && velocity.y < 0)
+
+        // Ground grace period (prevents bobbing flickering)
+        if (onGround)
+            groundedGrace = groundedBufferTime;
+        else
+            groundedGrace -= Time.deltaTime;
+
+        bool groundedSmoothed = onGround || groundedGrace > 0f;
+
+        // Air to Ground transition
+        if (groundedSmoothed && !wasGrounded)
         {
-            velocity.y = -5f;
+            if (animator) animator.SetBool("isJumping", false);
+            landedBlockIdsThisLanding.Clear();
         }
 
-        // --- User Input --- 
-        float moveX = Input.GetAxisRaw("Horizontal"); // A or D keys
-        float moveZ = Input.GetAxisRaw("Vertical"); // W or S keys 
 
-        // --- Camera-relative movement --- 
+        // Gentle stick to ground
+        if (groundedSmoothed && velocity.y < 0)
+        {
+            velocity.y = -2f;
+        }
+
+        // --- User Input ---
+        float moveX = Input.GetAxisRaw("Horizontal");
+        float moveZ = Input.GetAxisRaw("Vertical");
+
+        // --- Camera-relative movement ---
+        if (cameraTransform == null && Camera.main != null)
+            cameraTransform = Camera.main.transform;
+
         Vector3 camForward = cameraTransform.forward;
         camForward.y = 0f;
         camForward.Normalize();
@@ -64,17 +100,22 @@ public class PlayerMovement : MonoBehaviour
         if (move.magnitude > 1f) move.Normalize();
 
         // --- Sprint check ---
-        float currentSpeed = speed;
-        bool isSprinting = false;
-
-        if (Input.GetKey(KeyCode.LeftShift) && move.magnitude > 0.1f)
-        {
-            isSprinting = true;
-        }
+        bool isSprinting = Input.GetKey(KeyCode.LeftShift) && move.magnitude > 0.1f;
+        float currentSpeed = isSprinting ? speed * sprintMultiplier : speed;
         animator.SetBool("isSprinting", isSprinting);
 
-        // --- Move --- 
+        // --- Move ---
         controller.Move(move * currentSpeed * Time.deltaTime);
+
+        // --- Platform Carrying (ride bobbing cubes) ---
+        if (currentBlock != null && groundedSmoothed)
+        {
+            Vector3 platformDelta = currentBlock.Delta;
+            if (platformDelta != Vector3.zero)
+            {
+                controller.Move(platformDelta);
+            }
+        }
 
         // --- Rotate Towards Movement Direction ---
         if (move.sqrMagnitude > 0.001f)
@@ -83,51 +124,122 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, rotationSpeed * Time.deltaTime);
         }
 
-        // --- Jumping movement --- 
-        if (Input.GetButtonDown("Jump") && onGround)
-        {
-            velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
-            animator.SetBool("isJumping", true);
-        }
-        else if (onGround)
-        {
-            animator.SetBool("isJumping", false);
-        }
+        // --- Detect Block Under Feet (BEFORE jump check) ---
+        UpdateCurrentBlockUnderFeet(groundedSmoothed);
 
-        // --- Running backwards movement ---
-        if (moveZ < -0.1f)
+        // --- Jump Logic (with cube explosion on 2nd press) ---
+        if (Input.GetButtonDown("Jump") && groundedSmoothed)
         {
-            animator.SetBool("isRunningBackwards", true);
-        }
-        else{
-            animator.SetBool("isRunningBackwards", false);
+            if (currentBlock != null && currentBlock.IsActivated && !currentBlock.ExplodeOnLanding)
+            {
+                currentBlock.ApplySecondStepIfReady();
+            }
+
+            velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
+            if (animator) animator.SetBool("isJumping", true);
         }
 
         // --- Apply gravity ---
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
 
+        // --- Slope Sliding ---
         HandleSlopeSliding();
 
-        float movementMag = new Vector3(move.x, 0, move.z).magnitude;
-        animator.SetFloat("Speed", movementMag);
+        // --- Animator Updates ---
+        animator.SetBool("isRunningBackwards", moveZ < -0.1f);
+        animator.SetFloat("Speed", new Vector3(move.x, 0, move.z).magnitude);
+
+        // --- Ground to Air ---
+        if (!groundedSmoothed && wasGrounded)
+        {
+            currentBlock = null;
+        }
+
+        wasGrounded = groundedSmoothed;
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        // Downward/top contact checks (keep yours)
+        if (hit.moveDirection.y > -0.05f && velocity.y > -0.01f) return;
+        float upDot = Vector3.Dot(hit.normal, Vector3.up);
+        if (upDot < 0.8f) return;
+
+        var block =
+            hit.collider.GetComponentInParent<BlockBehaviour>() ??
+            hit.collider.GetComponent<BlockBehaviour>() ??
+            hit.collider.GetComponentInChildren<BlockBehaviour>();
+        if (block == null) return;
+
+        // once-per-landing guard (see Fix #2 below for the new set)
+        int key = block.transform.root.gameObject.GetInstanceID();
+        if (!landedBlockIdsThisLanding.Add(key)) return;
+
+        if (block.ExplodeOnLanding)
+        {
+            block.BreakNow();
+        }
+        else if (!block.IsActivated)
+        {
+            block.ApplyFirstStepIfNeeded();
+        }
+    }
+
+    void UpdateCurrentBlockUnderFeet(bool isGrounded)
+    {
+        Vector3 origin = transform.position + Vector3.up * 0.3f;
+        float radius = 0.3f;
+        float distance = groundCheckDistance;
+
+        BlockBehaviour detectedBlock = null;
+
+        if (Physics.SphereCast(origin, radius, Vector3.down, out RaycastHit hit, distance))
+        {
+            detectedBlock =
+                hit.collider.GetComponentInParent<BlockBehaviour>() ??
+                hit.collider.GetComponent<BlockBehaviour>() ??
+                hit.collider.GetComponentInChildren<BlockBehaviour>();
+        }
+
+        if (detectedBlock == null)
+        {
+            Vector3 feet = transform.position +
+                        Vector3.down * (controller.height * 0.5f - controller.skinWidth - 0.05f);
+            foreach (var c in Physics.OverlapSphere(feet, 0.35f))
+            {
+                var b = c.GetComponentInParent<BlockBehaviour>() ??
+                        c.GetComponent<BlockBehaviour>() ??
+                        c.GetComponentInChildren<BlockBehaviour>();
+                if (b) { detectedBlock = b; break; }
+            }
+        }
+
+        if (isGrounded)
+            currentBlock = detectedBlock;
+
+        var thisFrameBlock = isGrounded ? currentBlock : null;
+        if (thisFrameBlock != lastGroundedBlock)
+            lastGroundedBlock = thisFrameBlock;
     }
 
     void HandleSlopeSliding()
     {
-        Vector3 rayOrigin = transform.position + Vector3.up * 0.1f;
+        if (currentBlock != null) return;
 
+        Vector3 rayOrigin = transform.position + Vector3.up * 0.1f;
         if (Physics.Raycast(rayOrigin, Vector3.down, out slopeHit, controller.height / 2f + 0.5f))
         {
             float angle = Vector3.Angle(slopeHit.normal, Vector3.up);
-
             if (angle > slopeLimit)
             {
-                // Get downhill direction along the slope
-                Vector3 slideDir = Vector3.Cross(Vector3.Cross(slopeHit.normal, Vector3.down), slopeHit.normal).normalized;
+                Vector3 slideDir = Vector3.Cross(
+                    Vector3.Cross(slopeHit.normal, Vector3.down),
+                    slopeHit.normal
+                ).normalized;
+
                 controller.Move(slideDir * slideSpeed * Time.deltaTime);
             }
         }
     }
-
 }
