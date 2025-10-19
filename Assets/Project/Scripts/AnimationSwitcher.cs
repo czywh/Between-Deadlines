@@ -13,8 +13,6 @@ public class KeyAnimationSwitcher : MonoBehaviour
         "housedance"   // 6
     };
 
-    [Range(0f, 0.5f)] public float transition = 0.1f;
-
     void Reset() => animator = GetComponent<Animator>();
 
     void Update()
@@ -27,9 +25,9 @@ public class KeyAnimationSwitcher : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha6)) PlayIndex(5);
     }
 
-    void PlayIndex(int i)
-    {
-        if (!animator || i < 0 || i >= stateNames.Length) return;
-        animator.CrossFadeInFixedTime(stateNames[i], transition, 0);
-    }
+void PlayIndex(int i)
+{
+    if (!animator || i < 0 || i >= stateNames.Length) return;
+    animator.Play(stateNames[i], 0, 0f);
+}
 }
