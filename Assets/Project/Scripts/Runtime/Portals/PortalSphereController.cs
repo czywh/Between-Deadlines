@@ -277,7 +277,7 @@ public class PortalSphereController : MonoBehaviour
 		// ★ Always RT path on activation
 		var ctx = BuildRenderPathContext();
 		_currentPath = WorldB_Graph_InteractionUtil.UpdatePath_AlwaysRT(ref portalRT, in ctx); // ★
-		WorldB_Graph_InteractionUtil.EnsureRTBinding(ctx);
+		WorldB_Graph_InteractionUtil.EnsureRTBinding(portalRT, ctx);
 
 		// ★ Optional: immediate material binding to avoid 1-frame delay
 		WorldB_Graph_InteractionUtil.ApplyMaterialPath(worldBOnlyRoot, _worldBOnlyLayer, _currentPath);

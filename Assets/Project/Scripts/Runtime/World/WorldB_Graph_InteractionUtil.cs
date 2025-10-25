@@ -15,7 +15,7 @@ public struct RenderPathContext
 
     public LayerMask portalCameraCulling;
     public string sphereRTProperty;
-    public RenderTexture portalRT;
+    public RenderTexture portalRT;                 // 仅用于传入旧值（不会在内部被写回）
     public Material sphereMaterialForRT;
     public float rtResolutionScale;
     public bool useDistanceFade;
@@ -60,7 +60,11 @@ public static class WorldB_Graph_InteractionUtil
     public static RenderPath UpdatePath_AlwaysRT(ref RenderTexture portalRT, in RenderPathContext ctx)
     {
         if (ctx.mainCamera == null || ctx.portalCamera == null)
+        {
+            // 在无法渲染时确保释放（避免泄漏）
+            ReleaseRT(ref portalRT, ctx.portalCamera, ctx.sphereMaterialForRT, SafeRTProp(ctx.sphereRTProperty));
             return RenderPath.RT;
+        }
 
         int worldBMask = 1 << ctx.worldBLayer;
 
@@ -71,45 +75,70 @@ public static class WorldB_Graph_InteractionUtil
         ctx.portalCamera.enabled = ctx.useRenderTexture;
         ctx.portalCamera.cullingMask = ctx.portalCameraCulling;
 
-
-        // ★ Ensure RT creation and binding
-        CheckOrRecreateRT(ref portalRT, ctx.portalCamera, ctx.useRenderTexture,
+        // ★ Ensure RT creation and binding (含关闭时释放)
+        CheckOrRecreateRT(
+            ref portalRT,
+            ctx.portalCamera,
+            ctx.useRenderTexture,
             Mathf.Clamp01(ctx.rtResolutionScale <= 0 ? 1f : ctx.rtResolutionScale),
             ctx.sphereMaterialForRT,
-            string.IsNullOrEmpty(ctx.sphereRTProperty) ? "_PortalRT" : ctx.sphereRTProperty);
+            SafeRTProp(ctx.sphereRTProperty)
+        );
 
-        EnsureRTBinding(in ctx);
+        // ★ 用“最新”的 portalRT 进行绑定，而不是 ctx.portalRT
+        EnsureRTBinding(portalRT, in ctx);
 
         return RenderPath.RT;
     }
 
-
-
     // ===========================================================
     // RT Management
     // ===========================================================
-    public static bool CheckOrRecreateRT(ref RenderTexture rt, Camera portalCamera, bool useRenderTexture, float resolutionScale,
-        Material sphereMaterialForRT = null, string sphereRTProperty = "_PortalRT",
-        string rtName = "PortalSphere_RT", RenderTextureFormat format = RenderTextureFormat.ARGB32, int depthBufferBits = 16)
+    /// <summary>
+    /// 检查或重建 RT。若 useRenderTexture==false 或相机无效，则释放并解绑。
+    /// 返回值表示是否发生了重建。
+    /// </summary>
+    public static bool CheckOrRecreateRT(
+        ref RenderTexture rt,
+        Camera portalCamera,
+        bool useRenderTexture,
+        float resolutionScale,
+        Material sphereMaterialForRT = null,
+        string sphereRTProperty = "_PortalRT",
+        string rtName = "PortalSphere_RT",
+        RenderTextureFormat format = RenderTextureFormat.ARGB32,
+        int depthBufferBits = 16
+    )
     {
+        // 不使用 RT 或相机不可用：释放 + 解绑
         if (!useRenderTexture || !portalCamera)
         {
-            if (portalCamera && portalCamera.targetTexture != null)
-                portalCamera.targetTexture = null;
+            if (sphereMaterialForRT && !string.IsNullOrEmpty(sphereRTProperty))
+                sphereMaterialForRT.SetTexture(sphereRTProperty, null);
+
+            ReleaseRT(ref rt, portalCamera);
             return false;
         }
 
         int w = Mathf.Max(1, Mathf.RoundToInt(Screen.width * resolutionScale));
         int h = Mathf.Max(1, Mathf.RoundToInt(Screen.height * resolutionScale));
-        bool needRecreate = (rt == null || rt.width != w || rt.height != h);
+
+        // 如需更严谨，可把 format / depthBufferBits / MSAA 变化也纳入判断
+        bool needRecreate = (rt == null) || (rt.width != w) || (rt.height != h);
 
         if (!needRecreate)
         {
+            // 确保已绑定
             if (sphereMaterialForRT && !string.IsNullOrEmpty(sphereRTProperty))
                 sphereMaterialForRT.SetTexture(sphereRTProperty, rt);
+
+            if (portalCamera.targetTexture != rt)
+                portalCamera.targetTexture = rt;
+
             return false;
         }
 
+        // 重建
         ReleaseRT(ref rt, portalCamera);
 
         rt = new RenderTexture(w, h, depthBufferBits, format)
@@ -122,23 +151,30 @@ public static class WorldB_Graph_InteractionUtil
         rt.Create();
 
         portalCamera.targetTexture = rt;
+
         if (sphereMaterialForRT && !string.IsNullOrEmpty(sphereRTProperty))
             sphereMaterialForRT.SetTexture(sphereRTProperty, rt);
 
         return true;
     }
 
-    public static void EnsureRTBinding(in RenderPathContext ctx)
+    /// <summary>
+    /// 使用“当前最新”的 rt 进行绑定（不要从 ctx.portalRT 读取旧值）。
+    /// </summary>
+    public static void EnsureRTBinding(RenderTexture rt, in RenderPathContext ctx)
     {
         if (!ctx.useRenderTexture || !ctx.portalCamera) return;
 
-        if (ctx.sphereMaterialForRT && !string.IsNullOrEmpty(ctx.sphereRTProperty) && ctx.portalRT)
-            ctx.sphereMaterialForRT.SetTexture(ctx.sphereRTProperty, ctx.portalRT);
+        if (ctx.sphereMaterialForRT && !string.IsNullOrEmpty(ctx.sphereRTProperty))
+            ctx.sphereMaterialForRT.SetTexture(ctx.sphereRTProperty, rt);
 
-        if (ctx.portalCamera.targetTexture != ctx.portalRT)
-            ctx.portalCamera.targetTexture = ctx.portalRT;
+        if (ctx.portalCamera.targetTexture != rt)
+            ctx.portalCamera.targetTexture = rt;
     }
 
+    /// <summary>
+    /// 原有签名保留：释放 RT 并从相机解绑。
+    /// </summary>
     public static void ReleaseRT(ref RenderTexture rt, Camera portalCamera = null)
     {
         if (portalCamera && portalCamera.targetTexture == rt)
@@ -150,6 +186,17 @@ public static class WorldB_Graph_InteractionUtil
             Object.Destroy(rt);
             rt = null;
         }
+    }
+
+    /// <summary>
+    /// 新增重载：释放时顺便把绑定到材质的属性清空（避免残留引用）。
+    /// </summary>
+    public static void ReleaseRT(ref RenderTexture rt, Camera portalCamera, Material boundMat, string prop = "_PortalRT")
+    {
+        if (boundMat && !string.IsNullOrEmpty(prop))
+            boundMat.SetTexture(prop, null);
+
+        ReleaseRT(ref rt, portalCamera);
     }
 
     // ===========================================================
@@ -169,11 +216,14 @@ public static class WorldB_Graph_InteractionUtil
 
     public static void EnableRTPath(Material mat)
     {
+        if (!mat) return;
         mat.EnableKeyword("_RENDERPATH_RT");
         mat.DisableKeyword("_RENDERPATH_CLIP");
     }
 
-    // Utility for multiple sphere visuals
+    /// <summary>
+    /// Utility for multiple sphere visuals: 把 RT 绑定到一批渲染器的材质上
+    /// </summary>
     public static void BindRTToSphereMaterials(IEnumerable<Renderer> renderers, RenderTexture rt, string propertyName = "_PortalRT", bool keepWhenNull = true)
     {
         if (renderers == null || string.IsNullOrEmpty(propertyName)) return;
@@ -191,4 +241,9 @@ public static class WorldB_Graph_InteractionUtil
             }
         }
     }
+
+    // ===========================================================
+    // Helpers
+    // ===========================================================
+    private static string SafeRTProp(string prop) => string.IsNullOrEmpty(prop) ? "_PortalRT" : prop;
 }
