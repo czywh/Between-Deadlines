@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: book bullet
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: b580b6144c79d1a409f3fa619b456636, type: 3}
+      propertyPath: m_TagString
+      value: Bullet
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b580b6144c79d1a409f3fa619b456636, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.5
@@ -120,13 +124,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e98faab7a9859458b95c0898935ac00c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
-  lifeTime: 6
+  speed: 5
+  lifeTime: 10
   damage: 1
-  portalLayers:
-    serializedVersion: 2
-    m_Bits: 1024
   requireReflectedToDamageBoss: 1
+  homingStrength: 1
+  impactEffectPrefab: {fileID: 6452539493668645724, guid: b118fb2d37a2a46878db19524e896d88, type: 3}
+  vanishEffectPrefab: {fileID: 6452539493668645724, guid: b118fb2d37a2a46878db19524e896d88, type: 3}
+  knockbackForce: 12
+  knockbackUpward: 3
 --- !u!54 &239816408442117605
 Rigidbody:
   m_ObjectHideFlags: 0

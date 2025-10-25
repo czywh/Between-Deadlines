@@ -1,22 +1,36 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody), typeof(Collider))]
 public class ReflectableBullet : MonoBehaviour
 {
-    [Header("Bullet")]
+    [Header("Bullet Settings")]
     public float speed = 16f;
     public float lifeTime = 6f;
     public int damage = 1;
-    public LayerMask portalLayers; // 可选：用于 Layer 识别 Portal，留空则用 Tag
-
-    [Tooltip("反弹后才可以伤害 Boss")]
+    [Tooltip("只有被反弹过才会伤害 Boss")]
     public bool requireReflectedToDamageBoss = true;
+
+    [Header("Homing")]
+    [Range(0f, 1f)] public float homingStrength = 0.06f;
+
+    [Tooltip("子弹被任何东西销毁/命中时的通用粒子（可空）")]
+    public GameObject impactEffectPrefab;
+    [Tooltip("子弹寿命到期时播放的消散特效（可空）")]
+    public GameObject vanishEffectPrefab;
+
+    [Header("Player Knockback")]
+    [Tooltip("击中玩家时的击退力度")]
+    public float knockbackForce = 12f;
+    [Tooltip("击中玩家时附加的向上力度")]
+    public float knockbackUpward = 3f;
 
     private Rigidbody _rb;
     private bool _reflected = false;
     private float _dieTime;
     private Collider _ownerToIgnore;
     private float _ignoreUntil = 0f;
+
+    private Transform _bossTarget;
 
     void Awake()
     {
@@ -25,7 +39,6 @@ public class ReflectableBullet : MonoBehaviour
         _rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
     }
 
-    /// <summary>由 Boss 初始化。</summary>
     public void Init(Vector3 initialDir, Collider ownerToIgnore, float ownerIgnoreTime)
     {
         _rb.linearVelocity = initialDir.normalized * speed;
@@ -40,9 +53,13 @@ public class ReflectableBullet : MonoBehaviour
 
     void Update()
     {
-        if (Time.time >= _dieTime) Destroy(gameObject);
+        if (Time.time >= _dieTime)
+        {
+            SpawnVFX(vanishEffectPrefab, transform.position, Quaternion.identity);
+            Destroy(gameObject);
+            return;
+        }
 
-        // 忽略超时后恢复与 Boss 的碰撞
         if (_ownerToIgnore && Time.time >= _ignoreUntil)
         {
             Physics.IgnoreCollision(_ownerToIgnore, GetComponent<Collider>(), false);
@@ -50,52 +67,76 @@ public class ReflectableBullet : MonoBehaviour
         }
     }
 
+    /// 由 ReflectWall 调用：按法线反弹，并开始追踪 Boss（Tag）
+    public void ReflectBy(Vector3 normal)
+    {
+        Vector3 v = _rb.linearVelocity;
+        Vector3 reflected = Vector3.Reflect(v, normal.normalized);
+        _rb.linearVelocity = reflected.normalized * speed;
+        _reflected = true;
+        transform.rotation = Quaternion.LookRotation(_rb.linearVelocity.normalized, Vector3.up);
+
+        var bossObj = GameObject.FindGameObjectWithTag("Boss");
+        _bossTarget = bossObj ? bossObj.transform : null;
+    }
+
+    void FixedUpdate()
+    {
+        if (_reflected && _bossTarget != null)
+        {
+            Vector3 desired = (_bossTarget.position - transform.position).normalized;
+            Vector3 newVel = Vector3.Lerp(_rb.linearVelocity.normalized, desired, homingStrength) * speed;
+            _rb.linearVelocity = newVel;
+            transform.rotation = Quaternion.LookRotation(_rb.linearVelocity.normalized, Vector3.up);
+        }
+    }
+
     void OnCollisionEnter(Collision collision)
     {
-        // 1) 命中 Portal：反弹（使用法线反射）
-        if (IsPortal(collision.collider))
-        {
-            Vector3 v = _rb.linearVelocity;
-            Vector3 n = collision.GetContact(0).normal;
-            Vector3 reflected = Vector3.Reflect(v, n);
-            _rb.linearVelocity = reflected.normalized * speed;
-            _reflected = true;
-            // 可选：调个角度朝向
-            transform.rotation = Quaternion.LookRotation(_rb.linearVelocity.normalized, Vector3.up);
+        // 让墙体自己处理反弹（它会调用 ReflectBy）
+        if (collision.collider.GetComponentInParent<ReflectWall>() != null)
             return;
-        }
 
-        // 2) 命中 Boss：只有被反弹过才造成伤害（根据设置）
-        var boss = collision.collider.GetComponentInParent<BossShooter>();
-        if (boss != null)
+        // ① 撞到 Boss
+        if (collision.collider.CompareTag("Boss"))
         {
             if (!_reflected && requireReflectedToDamageBoss)
             {
-                // 未反弹：不伤害 Boss（可做火花特效）
+                SpawnImpact(collision);
                 Destroy(gameObject);
                 return;
             }
 
-            boss.TakeDamage(damage);
+            var boss = collision.collider.GetComponentInParent<BossShooter>();
+            if (boss != null)
+            {
+                Vector3 hitPoint = collision.GetContact(0).point;
+                boss.TakeDamage(damage, hitPoint);
+            }
+            SpawnImpact(collision);
             Destroy(gameObject);
             return;
         }
 
-        // 3) 命中其他物体：默认销毁（需要可穿透可自定）
+
+        // ③ 其他物体 → 默认播放通用击中 VFX 后销毁
+        SpawnImpact(collision);
         Destroy(gameObject);
     }
 
-    private bool IsPortal(Collider col)
+    //—— 工具 ——//
+    private void SpawnImpact(Collision c)
     {
-        // 优先 Tag 判断
-        if (col.CompareTag("Portal")) return true;
+        if (!impactEffectPrefab) return;
+        var cp = c.GetContact(0);
+        SpawnVFX(impactEffectPrefab, cp.point, Quaternion.LookRotation(cp.normal));
+    }
 
-        // 或者 Layer 判断（如设置了 portalLayers）
-        if (portalLayers.value != 0)
-        {
-            int layerMask = 1 << col.gameObject.layer;
-            if ((portalLayers.value & layerMask) != 0) return true;
-        }
-        return false;
+    private static void SpawnVFX(GameObject prefab, Vector3 pos, Quaternion rot)
+    {
+        if (!prefab) return;
+        var go = Object.Instantiate(prefab, pos, rot);
+        // 可选：给特效加自毁
+        Object.Destroy(go, 5f);
     }
 }
