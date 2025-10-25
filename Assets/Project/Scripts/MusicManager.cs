@@ -9,6 +9,9 @@ public class MusicManager : MonoBehaviour
     public AudioSource happyMusic;
     public float fadeDuration = 3f;
 
+    // track if happy music has started before
+    private bool hasPlayedOnce = false;
+
     void Start()
     {
         sadMusic.volume = sadMaxVolume;
@@ -29,6 +32,12 @@ public class MusicManager : MonoBehaviour
     private IEnumerator FadeToHappy()
     {
         float time = 0f;
+
+        if (!hasPlayedOnce)
+        {
+            happyMusic.time = 20f;
+            hasPlayedOnce = true;
+        }
         happyMusic.UnPause();
 
         float sadStart = sadMusic.volume;
