@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Movable
   - invisible
+  - Portal
   layers:
   - Default
   - TransparentFX
