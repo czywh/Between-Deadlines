@@ -32,6 +32,12 @@ public class BossShooter : MonoBehaviour
     [Tooltip("Boss 被摧毁时播放的粒子（使用粒子系统自己的生命周期，例如 Stop Action=Destroy）")]
     public GameObject deathEffectPrefab;
 
+    [Header("Hit Shake")]
+    [Tooltip("Boss 被击中时抖动的幅度（单位）")]
+    public float shakeIntensity = 0.2f;
+    [Tooltip("Boss 被击中时抖动的持续时间（秒）")]
+    public float shakeDuration = 0.15f;
+
     // —— 内部状态 ——
     private int _hp;
     private Coroutine _fireCo;
@@ -41,6 +47,9 @@ public class BossShooter : MonoBehaviour
     private MaterialPropertyBlock _mpb;
     // 根据你的着色器改成合适的颜色属性名：URP/HDRP 常用 _BaseColor，内置标准管线常用 _Color
     private static readonly int _ColorProp = Shader.PropertyToID("_BaseColor");
+
+    public int CurrentHP => _hp;
+    public int MaxHP => maxHP;
 
     void Awake()
     {
@@ -124,6 +133,7 @@ public class BossShooter : MonoBehaviour
         if (flashRenderers != null && flashRenderers.Length > 0)
             StartCoroutine(FlashOnce());
 
+        StartCoroutine(ShakeOnce());
         if (_hp <= 0) Die();
     }
 
@@ -164,7 +174,7 @@ public class BossShooter : MonoBehaviour
             if (!r) continue;
 
             r.GetPropertyBlock(_mpb);
-            
+
 
             _mpb.SetColor(_ColorProp, flashColor);
             r.SetPropertyBlock(_mpb);
@@ -180,5 +190,27 @@ public class BossShooter : MonoBehaviour
             _mpb.SetColor(_ColorProp, orig[i]);
             r.SetPropertyBlock(_mpb);
         }
+    }
+
+    private IEnumerator ShakeOnce()
+    {
+        Vector3 originalPos = transform.position;
+        float elapsed = 0f;
+
+        while (elapsed < shakeDuration)
+        {
+            elapsed += Time.deltaTime;
+
+            // 随机方向的小幅偏移
+            float offsetX = Random.Range(-1f, 1f) * shakeIntensity;
+            float offsetY = Random.Range(-1f, 1f) * shakeIntensity;
+            float offsetZ = Random.Range(-1f, 1f) * shakeIntensity * 0.5f; // 轻微Z向抖动
+
+            transform.position = originalPos + new Vector3(offsetX, offsetY, offsetZ);
+
+            yield return null;
+        }
+
+        transform.position = originalPos;
     }
 }

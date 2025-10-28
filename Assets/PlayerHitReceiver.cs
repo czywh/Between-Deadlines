@@ -13,14 +13,40 @@ public class PlayerHitReceiver : MonoBehaviour
         _move = GetComponentInParent<PlayerMovement>(); // 或 GetComponent
     }
 
-    void OnCollisionEnter(Collision c)
+    void OnCollisionEnter(Collision collision)
+{
+    if (collision.collider.CompareTag("Bullet"))
     {
-        if (c.collider.CompareTag("Bullet")) DoKnockback();
+        Debug.Log($"[PlayerHitReceiver] OnCollisionEnter with {collision.collider.name}");
+        // 1) 掉血
+        var hp = GetComponentInParent<PlayerHealth>();
+        if (hp != null) hp.TakeDamage(1);
+
+        // 2) 击退（你原有的调用保持不变）
+        DoKnockback();
+
+        // 3) 销毁子弹（拿父级以防子弹碰撞体在子节点）
+        var bullet = collision.collider.GetComponentInParent<ReflectableBullet>();
+        if (bullet != null) Destroy(bullet.gameObject);
+        else Destroy(collision.collider.gameObject);
     }
-    void OnTriggerEnter(Collider other)
+}
+
+void OnTriggerEnter(Collider other)
+{
+    if (other.CompareTag("Bullet"))
     {
-        if (other.CompareTag("Bullet")) DoKnockback();
+        Debug.Log($"[PlayerHitReceiver] OnTriggerEnter with {other.name}");
+        var hp = GetComponentInParent<PlayerHealth>();
+        if (hp != null) hp.TakeDamage(1);
+
+        DoKnockback();
+
+        var bullet = other.GetComponentInParent<ReflectableBullet>();
+        if (bullet != null) Destroy(bullet.gameObject);
+        else Destroy(other.gameObject);
     }
+}
 
     private void DoKnockback()
     {
