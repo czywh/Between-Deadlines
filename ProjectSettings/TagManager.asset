@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Movable
   - invisible
+  - Portal
+  - Boss
+  - Bullet
   layers:
   - Default
   - TransparentFX
