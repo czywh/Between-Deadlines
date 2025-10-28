@@ -43,27 +43,6 @@ public class PlayerMovement : MonoBehaviour
     private bool leftGroundAfterActivate = false;  // did we go airborne since activation?
 
     private readonly HashSet<int> landedBlockIdsThisLanding = new();
-    [SerializeField] private float externalDecay = 6f;   // 外力衰减(越大越快停)
-    private Vector3 externalVelocity = Vector3.zero;     // 外力速度(击退/冲刺等)
-
-    // 供外部调用：添加一次外力（世界方向）
-    public void AddExternalImpulse(Vector3 worldDir, float speed)
-    {
-        externalVelocity += worldDir.normalized * speed;
-    }
-
-    // 如果你想固定持续时间而不是衰减，也可以用协程逐渐减到 0
-    public void AddExternalImpulseForDuration(Vector3 worldDir, float speed, float duration)
-    {
-        StopCoroutine(nameof(ExternalForDuration));
-        StartCoroutine(ExternalForDuration(worldDir.normalized * speed, duration));
-    }
-    private System.Collections.IEnumerator ExternalForDuration(Vector3 v, float duration)
-    {
-        externalVelocity += v;
-        yield return new WaitForSeconds(duration);
-        externalVelocity -= v;
-    }
 
     void Start()
     {
@@ -75,113 +54,137 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void Update()
-{
-    float dt = Time.deltaTime;
-
-    // --- Ground Check with Smoothing ---
-    onGround = controller.isGrounded;
-
-    // Ground grace period (prevents bobbing flickering)
-    if (onGround) groundedGrace = groundedBufferTime;
-    else          groundedGrace -= dt;
-
-    bool groundedSmoothed = onGround || groundedGrace > 0f;
-
-    // Air to Ground transition
-    if (groundedSmoothed && !wasGrounded)
     {
-        if (animator) animator.SetBool("isJumping", false);
-        landedBlockIdsThisLanding.Clear();
-    }
+        // --- Ground Check with Smoothing ---
+        onGround = controller.isGrounded;
 
-    // Gentle stick to ground
-    if (groundedSmoothed && velocity.y < 0f)
-        velocity.y = -2f;
+        // Ground grace period (prevents bobbing flickering)
+        if (onGround)
+            groundedGrace = groundedBufferTime;
+        else
+            groundedGrace -= Time.deltaTime;
 
-    // --- User Input ---
-    float moveX = Input.GetAxisRaw("Horizontal");
-    float moveZ = Input.GetAxisRaw("Vertical");
+        bool groundedSmoothed = onGround || groundedGrace > 0f;
 
-    // --- Camera-relative movement ---
-    if (cameraTransform == null && Camera.main != null)
-        cameraTransform = Camera.main.transform;
+        // Air to Ground transition
+        if (groundedSmoothed && !wasGrounded)
+        {
+            if (animator) animator.SetBool("isJumping", false);
+            landedBlockIdsThisLanding.Clear();
+        }
 
-    Vector3 camForward = cameraTransform.forward; camForward.y = 0f; camForward.Normalize();
-    Vector3 camRight   = cameraTransform.right;   camRight.y   = 0f; camRight.Normalize();
 
-    Vector3 moveDir = camForward * moveZ + camRight * moveX;
-    if (moveDir.magnitude > 1f) moveDir.Normalize();
+        // Gentle stick to ground
+        if (groundedSmoothed && velocity.y < 0)
+        {
+            velocity.y = -2f;
+        }
 
-    // --- Sprint check ---
-    bool isSprinting = Input.GetKey(KeyCode.LeftShift) && moveDir.magnitude > 0.1f;
-    float currentSpeed = isSprinting ? speed * sprintMultiplier : speed;
-    if (animator) animator.SetBool("isSprinting", isSprinting);
+        // --- User Input ---
+        float moveX = Input.GetAxisRaw("Horizontal");
+        float moveZ = Input.GetAxisRaw("Vertical");
 
-    // --- Rotate Towards Movement Direction ---
-    if (moveDir.sqrMagnitude > 0.001f)
-    {
-        Quaternion targetRot = Quaternion.LookRotation(moveDir);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, rotationSpeed * dt);
-    }
+        // --- Camera-relative movement ---
+        if (cameraTransform == null && Camera.main != null)
+            cameraTransform = Camera.main.transform;
 
-    // --- Detect Block Under Feet (BEFORE jump check) ---
-    UpdateCurrentBlockUnderFeet(groundedSmoothed);
+        Vector3 camForward = cameraTransform.forward;
+        camForward.y = 0f;
+        camForward.Normalize();
 
-    // --- Jump Logic ---
-    if (Input.GetButtonDown("Jump") && groundedSmoothed)
-    {
-        if (currentBlock != null && currentBlock.IsActivated && !currentBlock.ExplodeOnLanding)
-            currentBlock.ApplySecondStepIfReady();
+        Vector3 camRight = cameraTransform.right;
+        camRight.y = 0f;
+        camRight.Normalize();
 
-        velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
-        if (animator) animator.SetBool("isJumping", true);
-    }
+        Vector3 move = camForward * moveZ + camRight * moveX;
+        if (move.magnitude > 1f) move.Normalize();
 
-    // --- Gravity ---
-    velocity.y += gravity * dt;
+        // --- Sprint check ---
+        bool isSprinting = Input.GetKey(KeyCode.LeftShift) && move.magnitude > 0.1f;
+        float currentSpeed = isSprinting ? speed * sprintMultiplier : speed;
+        animator.SetBool("isSprinting", isSprinting);
 
-    // ========== 关键改动：把水平(输入) + 外力 + 垂直 合成一次 Move ==========
-    Vector3 planarByInput = moveDir * currentSpeed;                 // 水平（输入）
-    Vector3 externalPlanar = new Vector3(externalVelocity.x, 0f, externalVelocity.z);
-    float   verticalTotal  = velocity.y + externalVelocity.y;       // 外力若含竖直成分则叠加
+        // --- Move ---
+        controller.Move(move * currentSpeed * Time.deltaTime);
 
-    Vector3 finalVelocity = planarByInput + externalPlanar;         // 合成水平
-    finalVelocity.y = verticalTotal;
+        // --- Platform Carrying (ride bobbing cubes) ---
+        if (currentBlock != null && groundedSmoothed)
+        {
+            Vector3 platformDelta = currentBlock.Delta;
+            if (platformDelta != Vector3.zero)
+            {
+                controller.Move(platformDelta);
+            }
+        }
 
-    controller.Move(finalVelocity * dt);                            // ✅ 只 Move 一次
+        // --- Rotate Towards Movement Direction ---
+        if (move.sqrMagnitude > 0.001f)
+        {
+            Quaternion targetRot = Quaternion.LookRotation(move);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, rotationSpeed * Time.deltaTime);
+        }
 
-    // --- Platform Carrying (ride bobbing cubes) ---
-    if (currentBlock != null && groundedSmoothed)
-    {
-        Vector3 platformDelta = currentBlock.Delta;
-        if (platformDelta != Vector3.zero)
-            controller.Move(platformDelta);  // 这是位移量，不是速度，单独再Move一次
-    }
+        // --- Detect Block Under Feet (BEFORE jump check) ---
+        UpdateCurrentBlockUnderFeet(groundedSmoothed);
 
-    // --- Slope Sliding ---
-    HandleSlopeSliding();
+        // --- Jump Logic (with cube explosion on 2nd press) ---
+        if (Input.GetButtonDown("Jump") && groundedSmoothed)
+        {
+            if (currentBlock != null && currentBlock.IsActivated && !currentBlock.ExplodeOnLanding)
+            {
+                currentBlock.ApplySecondStepIfReady();
+            }
 
-    // --- Animator Updates ---
-    if (animator)
-    {
+            velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
+            if (animator) animator.SetBool("isJumping", true);
+        }
+
+        // --- Apply gravity ---
+        velocity.y += gravity * Time.deltaTime;
+        controller.Move(velocity * Time.deltaTime);
+
+        // --- Slope Sliding ---
+        HandleSlopeSliding();
+
+        // --- Animator Updates ---
         animator.SetBool("isRunningBackwards", moveZ < -0.1f);
-        animator.SetFloat("Speed", new Vector3(moveDir.x, 0f, moveDir.z).magnitude);
+        animator.SetFloat("Speed", new Vector3(move.x, 0, move.z).magnitude);
+
+        // --- Ground to Air ---
+        if (!groundedSmoothed && wasGrounded)
+        {
+            currentBlock = null;
+        }
+
+        wasGrounded = groundedSmoothed;
     }
 
-    // --- Ground to Air ---
-    if (!groundedSmoothed && wasGrounded)
-        currentBlock = null;
-
-    wasGrounded = groundedSmoothed;
-
-    // === 外力衰减（放在最后，逐步回零） ===
-    if (externalVelocity.sqrMagnitude > 0.0001f)
+    private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        float decay = Mathf.Clamp01(externalDecay * dt);
-        externalVelocity = Vector3.Lerp(externalVelocity, Vector3.zero, decay);
+        // Downward/top contact checks (keep yours)
+        if (hit.moveDirection.y > -0.05f && velocity.y > -0.01f) return;
+        float upDot = Vector3.Dot(hit.normal, Vector3.up);
+        if (upDot < 0.8f) return;
+
+        var block =
+            hit.collider.GetComponentInParent<BlockBehaviour>() ??
+            hit.collider.GetComponent<BlockBehaviour>() ??
+            hit.collider.GetComponentInChildren<BlockBehaviour>();
+        if (block == null) return;
+
+        // once-per-landing guard (see Fix #2 below for the new set)
+        int key = block.transform.root.gameObject.GetInstanceID();
+        if (!landedBlockIdsThisLanding.Add(key)) return;
+
+        if (block.ExplodeOnLanding)
+        {
+            block.BreakNow();
+        }
+        else if (!block.IsActivated)
+        {
+            block.ApplyFirstStepIfNeeded();
+        }
     }
-    else externalVelocity = Vector3.zero;
-}
 
     void UpdateCurrentBlockUnderFeet(bool isGrounded)
     {

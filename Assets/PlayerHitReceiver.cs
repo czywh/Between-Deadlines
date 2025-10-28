@@ -6,11 +6,11 @@ public class PlayerHitReceiver : MonoBehaviour
     public float knockbackSpeed = 18f;    // 外力初速度
     public float knockbackDuration = 0.25f; // 若用持续时间接口
 
-    private PlayerMovement _move;
+    // private BossLevelPlayerMovement _move;
 
     void Awake()
     {
-        _move = GetComponentInParent<PlayerMovement>(); // 或 GetComponent
+        // _move = GetComponentInParent<BossLevelPlayerMovement>(); // 或 GetComponent
     }
 
     void OnCollisionEnter(Collision collision)
@@ -53,7 +53,7 @@ void OnTriggerEnter(Collider other)
         // 把“本地右后方”转成世界方向
         Vector3 worldDir = transform.TransformDirection(localKnockbackDir).normalized;
         // 二选一：
-        _move.AddExternalImpulse(worldDir, knockbackSpeed);                      // 衰减型
+        // _move.AddExternalImpulse(worldDir, knockbackSpeed);                      // 衰减型
         
     }
 }
