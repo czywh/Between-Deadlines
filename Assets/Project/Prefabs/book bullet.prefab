@@ -76,6 +76,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: b580b6144c79d1a409f3fa619b456636, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 91f5212b3a96042e59d1d9553997d254, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -133,8 +137,8 @@ MonoBehaviour:
   damage: 1
   requireReflectedToDamageBoss: 1
   homingStrength: 1
-  impactEffectPrefab: {fileID: 6452539493668645724, guid: b118fb2d37a2a46878db19524e896d88, type: 3}
-  vanishEffectPrefab: {fileID: 6452539493668645724, guid: b118fb2d37a2a46878db19524e896d88, type: 3}
+  impactEffectPrefab: {fileID: 1547313440927309249, guid: f3eb12d0ce9bf473dbbd9cb24a1cf7ba, type: 3}
+  vanishEffectPrefab: {fileID: 1547313440927309249, guid: f3eb12d0ce9bf473dbbd9cb24a1cf7ba, type: 3}
   knockbackForce: 12
   knockbackUpward: 3
 --- !u!54 &239816408442117605

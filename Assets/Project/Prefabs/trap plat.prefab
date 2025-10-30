@@ -50,7 +50,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2231849567509073861, guid: 03b09bd6ccd7147c59df71f059871887, type: 3}
       propertyPath: m_Name
-      value: platform Variant
+      value: trap plat
+      objectReference: {fileID: 0}
+    - target: {fileID: 3944337888128267552, guid: 03b09bd6ccd7147c59df71f059871887, type: 3}
+      propertyPath: greyTint.b
+      value: 0.2627451
+      objectReference: {fileID: 0}
+    - target: {fileID: 3944337888128267552, guid: 03b09bd6ccd7147c59df71f059871887, type: 3}
+      propertyPath: greyTint.g
+      value: 0.36862746
+      objectReference: {fileID: 0}
+    - target: {fileID: 3944337888128267552, guid: 03b09bd6ccd7147c59df71f059871887, type: 3}
+      propertyPath: greyTint.r
+      value: 0.8117647
       objectReference: {fileID: 0}
     - target: {fileID: 3944337888128267552, guid: 03b09bd6ccd7147c59df71f059871887, type: 3}
       propertyPath: explodeOnLanding
