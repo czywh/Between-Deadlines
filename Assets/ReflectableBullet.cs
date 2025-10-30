@@ -118,6 +118,32 @@ public class ReflectableBullet : MonoBehaviour
             return;
         }
 
+        // === ② 撞到 Player：施加击退 ===
+        if (collision.collider.CompareTag("Player"))
+        {
+            
+            var kb = collision.collider.GetComponentInParent<KnockbackReceiver>() ??
+                     collision.collider.GetComponent<KnockbackReceiver>() ??
+                     collision.collider.GetComponentInChildren<KnockbackReceiver>();
+
+            if (kb != null)
+            {
+                float upFactor = 0f;
+                if (knockbackForce > 0.0001f)
+                    upFactor = Mathf.Clamp01(knockbackUpward / knockbackForce);
+
+                
+                kb.AddKnockback(sourcePosition: transform.position,
+                                force: knockbackForce,
+                                overrideUpFactor: upFactor);
+            }
+
+            
+            SpawnImpact(collision);
+            Destroy(gameObject);
+            return;
+        }
+
 
         // ③ 其他物体 → 默认播放通用击中 VFX 后销毁
         SpawnImpact(collision);
