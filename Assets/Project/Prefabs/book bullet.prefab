@@ -13,6 +13,10 @@ PrefabInstance:
       value: book bullet
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: b580b6144c79d1a409f3fa619b456636, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: b580b6144c79d1a409f3fa619b456636, type: 3}
       propertyPath: m_TagString
       value: Bullet
       objectReference: {fileID: 0}
@@ -124,7 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e98faab7a9859458b95c0898935ac00c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 15
   lifeTime: 10
   damage: 1
   requireReflectedToDamageBoss: 1
