@@ -40883,8 +40883,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1922419954}
     - target: {fileID: 3169880474641101412, guid: 7e062072ee464402a8273b943c752169, type: 3}
+      propertyPath: spawnOnce
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3169880474641101412, guid: 7e062072ee464402a8273b943c752169, type: 3}
       propertyPath: spawnCooldown
-      value: 20
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3169880474641101412, guid: 7e062072ee464402a8273b943c752169, type: 3}
       propertyPath: 'spawnPoints.Array.data[0]'
