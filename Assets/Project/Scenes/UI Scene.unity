@@ -26194,20 +26194,24 @@ PrefabInstance:
       value: platform (11)
       objectReference: {fileID: 0}
     - target: {fileID: 271173780068465029, guid: 8f9f69af0c7534ceca4670e0527d00ad, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 271173780068465029, guid: 8f9f69af0c7534ceca4670e0527d00ad, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 271173780068820389, guid: 8f9f69af0c7534ceca4670e0527d00ad, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.4518814
+      value: -23.21
       objectReference: {fileID: 0}
     - target: {fileID: 271173780068820389, guid: 8f9f69af0c7534ceca4670e0527d00ad, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.7488799
+      value: -0.56
       objectReference: {fileID: 0}
     - target: {fileID: 271173780068820389, guid: 8f9f69af0c7534ceca4670e0527d00ad, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 17.476357
+      value: 36.11
       objectReference: {fileID: 0}
     - target: {fileID: 271173780068820389, guid: 8f9f69af0c7534ceca4670e0527d00ad, type: 3}
       propertyPath: m_LocalRotation.w
@@ -26237,6 +26241,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3136583623011091296, guid: 8f9f69af0c7534ceca4670e0527d00ad, type: 3}
+      propertyPath: firstJumpMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 91f5212b3a96042e59d1d9553997d254, type: 2}
+    - target: {fileID: 3136583623011091296, guid: 8f9f69af0c7534ceca4670e0527d00ad, type: 3}
+      propertyPath: fireParticlePrefab
+      value: 
+      objectReference: {fileID: 7410526085682847027, guid: 3c0a1ffa5527a491c8e5cdded26cbc3f, type: 3}
+    - target: {fileID: 3136583623011091296, guid: 8f9f69af0c7534ceca4670e0527d00ad, type: 3}
+      propertyPath: fireExplosionPrefab
+      value: 
+      objectReference: {fileID: 1547313440927309249, guid: 7012da659976f4819b46cf5a20780cba, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

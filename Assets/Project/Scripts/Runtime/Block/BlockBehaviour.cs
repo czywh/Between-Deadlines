@@ -11,8 +11,10 @@ public class BlockBehaviour : MonoBehaviour
 
     [Header("FX")]
     [SerializeField] private ParticleSystem collisionParticles;
-    [SerializeField] private Renderer rend; // drag the visible MeshRenderer here (or leave null to auto)
-    [SerializeField] private Color firstStepTint = Color.white;
+    [SerializeField] private Renderer rend;
+    [SerializeField] private Material firstJumpMaterial;    
+    [SerializeField] private GameObject fireParticlePrefab;
+    [SerializeField] private GameObject fireExplosionPrefab;
 
     [Header("Motion (optional)")]
     [SerializeField] private bool canFloat = true;
@@ -31,6 +33,9 @@ public class BlockBehaviour : MonoBehaviour
     public bool IsBroken => steps >= 2;
 
     private Color baseColor;
+
+    private GameObject currentFire;
+    private bool firstJumpDone = false;
 
     void Awake()
     {
@@ -90,8 +95,14 @@ public class BlockBehaviour : MonoBehaviour
 
         if (IsBroken || IsActivated) return;
         steps = 1;
-        if (rend)
-            rend.material.color = Color.Lerp(baseColor, firstStepTint, 0.5f);
+        if (rend && firstJumpMaterial != null)
+            rend.material = firstJumpMaterial;
+
+        if (!firstJumpDone && fireParticlePrefab != null)
+        {
+            currentFire = Instantiate(fireParticlePrefab, transform.position + Vector3.up * 0.5f, Quaternion.identity, transform);
+            firstJumpDone = true;
+        }
 
         Debug.Log($"[Block] FirstStep APPLIED steps(now)={steps}", this);
     }
@@ -109,7 +120,17 @@ public class BlockBehaviour : MonoBehaviour
         if (IsBroken) return;
         steps = 2;
 
-        if (collisionParticles)
+        if (currentFire != null)
+        {
+            Destroy(currentFire);
+            currentFire = null;
+        }
+
+        if (fireExplosionPrefab != null)
+        {
+            Instantiate(fireExplosionPrefab, transform.position, Quaternion.identity);
+        }
+        else if (collisionParticles)
         {
             var fx = Instantiate(collisionParticles, transform.position, Quaternion.identity);
             var main = fx.main;
