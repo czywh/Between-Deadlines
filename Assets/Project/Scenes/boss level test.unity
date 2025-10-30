@@ -23004,9 +23004,6 @@ PrefabInstance:
       addedObject: {fileID: 1421692080}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9992dcda281dc42a4841b22d153c1415, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1421692081}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9992dcda281dc42a4841b22d153c1415, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1421692082}
   m_SourcePrefab: {fileID: 100100000, guid: 9992dcda281dc42a4841b22d153c1415, type: 3}
 --- !u!1 &1401023288 stripped
@@ -23426,25 +23423,6 @@ MonoBehaviour:
   localKnockbackDir: {x: 1, y: 0, z: -1}
   knockbackSpeed: 5
   knockbackDuration: 0.3
---- !u!114 &1421692081
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1421692071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e01f72c9b47ce4098b8f6bd7a56a12e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHP: 10
-  currentHP: 10
-  invulnerableTime: 0.2
-  restartDelay: 3
-  componentsToDisableOnDeath:
-  - {fileID: 1421692079}
-  deathEffectPrefab: {fileID: 0}
 --- !u!114 &1421692082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35297,13 +35275,13 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1102182968310382153, guid: 435a6c528046a4a64889d356240eccab, type: 3}
-      propertyPath: maxHP
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1102182968310382153, guid: 435a6c528046a4a64889d356240eccab, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 1421692072}
+    - target: {fileID: 1102182968310382153, guid: 435a6c528046a4a64889d356240eccab, type: 3}
+      propertyPath: activateRange
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1102182968310382153, guid: 435a6c528046a4a64889d356240eccab, type: 3}
       propertyPath: shakeDuration
       value: 0.3
@@ -35313,6 +35291,10 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1102182968310382153, guid: 435a6c528046a4a64889d356240eccab, type: 3}
+      propertyPath: deactivateRange
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1102182968310382153, guid: 435a6c528046a4a64889d356240eccab, type: 3}
       propertyPath: hitEffectPrefab
       value: 
       objectReference: {fileID: 6452539493668645724, guid: b118fb2d37a2a46878db19524e896d88, type: 3}
@@ -35320,10 +35302,6 @@ PrefabInstance:
       propertyPath: deathEffectPrefab
       value: 
       objectReference: {fileID: 6452539493668645724, guid: b118fb2d37a2a46878db19524e896d88, type: 3}
-    - target: {fileID: 1102182968310382153, guid: 435a6c528046a4a64889d356240eccab, type: 3}
-      propertyPath: deathEffectLifetime
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 6043459138727919911, guid: 435a6c528046a4a64889d356240eccab, type: 3}
       propertyPath: m_Name
       value: teddybear Variant
@@ -35369,8 +35347,7 @@ PrefabInstance:
       value: 118.781
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 130469352992411908, guid: 435a6c528046a4a64889d356240eccab, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 435a6c528046a4a64889d356240eccab, type: 3}

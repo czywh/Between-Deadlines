@@ -38,18 +38,38 @@ public class BossShooter : MonoBehaviour
     [Tooltip("Boss 被击中时抖动的持续时间（秒）")]
     public float shakeDuration = 0.15f;
 
+    [Header("Aggro / Activation")]
+    [Tooltip("玩家进入该距离内时激活 Boss 攻击")]
+    public float activateRange = 12f;
+    [Tooltip("玩家离开到该距离外时取消激活（迟滞，避免反复抖动）")]
+    public float deactivateRange = 14f;
+    [Tooltip("是否需要与玩家有直线视野才算激活")]
+    public bool requireLineOfSight = false;
+    [Tooltip("视线检测的阻挡层（地形/墙等）。留空=默认射线命中一切。")]
+    public LayerMask losObstacles = ~0;
+
     // —— 内部状态 ——
     private int _hp;
     private Coroutine _fireCo;
     private Collider _bossCollider;
 
-    // 用于给不同渲染器安全改色
+    // 受击变色（MPB）
     private MaterialPropertyBlock _mpb;
-    // 根据你的着色器改成合适的颜色属性名：URP/HDRP 常用 _BaseColor，内置标准管线常用 _Color
-    private static readonly int _ColorProp = Shader.PropertyToID("_BaseColor");
+    private static readonly int _ColorPropBase = Shader.PropertyToID("_BaseColor");
+    private static readonly int _ColorPropStd = Shader.PropertyToID("_Color");
+    private Color[] _origColors; // 每个 renderer 的原始颜色缓存
+
+    // 激活开关
+    private bool _aggro = false;
 
     public int CurrentHP => _hp;
     public int MaxHP => maxHP;
+
+    [Header("Gizmos")]
+    public bool showGizmos = true;
+    public Color activateColor = new Color(0f, 1f, 0.6f, 1f);
+    public Color deactivateColor = new Color(1f, 0.7f, 0f, 1f);
+    public bool drawWhenUnselected = false; // 勾选则未选中对象也显示
 
     void Awake()
     {
@@ -64,8 +84,36 @@ public class BossShooter : MonoBehaviour
 
         _mpb = new MaterialPropertyBlock();
 
-        // 建议在 Inspector 给 Boss 物体设置 Tag=Boss（配合你的子弹反射后按 Tag 追踪）
-        // gameObject.tag = "Boss"; // 如需强制设置，可取消注释
+        // 缓存原色（若未赋 renderers 列表则跳过）
+        if (flashRenderers != null && flashRenderers.Length > 0)
+        {
+            _origColors = new Color[flashRenderers.Length];
+            for (int i = 0; i < flashRenderers.Length; i++)
+            {
+                var r = flashRenderers[i];
+                if (!r) { _origColors[i] = Color.white; continue; }
+
+                // 优先从 MPB 读，读不到时尝试材质常用属性
+                r.GetPropertyBlock(_mpb);
+                if (_mpb != null && (_mpb.GetVector(_ColorPropBase) != Vector4.zero))
+                    _origColors[i] = _mpb.GetColor(_ColorPropBase);
+                else if (_mpb != null && (_mpb.GetVector(_ColorPropStd) != Vector4.zero))
+                    _origColors[i] = _mpb.GetColor(_ColorPropStd);
+                else if (r.sharedMaterial != null)
+                {
+                    if (r.sharedMaterial.HasProperty(_ColorPropBase))
+                        _origColors[i] = r.sharedMaterial.GetColor(_ColorPropBase);
+                    else if (r.sharedMaterial.HasProperty(_ColorPropStd))
+                        _origColors[i] = r.sharedMaterial.GetColor(_ColorPropStd);
+                    else
+                        _origColors[i] = Color.white;
+                }
+                else _origColors[i] = Color.white;
+            }
+        }
+
+        // 可选：强制设置 Tag 以配合反弹子弹追踪
+        // gameObject.tag = "Boss";
     }
 
     void OnEnable()
@@ -82,14 +130,20 @@ public class BossShooter : MonoBehaviour
         }
     }
 
-    // —— 发射循环 ——
+    void Update()
+    {
+        UpdateAggro();
+    }
+
+    // —— 发射循环（仅激活时才发射） ——
     IEnumerator FireLoop()
     {
         var wait = new WaitForSeconds(fireInterval);
         while (true)
         {
             yield return wait;
-            TryFire();
+            if (_aggro)
+                TryFire();
         }
     }
 
@@ -134,6 +188,7 @@ public class BossShooter : MonoBehaviour
             StartCoroutine(FlashOnce());
 
         StartCoroutine(ShakeOnce());
+
         if (_hp <= 0) Die();
     }
 
@@ -150,12 +205,10 @@ public class BossShooter : MonoBehaviour
             _fireCo = null;
         }
 
-        // 死亡粒子（不设播放时长；和墙同逻辑：完全由粒子系统自己决定寿命）
+        // 死亡粒子（不设播放时长；完全由粒子系统自己决定寿命）
         if (deathEffectPrefab != null)
         {
-            // 不作为 Boss 子物体，避免 Boss 销毁把粒子一并删掉
             Instantiate(deathEffectPrefab, transform.position, transform.rotation);
-            
         }
 
         // 稍作延迟以便受击/粒子能完整触发
@@ -165,8 +218,7 @@ public class BossShooter : MonoBehaviour
     // —— 一次闪白 —— 
     private IEnumerator FlashOnce()
     {
-        // 记录原色
-        Color[] orig = new Color[flashRenderers.Length];
+        if (flashRenderers == null || flashRenderers.Length == 0) yield break;
 
         for (int i = 0; i < flashRenderers.Length; i++)
         {
@@ -174,9 +226,8 @@ public class BossShooter : MonoBehaviour
             if (!r) continue;
 
             r.GetPropertyBlock(_mpb);
-
-
-            _mpb.SetColor(_ColorProp, flashColor);
+            // 优先写 _BaseColor，失败再写 _Color
+            _mpb.SetColor(_ColorPropBase, flashColor);
             r.SetPropertyBlock(_mpb);
         }
 
@@ -187,8 +238,16 @@ public class BossShooter : MonoBehaviour
             var r = flashRenderers[i];
             if (!r) continue;
 
-            _mpb.SetColor(_ColorProp, orig[i]);
-            r.SetPropertyBlock(_mpb);
+            // 还原缓存的原色
+            var restore = (_origColors != null && i < _origColors.Length) ? _origColors[i] : Color.white;
+            r.GetPropertyBlock(_mpb);
+            if (_mpb != null)
+            {
+                // 两个常见属性都尝试一下，确保兼容不同管线
+                _mpb.SetColor(_ColorPropBase, restore);
+                _mpb.SetColor(_ColorPropStd, restore);
+                r.SetPropertyBlock(_mpb);
+            }
         }
     }
 
@@ -213,4 +272,84 @@ public class BossShooter : MonoBehaviour
 
         transform.position = originalPos;
     }
+
+    // —— 激活判定 —— //
+    private void UpdateAggro()
+    {
+        if (player == null)
+        {
+            _aggro = false;
+            return;
+        }
+
+        float d = Vector3.Distance(transform.position, player.position);
+
+        if (_aggro)
+        {
+            // 已激活：距离超过“取消阈值”或（需要LOS且失去视线）则关闭
+            if (d > deactivateRange || !HasLineOfSight())
+                _aggro = false;
+        }
+        else
+        {
+            // 未激活：进入“激活阈值”且（如需要LOS则必须有视线）才开启
+            if (d <= activateRange && HasLineOfSight())
+                _aggro = true;
+        }
+    }
+
+    private bool HasLineOfSight()
+    {
+        if (!requireLineOfSight) return true;
+        if (player == null) return false;
+
+        Vector3 origin = firePoint ? firePoint.position : transform.position;
+        Vector3 toPlayer = player.position - origin;
+        float dist = toPlayer.magnitude;
+        if (dist <= 0.001f) return true;
+
+        Vector3 dir = toPlayer / Mathf.Max(dist, 0.0001f);
+        // 命中障碍即视为被阻挡
+        return !Physics.Raycast(origin, dir, dist, losObstacles, QueryTriggerInteraction.Ignore);
+    }
+
+    // 在类末尾加：
+    void OnDrawGizmos()
+    {
+        if (!drawWhenUnselected || !showGizmos) return;
+        DrawRangesGizmo();
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        if (!showGizmos) return;
+        DrawRangesGizmo();
+    }
+
+    private void DrawRangesGizmo()
+    {
+        Vector3 p = transform.position;
+
+        // 激活半径
+        Gizmos.color = activateColor;
+        Gizmos.DrawWireSphere(p, Mathf.Max(0f, activateRange));
+
+        // 取消激活半径（迟滞圈）
+        Gizmos.color = deactivateColor;
+        Gizmos.DrawWireSphere(p, Mathf.Max(0f, deactivateRange));
+
+        // 可选：画向玩家的线（仅在有引用时）
+        if (player != null)
+        {
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawLine(p, player.position);
+            // 小端点
+            Gizmos.DrawWireSphere(player.position, 0.2f);
+        }
+    }
+
+#if UNITY_EDITOR
+    // 可选：在 Scene 里标注文字（不影响打包）
+    private void OnSceneGUI() { } // 占位避免警告
+#endif
 }

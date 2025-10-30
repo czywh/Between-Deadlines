@@ -1,21 +1,22 @@
 using UnityEngine;
-//ProximityTriggerRelay.cs
+
+// ProximityTriggerRelay.cs
 [RequireComponent(typeof(Collider))]
 public class ProximityTriggerRelay : MonoBehaviour
 {
-    [Tooltip("所在HelpAddon上的控制器")]
+    [Tooltip("The HelpAddonController this trigger belongs to")]
     public HelpAddonController controller;
 
-    [Tooltip("玩家的Tag；需与Player物体一致")]
+    [Tooltip("Tag of the player object; must match the Player object's tag")]
     public string playerTag = "Player";
 
     void Reset()
     {
-        // 自动向上找一下控制器（父物体）
+        // Automatically find the controller from the parent object
         if (controller == null)
             controller = GetComponentInParent<HelpAddonController>();
         
-        // 确保是Trigger
+        // Ensure the collider is set as a trigger
         var col = GetComponent<Collider>();
         if (col != null) col.isTrigger = true;
     }

@@ -2,40 +2,45 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Events;
-//HelpAddonController.cs
+
+// HelpAddonController.cs
 public class HelpAddonController : MonoBehaviour
 {
     [Header("References")]
-    [Tooltip("世界空间提示（显示“Press E…”）的根对象")]
+    [Tooltip("Root object of the world-space prompt (shows 'Press E...')")]
     public GameObject promptCanvas;            // HelpAddon/PromptCanvas
-    [Tooltip("全屏说明页的根对象（Screen Space Overlay）")]
-    public GameObject helpCanvas;              // HelpAddon/HelpCanvas（或全局UI）
-    [Tooltip("说明页里的TMP文字（可选）")]
+    [Tooltip("Root object of the full-screen help page (Screen Space Overlay)")]
+    public GameObject helpCanvas;              // HelpAddon/HelpCanvas (or global UI)
+    [Tooltip("TMP text inside the help page (optional)")]
     public TextMeshProUGUI helpText;           // HelpCanvas/Panel/Text (TMP)
-    [Tooltip("说明页里的关闭按钮（可选）")]
+    [Tooltip("Close button inside the help page (optional)")]
     public Button closeButton;                 // HelpCanvas/Panel/CloseButton
 
     [Header("Settings")]
-    [Tooltip("玩家的Tag；需要与Player物体一致")]
+    [Tooltip("Tag of the player object; must match the Player object's tag")]
     public string playerTag = "Player";
     [TextArea(2, 4)]
-    public string instructionMessage = "Press E to view the instruction!!";
+    public string instructionMessage = "Press E to view the instruction!";
 
     [Header("Input")]
-    public KeyCode toggleKey = KeyCode.E;      // 按E开关说明页
-    public KeyCode closeKey  = KeyCode.Escape; // ESC关闭
+    [Tooltip("Key to toggle the help page")]
+    public KeyCode toggleKey = KeyCode.E;      
+    [Tooltip("Key to close the help page (ESC)")]
+    public KeyCode closeKey  = KeyCode.Escape; 
 
     [Header("Events (Optional)")]
-    public UnityEvent onHelpOpen;              // 打开时回调（可冻结玩家移动等）
-    public UnityEvent onHelpClose;             // 关闭时回调（恢复移动等）
+    [Tooltip("Event called when the help page opens (e.g. to freeze player movement)")]
+    public UnityEvent onHelpOpen;              
+    [Tooltip("Event called when the help page closes (e.g. to resume movement)")]
+    public UnityEvent onHelpClose;             
 
-    // 状态
+    // ===== Internal State =====
     private bool _inRange = false;
     private bool _helpOpen = false;
 
     void Reset()
     {
-        // 初次挂脚本时尽量自动抓引用
+        // Automatically assign references when the script is first added
         if (promptCanvas == null) promptCanvas = transform.Find("PromptCanvas")?.gameObject;
         if (helpCanvas   == null) helpCanvas   = transform.Find("HelpCanvas")?.gameObject;
         if (helpText     == null) helpText     = GetComponentInChildren<TextMeshProUGUI>(true);
@@ -57,38 +62,37 @@ public class HelpAddonController : MonoBehaviour
         }
 
         Debug.Log($"[HelpAddon] bound helpText = {helpText?.name}", this);
-
     }
 
     void Update()
     {
-        // E键：在范围内→开；已开→关
+        // Press E: open if in range; close if already open
         if (Input.GetKeyDown(toggleKey))
         {
             if (_helpOpen) CloseHelp();
             else if (_inRange) OpenHelp();
         }
 
-        // ESC 始终可关
+        // ESC always closes
         if (_helpOpen && Input.GetKeyDown(closeKey))
             CloseHelp();
     }
 
-    // ===== 供触发器转发调用 =====
+    // ===== Trigger Events =====
     public void NotifyEnter()
     {
         _inRange = true;
-        SafeSetActive(promptCanvas, !_helpOpen); // 说明页未开时才显示提示
+        SafeSetActive(promptCanvas, !_helpOpen); // Show prompt only when help is closed
     }
 
     public void NotifyExit()
     {
         _inRange = false;
         SafeSetActive(promptCanvas, false);
-        // 如果希望离开范围就强制关闭说明页，取消下一行注释：
+        // Uncomment the next line if you want to auto-close help when leaving range
         // if (_helpOpen) CloseHelp();
     }
-    // =================================
+    // ===========================
 
     public void OpenHelp()
     {
@@ -102,7 +106,7 @@ public class HelpAddonController : MonoBehaviour
     {
         _helpOpen = false;
         SafeSetActive(helpCanvas, false);
-        SafeSetActive(promptCanvas, _inRange); // 仍在范围内则恢复“Press E…”
+        SafeSetActive(promptCanvas, _inRange); // Restore "Press E..." if still in range
         onHelpClose?.Invoke();
     }
 
@@ -112,11 +116,10 @@ public class HelpAddonController : MonoBehaviour
     }
 
     void Start()
-{
-    if (helpText != null)
     {
-        helpText.text = instructionMessage;
+        if (helpText != null)
+        {
+            helpText.text = instructionMessage;
+        }
     }
-}
-
 }
