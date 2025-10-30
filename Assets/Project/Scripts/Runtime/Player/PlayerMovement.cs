@@ -44,6 +44,13 @@ public class PlayerMovement : MonoBehaviour
 
     private readonly HashSet<int> landedBlockIdsThisLanding = new();
 
+    [SerializeField] private KnockbackReceiver knockback;
+
+    void Awake()
+    {
+        if (!knockback) knockback = GetComponent<KnockbackReceiver>();
+    }
+
     void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -142,6 +149,13 @@ public class PlayerMovement : MonoBehaviour
         // --- Apply gravity ---
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
+
+        if (knockback != null)
+        {
+            Vector3 knockDelta = knockback.ConsumeDelta(Time.deltaTime);
+            if (knockDelta.sqrMagnitude > 0f)
+                controller.Move(knockDelta);
+        }
 
         // --- Slope Sliding ---
         HandleSlopeSliding();

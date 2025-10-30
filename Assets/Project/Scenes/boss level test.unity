@@ -23005,6 +23005,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9992dcda281dc42a4841b22d153c1415, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1421692081}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9992dcda281dc42a4841b22d153c1415, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1421692082}
   m_SourcePrefab: {fileID: 100100000, guid: 9992dcda281dc42a4841b22d153c1415, type: 3}
 --- !u!1 &1401023288 stripped
 GameObject:
@@ -23377,7 +23380,7 @@ MonoBehaviour:
   slideSpeed: 4
   groundCheckDistance: 1.2
   groundedBufferTime: 0.12
-  externalDecay: 6
+  knockback: {fileID: 1421692082}
 --- !u!143 &1421692078
 CharacterController:
   m_ObjectHideFlags: 0
@@ -23435,13 +23438,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e01f72c9b47ce4098b8f6bd7a56a12e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 1
-  currentHP: 1
+  maxHP: 10
+  currentHP: 10
   invulnerableTime: 0.2
   restartDelay: 3
   componentsToDisableOnDeath:
   - {fileID: 1421692079}
   deathEffectPrefab: {fileID: 0}
+--- !u!114 &1421692082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1421692071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95711e473956e4f18aaab617212ce420, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  decayPerSecond: 6
+  upFactor: 0.15
+  ignoreYFromSource: 1
+  resistance: 0
+  driveCharacterController: 0
 --- !u!1001 &1423192581
 PrefabInstance:
   m_ObjectHideFlags: 0
