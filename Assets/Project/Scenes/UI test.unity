@@ -2603,6 +2603,30 @@ PrefabInstance:
       propertyPath: instructionMessage
       value: You need to follow the light to find the exit! Come on!
       objectReference: {fileID: 0}
+    - target: {fileID: 3342228495006225837, guid: 453feafefe5b945949a0dda6ebf3a069, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3342228495006225837, guid: 453feafefe5b945949a0dda6ebf3a069, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 24747bdb7b8f220479ed75f1b69d9634, type: 3}
+    - target: {fileID: 3342228495006225837, guid: 453feafefe5b945949a0dda6ebf3a069, type: 3}
+      propertyPath: m_Color.b
+      value: 0.76862746
+      objectReference: {fileID: 0}
+    - target: {fileID: 3342228495006225837, guid: 453feafefe5b945949a0dda6ebf3a069, type: 3}
+      propertyPath: m_Color.g
+      value: 0.76862746
+      objectReference: {fileID: 0}
+    - target: {fileID: 3342228495006225837, guid: 453feafefe5b945949a0dda6ebf3a069, type: 3}
+      propertyPath: m_Color.r
+      value: 0.76862746
+      objectReference: {fileID: 0}
+    - target: {fileID: 3342228495006225837, guid: 453feafefe5b945949a0dda6ebf3a069, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3962538860477462769, guid: 453feafefe5b945949a0dda6ebf3a069, type: 3}
       propertyPath: m_LocalScale.x
       value: 50
@@ -9234,6 +9258,42 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -23.706
       objectReference: {fileID: 0}
+    - target: {fileID: 2548061582708990418, guid: 453feafefe5b945949a0dda6ebf3a069, type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3342228495006225837, guid: 453feafefe5b945949a0dda6ebf3a069, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3342228495006225837, guid: 453feafefe5b945949a0dda6ebf3a069, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 24747bdb7b8f220479ed75f1b69d9634, type: 3}
+    - target: {fileID: 3342228495006225837, guid: 453feafefe5b945949a0dda6ebf3a069, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3342228495006225837, guid: 453feafefe5b945949a0dda6ebf3a069, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3342228495006225837, guid: 453feafefe5b945949a0dda6ebf3a069, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3342228495006225837, guid: 453feafefe5b945949a0dda6ebf3a069, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3758746536040348644, guid: 453feafefe5b945949a0dda6ebf3a069, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3758746536040348644, guid: 453feafefe5b945949a0dda6ebf3a069, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0f7737d51b7ac86458a508894013f46d, type: 3}
     - target: {fileID: 3962538860477462769, guid: 453feafefe5b945949a0dda6ebf3a069, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.0239
@@ -9249,6 +9309,18 @@ PrefabInstance:
     - target: {fileID: 3962538860477462769, guid: 453feafefe5b945949a0dda6ebf3a069, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4494286461148707694, guid: 453feafefe5b945949a0dda6ebf3a069, type: 3}
+      propertyPath: m_margin.x
+      value: 95.03591
+      objectReference: {fileID: 0}
+    - target: {fileID: 4494286461148707694, guid: 453feafefe5b945949a0dda6ebf3a069, type: 3}
+      propertyPath: m_margin.z
+      value: 56.265656
+      objectReference: {fileID: 0}
+    - target: {fileID: 4494286461148707694, guid: 453feafefe5b945949a0dda6ebf3a069, type: 3}
+      propertyPath: m_fontStyle
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4662513896696695869, guid: 453feafefe5b945949a0dda6ebf3a069, type: 3}
       propertyPath: m_Size.x
@@ -9329,6 +9401,18 @@ PrefabInstance:
     - target: {fileID: 7240122235305688973, guid: 453feafefe5b945949a0dda6ebf3a069, type: 3}
       propertyPath: m_Name
       value: HelpAddon
+      objectReference: {fileID: 0}
+    - target: {fileID: 8113200171916944165, guid: 453feafefe5b945949a0dda6ebf3a069, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8113200171916944165, guid: 453feafefe5b945949a0dda6ebf3a069, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 140
+      objectReference: {fileID: 0}
+    - target: {fileID: 8113200171916944165, guid: 453feafefe5b945949a0dda6ebf3a069, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 121
       objectReference: {fileID: 0}
     - target: {fileID: 8796226927533797449, guid: 453feafefe5b945949a0dda6ebf3a069, type: 3}
       propertyPath: m_IsActive
@@ -21088,6 +21172,7 @@ MonoBehaviour:
   slideSpeed: 4
   groundCheckDistance: 1.2
   groundedBufferTime: 0.12
+  knockback: {fileID: 0}
 --- !u!143 &1297472995
 CharacterController:
   m_ObjectHideFlags: 0
@@ -26970,12 +27055,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92858ce7ade7240a5aba9dff11dc0fb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 834652642}
-  distance: 1
-  yOffset: 0.8
-  alignToTargetForward: 1
-  localNudge: {x: 0, y: 0, z: 0}
-  followContinuously: 0
 --- !u!1001 &1605167187
 PrefabInstance:
   m_ObjectHideFlags: 0
