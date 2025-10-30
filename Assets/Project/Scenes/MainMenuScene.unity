@@ -1286,7 +1286,7 @@ PrefabInstance:
       objectReference: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
     - target: {fileID: 1482375717037824561, guid: 622e6eb1ce55746f3a754ab56b345b80, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4293256159
+      value: 4281479730
       objectReference: {fileID: 0}
     - target: {fileID: 1482375717037824561, guid: 622e6eb1ce55746f3a754ab56b345b80, type: 3}
       propertyPath: m_hasFontAssetChanged
@@ -2956,7 +2956,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AspectMode: 0
-  m_AspectRatio: 1.534632
+  m_AspectRatio: 1.1069182
 --- !u!224 &1675321456 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1736782621414160187, guid: 622e6eb1ce55746f3a754ab56b345b80, type: 3}
@@ -3719,7 +3719,7 @@ PrefabInstance:
       objectReference: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
     - target: {fileID: 1482375717037824561, guid: 622e6eb1ce55746f3a754ab56b345b80, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4278190080
+      value: 4281479730
       objectReference: {fileID: 0}
     - target: {fileID: 1482375717037824561, guid: 622e6eb1ce55746f3a754ab56b345b80, type: 3}
       propertyPath: m_hasFontAssetChanged
