@@ -8797,7 +8797,7 @@ RectTransform:
   m_GameObject: {fileID: 516828157}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 8, y: 8, z: 1}
+  m_LocalScale: {x: 7, y: 7, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 670354729}
@@ -8827,7 +8827,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0aa095c43d7eb4be9970c2eac22fc691, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 962a22327778d8a47ac24ef1686f4172, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -17862,7 +17862,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: CONTINUE
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -29502,10 +29502,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: introductionintroductionintroductionintroductionintroductionintroductionintroductionintroductionintroductionintroductionintroductionintroductionintroductionintroductionintroductionintroductionintroductionintroductionintroduction
+  m_text: "After a long night of coding and coffee,\\n\" \n        \"you wake up
+    to find yourself shrunk inside your own apartment.\\n\\n\"\n        \"Navigate
+    the miniature world and finish your deadlines\\n\"\n        \"before sunrise.\";\n"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: af3ff2489735f446b9c9bc74410306b7, type: 2}
-  m_sharedMaterial: {fileID: -4408378891160296386, guid: af3ff2489735f446b9c9bc74410306b7, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f9e445c921f146fe8170ec2c017cd66, type: 2}
+  m_sharedMaterial: {fileID: -8287655162260363224, guid: 8f9e445c921f146fe8170ec2c017cd66, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -29529,8 +29531,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 35
-  m_fontSizeBase: 35
+  m_fontSize: 25
+  m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -33182,8 +33184,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9647059, g: 0.8117647, b: 0.50980395, a: 1}
-    m_PressedColor: {r: 0.81960785, g: 0.6431373, b: 0.34509805, a: 1}
+    m_HighlightedColor: {r: 0.424897, g: 0.8867924, b: 0.38065147, a: 1}
+    m_PressedColor: {r: 0.20132415, g: 0.5849056, b: 0.06897471, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -33224,7 +33226,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b0a8a8537fdd744a1a3773967f9c15dc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0f7737d51b7ac86458a508894013f46d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -33259,8 +33261,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -250}
-  m_SizeDelta: {x: 450, y: 110}
+  m_AnchoredPosition: {x: 300, y: 300}
+  m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2008719400
 GameObject:
