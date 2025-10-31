@@ -40,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
 
     // New tracking sets
     private int lastActivatedBlockId = -1;         // which block we first landed on
-    private bool leftGroundAfterActivate = false;  // did we go airborne since activation?
+    private bool leftGroundAfterActivate = false;
 
     private readonly HashSet<int> landedBlockIdsThisLanding = new();
 
