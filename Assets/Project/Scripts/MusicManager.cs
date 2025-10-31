@@ -2,11 +2,17 @@ using UnityEngine;
 using System.Collections;
 public class MusicManager : MonoBehaviour
 {
-    [SerializeField, Range(0f, 1f)] private float sadMaxVolume = 0.2f;
-    [SerializeField, Range(0f, 1f)] private float happyMaxVolume = 0.1f;
+    [SerializeField, Range(0f, 1f)] private float sadMaxVolume = 1f;
+    [SerializeField, Range(0f, 1f)] private float happyMaxVolume = 1f;
+    [SerializeField, Range(0f, 1f)] private float victoryMaxVolume = 1f;
 
+
+    [Header("Audio Sources")]
     public AudioSource sadMusic;
     public AudioSource happyMusic;
+    public AudioSource victoryMusic;
+
+    [Header("Fade Settings")]
     public float fadeDuration = 3f;
 
     // track if happy music has started before
@@ -16,10 +22,13 @@ public class MusicManager : MonoBehaviour
     {
         sadMusic.volume = sadMaxVolume;
         happyMusic.volume = 0f;
+        victoryMusic.volume = 0f;
 
         sadMusic.Play();
         happyMusic.Play();
         happyMusic.Pause();
+        victoryMusic.Play();
+        victoryMusic.Pause();
     }
 
     //  called when enter world b
@@ -88,4 +97,34 @@ public class MusicManager : MonoBehaviour
         sadMusic.volume = sadMaxVolume;
         happyMusic.volume = 0f;
     }
+
+    // called when player reaches teddy bear 
+    public void OnVictory()
+    {
+        StopAllCoroutines();
+        StartCoroutine(FadeToVictory());
+    }
+
+    private IEnumerator FadeToVictory()
+    {
+        float time = 0f;
+
+        // Stop or fade out other music
+        sadMusic.Pause();
+        happyMusic.Pause();
+
+        victoryMusic.UnPause();
+        float victoryStart = 0f;
+
+        while (time < fadeDuration)
+        {
+            time += Time.deltaTime;
+            float t = time / fadeDuration;
+            victoryMusic.volume = Mathf.Lerp(victoryStart, victoryMaxVolume, t);
+            yield return null;
+        }
+
+        victoryMusic.volume = victoryMaxVolume;
+    }
+
 }
