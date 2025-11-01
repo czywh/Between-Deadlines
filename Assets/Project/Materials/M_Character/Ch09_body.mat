@@ -11,7 +11,8 @@ Material:
   m_Shader: {fileID: 4800000, guid: 37d250a424013406fbf352b520684587, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _DIFFUSEMODE_PROCEDURAL
   m_InvalidKeywords:
   - _METALLICGLOSSMAP
   - _NORMALMAP
@@ -71,6 +72,7 @@ Material:
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
+    - _DiffuseMode: 0
     - _DitherStrength: 0.1
     - _DstBlend: 0
     - _Feather: 0.392
@@ -91,6 +93,7 @@ Material:
     - _ShadowFadeStart: 35
     - _SmoothnessTextureChannel: 0
     - _SpecFeather: 0.08
+    - _SpecMainOnly: 0
     - _SpecStrength: 0.64
     - _SpecThreshold: 0.5
     - _SpecularHighlights: 1
@@ -98,6 +101,7 @@ Material:
     - _Steps: 4.31
     - _UVSec: 0
     - _UseDither: 1
+    - _UseShadowFade: 0
     - _Wrap: 0.2
     - _ZWrite: 1
     m_Colors:

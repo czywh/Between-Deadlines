@@ -1,39 +1,44 @@
-Shader "Custom/URP/CustomCelToon"
+Shader "Custom/URP/CustomCelToon_Full"
 {
     Properties
     {
-        // 兼容内置命名，同时让材质面板有主贴图/主颜色高亮
+        // 主纹理/颜色（兼容高亮）
         [MainTexture] _MainTex("Albedo", 2D) = "white" {}
         [MainColor]   _Color ("Tint", Color) = (1,1,1,1)
 
         // Outline
-        _OutlineColor ("Outline Color", Color) = (0,0,0,1)
+        _OutlineColor   ("Outline Color", Color) = (0,0,0,1)
         _OutlineWidthPx ("Outline Width (pixels)", Range(0,3)) = 0.35
 
-        // Diffuse(阶梯/羽化)
-        _Steps  ("Light Steps", Range(1,5)) = 3
-        _Feather("Feather (0 = hard)", Range(0,0.5)) = 0.05
+        // 漫反射 Toon 阶梯/羽化
+        _Steps   ("Light Steps", Range(1,5)) = 3
+        _Feather ("Feather (0 = hard)", Range(0,0.5)) = 0.05
 
-        // Specular（用软阈值替代硬 step，避免靠近/远离时高光跳变）
-        _SpecColor ("Spec Color", Color) = (1,1,1,1)
+        // 高光（软阈值避免跳变）
+        _SpecColor    ("Spec Color", Color) = (1,1,1,1)
         _SpecStrength ("Spec Strength", Range(0,2)) = 0.5
-        _SpecThreshold ("Spec Threshold", Range(0,1)) = 0.5
-        _SpecFeather   ("Spec Feather",   Range(0,0.5)) = 0.08
-        _Gloss ("Glossiness (BlinnPow)", Range(8,256)) = 64
+        _SpecThreshold("Spec Threshold", Range(0,1)) = 0.5
+        _SpecFeather  ("Spec Feather",   Range(0,0.5)) = 0.08
+        _Gloss        ("Glossiness (BlinnPow)", Range(8,256)) = 64
 
         // Rim
         _RimColor ("Rim Color", Color) = (1,1,1,1)
         _RimPower ("Rim Power", Range(0.5,8)) = 2
 
-        // 可选灰度 Ramp（0~1）
-        _Ramp ("Optional Ramp (grayscale)", 2D) = "gray" {}
+        // Ramp
+        [NoScaleOffset]_Ramp ("Ramp (1D Strip)", 2D) = "gray" {}
+        [KeywordEnum(Procedural,RampGray,RampColor)] _DiffuseMode("Diffuse Mode", Float) = 0
 
-        // 阴影距离淡出（解决接近 Shadow Distance 时“啪没了”）
+        // 阴影距离淡出
+        [Toggle(_USE_SHADOW_FADE)] _UseShadowFade ("Use Shadow Fade", Float) = 0
         _ShadowFadeStart ("Shadow Fade Start (m)", Range(0,200)) = 35
         _ShadowFadeEnd   ("Shadow Fade End (m)",   Range(0,300)) = 50
 
-        // 软阴影的最低亮度（避免纯黑块，削弱级联硬切换感）
+        // 软阴影最小亮度
         _MinShadow     ("Min Shadow", Range(0,0.6)) = 0.25
+
+        // 高光只来自主光
+        [Toggle(_SPEC_MAIN_ONLY)] _SpecMainOnly ("Specular From Main Light Only", Float) = 0
     }
 
     SubShader
@@ -47,12 +52,12 @@ Shader "Custom/URP/CustomCelToon"
         LOD 300
 
         // =========================
-        // Pass 0 : Outline (反转外壳)
+        // Pass 0 : Outline
         // =========================
         Pass
         {
             Name "OUTLINE"
-            Tags { "LightMode"="SRPDefaultUnlit" } // 简单颜色即可
+            Tags { "LightMode"="SRPDefaultUnlit" }
             Cull Front
             ZWrite On
             ZTest LEqual
@@ -83,15 +88,13 @@ Shader "Custom/URP/CustomCelToon"
             Varyings vert (Attributes v)
             {
                 Varyings o;
-                // 对象->裁剪
                 float4 clipPos = TransformObjectToHClip(v.positionOS.xyz);
 
-                // 视空间法线用于屏幕像素偏移（避免透视缩放）
+                // 视空间法线 -> 屏幕像素偏移方向
                 float3 viewN = mul((float3x3)UNITY_MATRIX_IT_MV, v.normalOS);
                 viewN.z = 0;
                 float2 dir = normalize(viewN.xy + 1e-6);
 
-                // 以像素为单位的NDC偏移
                 float2 ndcPerPixel = 2.0 / _ScreenParams.xy;
                 float2 ndcOffset   = dir * (_OutlineWidthPx * ndcPerPixel.y);
 
@@ -107,9 +110,9 @@ Shader "Custom/URP/CustomCelToon"
             ENDHLSL
         }
 
-        // ==========================================
-        // Pass 1 : URP 前向主通道（主光+附加光）
-        // ==========================================
+        // =========================
+        // Pass 1 : UniversalForward
+        // =========================
         Pass
         {
             Name "UniversalForward"
@@ -123,17 +126,17 @@ Shader "Custom/URP/CustomCelToon"
             #pragma vertex   vert
             #pragma fragment frag
 
-            // 阴影/附加光等关键词
+            // URP 关键字
             #pragma multi_compile _ _MAIN_LIGHT_SHADOWS
             #pragma multi_compile _ _MAIN_LIGHT_SHADOWS_CASCADE
             #pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
             #pragma multi_compile _ _ADDITIONAL_LIGHT_SHADOWS
             #pragma multi_compile _ _SHADOWS_SOFT
 
-            // 可选功能开关（在材质面板 Keywords 里勾选即可）
-            #pragma shader_feature_local _USE_RAMP              // 使用自定义灰度 Ramp
-            #pragma shader_feature_local _USE_SHADOW_FADE       // 开启阴影距离淡出（需设置 FadeStart/End）
-            #pragma shader_feature_local _SPEC_MAIN_ONLY        // 仅主光产生高光（避免附加光进/出导致跳变）
+            // 本地功能开关
+            #pragma shader_feature_local _USE_SHADOW_FADE
+            #pragma shader_feature_local _SPEC_MAIN_ONLY
+            #pragma shader_feature_local _DIFFUSEMODE_PROCEDURAL _DIFFUSEMODE_RAMPGRAY _DIFFUSEMODE_RAMPCOLOR
 
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
@@ -160,6 +163,8 @@ Shader "Custom/URP/CustomCelToon"
                 float  _ShadowFadeStart;
                 float  _ShadowFadeEnd;
                 float  _MinShadow;
+
+                float  _DiffuseMode; // 仅用于面板显示，无需在代码中使用
             CBUFFER_END
 
             struct Attributes
@@ -184,75 +189,85 @@ Shader "Custom/URP/CustomCelToon"
             Varyings vert (Attributes v)
             {
                 Varyings o;
-                o.positionWS = TransformObjectToWorld(v.positionOS.xyz);
-                o.normalWS   = TransformObjectToWorldNormal(v.normalOS);
+                o.positionWS  = TransformObjectToWorld(v.positionOS.xyz);
+                o.normalWS    = TransformObjectToWorldNormal(v.normalOS);
                 o.positionHCS = TransformWorldToHClip(o.positionWS);
-                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+                o.uv          = TRANSFORM_TEX(v.uv, _MainTex);
                 #if defined(MAIN_LIGHT_CALCULATE_SHADOWS)
                     o.shadowCoord = TransformWorldToShadowCoord(o.positionWS);
                 #endif
                 return o;
             }
 
-            // 计算分段漫反射：返回 0~1
-            // 教学：先把 N·L 等分成 _Steps 段，再用 _Feather 做羽化（避免硬台阶）。
-            half CelStep(half ndl)
+            // —— 计算分段强度（0~1），支持三种模式
+            half CelIntensity(half ndl)
             {
-                half steps = max(_Steps, 1.0);
-                half q = floor(ndl * steps);
-                half denom = max(steps - 1.0, 1.0);
+                // 先做“程序化阶梯”
+                half steps   = max(_Steps, 1.0);
+                half q       = floor(ndl * steps);
+                half denom   = max(steps - 1.0, 1.0);
                 half stepped = q / denom;
-                // _Feather>0 时向回插一点，柔化边缘
+                // 羽化软化边缘
                 stepped = lerp(stepped, ndl, saturate(_Feather * 2.0));
+                stepped = saturate(stepped);
 
-                #if defined(_USE_RAMP)
-                    // 若使用自定义 Ramp：以 0~1 灰度映射分段结果，更易统一风格
-                    stepped = SAMPLE_TEXTURE2D(_Ramp, sampler_Ramp, float2(saturate(stepped), 0.5)).r;
+                #if defined(_DIFFUSEMODE_RAMPGRAY) || defined(_DIFFUSEMODE_RAMPCOLOR)
+                    // 用 Ramp 的灰度作为强度（彩色模式也需要这个强度用于“亮面定义”）
+                    float2 uv = float2(stepped, 0.5);
+                    stepped = SAMPLE_TEXTURE2D(_Ramp, sampler_Ramp, uv).r;
+                    stepped = saturate(stepped);
                 #endif
-                return saturate(stepped);
+
+                return stepped;
             }
 
-            // 单盏光的 Toon 着色（关键：用软阴影参与分段，减少级联切换带来的割裂）
+            // —— 单盏光 Toon 着色（输出漫反射 & 高光）
             half3 ShadeOneLight(half3 n, half3 v, float3 posWS, Light light, half3 albedo, out half3 specCol)
             {
-                // —— 使用 float 以避免半精度量化造成的闪烁
                 float ndl   = saturate(dot(n, light.direction));
                 float atten = light.distanceAttenuation * light.shadowAttenuation;
 
-                // 1) 软阴影：给阴影一个最小亮度，避免纯黑块（级联边界更不明显）
+                // 软阴影：给阴影下限，减少级联割裂
                 float softShadow = lerp(_MinShadow, 1.0, light.shadowAttenuation);
 
-                // 2) 让阴影影响进入 Toon 阶梯（而不是直接 0/1 乘）
+                // 让阴影参与 N·L，再做分段
                 float litNL  = ndl * softShadow;
-                half  stepNL = CelStep((half)litNL);
+                half  k      = CelIntensity((half)litNL);
 
-                // 3) 可选：接近 ShadowDistance 时做“距离淡出”，避免阴影突然消失
                 #if defined(_USE_SHADOW_FADE)
                     float dCam = distance(_WorldSpaceCameraPos, posWS);
-                    // 距离超过 FadeEnd 逐渐减弱到 0；FadeStart 之前保持 1
                     float fade = 1.0 - smoothstep(_ShadowFadeStart, _ShadowFadeEnd, dCam);
-                    stepNL *= fade;
+                    k *= fade;
                 #endif
 
-                // —— 漫反射（先分段再乘颜色/衰减）
-                half3 diff = albedo * (half)stepNL * light.color * atten;
+                half3 diff;
 
-                // —— 高光：Blinn-Phong -> 软阈值（smoothstep）替代硬 step
+                // —— 漫反射颜色来源
+                #if defined(_DIFFUSEMODE_RAMPCOLOR)
+                    // 彩色 Ramp：用 ramp 颜色与 Albedo 相乘（保留贴图细节）
+                    float2 ruv = float2(k, 0.5);
+                    half3 rampRGB = SAMPLE_TEXTURE2D(_Ramp, sampler_Ramp, ruv).rgb;
+                    diff = (rampRGB * albedo) * light.color * (half)atten;
+                #else
+                    // 程序化 or 灰度 Ramp：强度 k 决定亮部权重
+                    diff = albedo * k * light.color * (half)atten;
+                #endif
+
+                // —— 高光（软阈值）
                 float3 h   = normalize(light.direction + v);
                 float  ndh = saturate(dot(n, h));
                 float  s   = pow(ndh, _Gloss);
 
-                // 教学：_SpecThreshold 控制“出现位置”，_SpecFeather 控制“高光带宽度”
-                float  w = max(_SpecFeather, 1e-4);
+                float  w   = max(_SpecFeather, 1e-4);
                 s = smoothstep(_SpecThreshold - w, _SpecThreshold + w, s);
 
-                // 只在亮面给高光（若想要“背面反光”，把下一行改成：s *= 1.0 - step(0.001, litNL);）
+                // 仅亮面出高光
                 s *= step(0.001, litNL);
-
-                // 阴影对高光也只做“软影响”（避免 0/1）
+                // 阴影软影响
                 s *= softShadow;
 
-                specCol = (half3)(s * _SpecStrength) * _SpecColor.rgb * light.color * atten;
+                specCol = (half3)(s * _SpecStrength) * _SpecColor.rgb * light.color * (half)atten;
+
                 return diff;
             }
 
@@ -261,9 +276,9 @@ Shader "Custom/URP/CustomCelToon"
                 half3 n = normalize(i.normalWS);
                 half3 v = normalize(GetWorldSpaceViewDir(i.positionWS));
 
-                half3 albedo = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv).rgb * _Color.rgb;
+                half3 baseCol = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv).rgb * _Color.rgb;
 
-                // 主光（若开了阴影，这里会带 shadowCoord）
+                // 主光
                 #if defined(MAIN_LIGHT_CALCULATE_SHADOWS)
                     Light mainLight = GetMainLight(i.shadowCoord);
                 #else
@@ -271,34 +286,30 @@ Shader "Custom/URP/CustomCelToon"
                 #endif
 
                 half3 specMain;
-                half3 col = ShadeOneLight(n, v, i.positionWS, mainLight, albedo, specMain);
+                half3 col = ShadeOneLight(n, v, i.positionWS, mainLight, baseCol, specMain);
 
-                // —— 高光累加策略：
-                // 默认：主光 + 附加光都出高光；
-                // 若勾选 _SPEC_MAIN_ONLY：只主光出高光，避免附加光进/出导致明暗跳变。
                 half3 specSum = specMain;
 
-                // 额外光源累加
+                // 附加光
                 #if defined(_ADDITIONAL_LIGHTS)
                     uint addCount = GetAdditionalLightsCount();
                     for (uint li = 0u; li < addCount; li++)
                     {
                         Light l = GetAdditionalLight(li, i.positionWS);
                         half3 specA;
-                        half3 addDiff = ShadeOneLight(n, v, i.positionWS, l, albedo, specA);
+                        half3 addDiff = ShadeOneLight(n, v, i.positionWS, l, baseCol, specA);
                         col += addDiff;
-
                         #if !defined(_SPEC_MAIN_ONLY)
                             specSum += specA;
                         #endif
                     }
                 #endif
 
-                // 环境（URP 基础环境：球谐近似）
+                // 环境光（SH）
                 half3 sh = SampleSH(n);
-                half3 ambient = sh * albedo;
+                half3 ambient = sh * baseCol;
 
-                // Rim（保持不变）
+                // Rim
                 half rim = pow(1.0h - saturate(dot(n, v)), _RimPower);
                 half3 rimCol = _RimColor.rgb * rim;
 
@@ -309,7 +320,7 @@ Shader "Custom/URP/CustomCelToon"
             ENDHLSL
         }
 
-        // 直接复用 URP 的投影 Pass
+        // 投影 Pass
         UsePass "Universal Render Pipeline/Lit/ShadowCaster"
     }
 
