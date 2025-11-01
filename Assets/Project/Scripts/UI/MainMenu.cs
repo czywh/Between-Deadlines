@@ -9,10 +9,9 @@ public class MainMenu : MonoBehaviour
 
     public void PlayGame()
     {
-        // REMEMBER CHANGE BACK WHEN MERGING 
-        //SceneManager.LoadScene("Scene test");
-
-        SceneManager.LoadScene("UI Scene");
+        Time.timeScale = 1f;
+        
+        SceneManager.LoadScene("Scene test", LoadSceneMode.Single);
     }
 
     public void OpenSettings()
