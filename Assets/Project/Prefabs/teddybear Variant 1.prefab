@@ -92,11 +92,11 @@ MonoBehaviour:
   player: {fileID: 0}
   firePoint: {fileID: 6383147400047303581}
   bulletPrefab: {fileID: 1222865483590141112, guid: 88f141ae91e344108a81c97807d532d8, type: 3}
-  hitEffectPrefab: {fileID: 6452539493668645724, guid: b118fb2d37a2a46878db19524e896d88, type: 3}
+  hitEffectPrefab: {fileID: 1547313440927309249, guid: 7012da659976f4819b46cf5a20780cba, type: 3}
   flashRenderers: []
   flashColor: {r: 1, g: 0, b: 0, a: 1}
   flashDuration: 0.08
-  deathEffectPrefab: {fileID: 6452539493668645724, guid: b118fb2d37a2a46878db19524e896d88, type: 3}
+  deathEffectPrefab: {fileID: 1547313440927309249, guid: 7012da659976f4819b46cf5a20780cba, type: 3}
   shakeIntensity: 0.5
   shakeDuration: 0.3
   activateRange: 5
