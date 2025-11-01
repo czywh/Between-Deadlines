@@ -36,50 +36,81 @@
 
 ### Gameplay and Mechanics
 **•	Player Perspective**:
-The game adopts a third-person perspective. The camera is positioned behind the player character and follows their movements smoothly, providing both spatial awareness of the environment and precise control for platforming.  
+The game adopts a third-person perspective, with the camera positioned slightly behind and above the player character. This setup provides both spatial awareness and precise control during platforming. The camera follows smoothly and adjusts dynamically during movement, jumps, or interactions to maintain optimal visibility and cinematic flow.
 
 **•	Controls**:
-The player uses WASD to move, Space to jump, Q switch between world A and world B, the left mouse button to control the camera, and the right mouse button to levitate levitatable objects. The control scheme is intentionally minimalistic to allow players to focus on puzzle-solving rather than complex input sequences.
+Players use WASD to move, Space to jump, Q to open the portal and switch between World A and World B, the left mouse button to interact with or activate movable objects.
+The control scheme remains deliberately minimalistic, encouraging focus on spatial reasoning and puzzle-solving rather than complex input sequences.
 
 **•	Progression and Objectives**:
-Players must solve puzzles and advance through the environment. As progression continues, puzzles require the use of multiple colors and rapid switching between them. Falling outside the scene results in the player’s “death,” after which they respawn at the latest checkpoint. Upon reaching the final destination, a timer is displayed to indicate total completion time, encouraging replayability and optimization.
+Players progress through continuous exploration and puzzle-solving rather than by stages or score. The game features no timer and no traditional checkpoints.
+When the player falls off the map, they do not die — instead, they are guided back through a shortcut route that naturally leads toward the previous playable area. Subtle guiding lights and ambient visual cues indicate the recovery path, ensuring smooth re-entry into the main route.
+The objective is to explore, solve spatial puzzles, and ultimately defeat the boss at the end of the journey. The emphasis is on curiosity, rhythm, and discovery instead of time pressure or point accumulation.
 
 **•	Core Mechanics**:
-The game is a puzzle–platformer where the player switches between two parallel worlds to overcome obstacles and reach the goal. In the grey, rainy World A, colors have faded, while in the vibrant World B, the environment is restored and new structures like bridges appear. The player can move, jump, switch worlds, and use telekinetic levitation to lift and reposition objects to solve puzzles or create new paths. The core rule of the game is that some objects only exist in one world at a time, and switching worlds changes the environment’s layout without altering physics or player position. The main fun comes from combining world-switching and object manipulation to discover hidden routes and solve creative challenges. 
+The central gameplay loop revolves around switching between two overlapping worlds using a portal to overcome environmental challenges.
+- World A is grey, broken, and rainy — a world drained of color and life.
+- World B is bright and vivid, restoring lost structures, bridges, and platforms.
+Unlike conventional dual-world mechanics, objects from World A remain physically solid even while in World B, allowing for layered traversal and creative path-building between dimensions.
+The player can use telekinetic manipulation to reposition certain objects into predefined locations or sequences, constructing new routes or triggering hidden mechanisms.
+The experience culminates in a boss encounter, where the player must use environmental elements to reflect projectiles back at the boss.
+The gameplay rhythm centers on observing, switching, manipulating, and reflecting — a balance of logic and creativity.
  
 ### Levels and World Design
 **•	Game World**:
-The game world consists of one large 3D environment rather than segmented levels. The design emphasizes exploration and continuity, with checkpoints strategically placed to reduce frustration after failure. Although no map system is provided, navigation signs and environmental cues guide players toward their objectives.
+The game takes place in a continuous 3D environment rather than segmented levels. The world is interconnected and encourages exploration and backtracking. There is no map or checkpoint system; instead, players are guided through visual directionality such as lighting, reflections, particle effects, and color contrast.
+When players fall or take a wrong turn, glowing light paths and subtle environmental effects guide them back toward the main route, maintaining immersion and flow without punishment.
 
 **•	Objects and Assets**:
 The world features two main categories of objects:
-1.	Decorative Objects: Large-scale props, such as oversized cans or static scenery, reinforce the miniature-world theme. These objects cannot be moved and do not interact with the player beyond serving as environmental boundaries or visual storytelling elements.
-2.	Puzzle Objects: Interactive objects that respond to the player’s current world state. These include platforms, blocks, switches, and moving elements.
+1.	Decorative Objects: Large, static props — such as abandoned architecture, oversized household items, or environmental landmarks — that establish the miniature-world theme. They are non-interactive and serve only as physical boundaries or storytelling elements.
+2.	Interactive and Puzzle Objects: Elements that respond to the player’s actions or world state, including levitatable cubes, activation tiles, fragile or single-use platforms, switches, and reflective surfaces. Their behavior changes dynamically between World A and World B.
 
 **•	Puzzle and Challenge Design**:
-Early puzzles introduce simple world-switching mechanics, teaching players how objects appear or disappear between the two worlds. As the game progresses, challenges become more complex, combining timed jumps, object levitation, and multi-step interactions that require switching worlds at the right moment. Some puzzles involve moving platforms or timed environmental changes, demanding both precision and planning. The difficulty increases gradually, ensuring players learn each mechanic before being tested on more advanced combinations of movement, timing, and spatial reasoning.
+Early puzzles introduce the world-switching mechanic, teaching players how objects appear, disappear, or overlap between worlds.
+As the game progresses, puzzles grow in complexity — requiring players to combine precise timing, levitation, and movement:
+- Some challenges involve stepping on activation plates to create temporary paths.
+- Others feature fragile or one-time platforms that crumble after use.
+- Certain sections require moving or aligning multiple objects to unlock routes.
+The final boss battle integrates all learned systems — world-switching, levitation, and projectile reflection — testing the player’s mastery of timing and spatial logic.
+The difficulty curve follows a “learn → apply → innovate” pattern, ensuring gradual understanding and rewarding creative experimentation.
  
 ### Physics
 •	Gravity and Jumping:
-The player character is constantly influenced by gravity, resulting in natural falling and jumping arcs. Jumps apply an upward impulse that diminishes over time, creating a parabolic trajectory. Falling off platforms or leaving the scene boundary triggers a death-and-respawn cycle at the latest checkpoint.
+The player character is always affected by global gravity. Jumps apply an upward impulse that decays smoothly, producing a natural parabolic arc.
+Falling into the void does not cause death; instead, the player is gently redirected toward a recovery shortcut, illuminated by guiding lights that visually lead back to the playable area. This system reinforces exploration and reduces frustration from failed jumps.
 
 •	Collision Detection:
-All interactive objects have colliders. Collision is conditional on the player’s current color state: objects of matching color behave as solid, while non-matching objects allow the player to pass through. Decorative objects retain static colliders but serve only as barriers, not puzzle elements.
+All interactive objects have colliders, with their behavior depending on world state:
+- In World A, A-world objects are solid while B-world objects are visible but intangible.
+- In World B, both B-world and A-world objects remain solid, allowing combined physical interactions and layered traversal possibilities.
+Decorative objects maintain static colliders but serve purely as environmental boundaries.
 
 •	Movement and Forces:
-Player movement is velocity-based, prioritizing responsive, arcade-style control rather than realistic acceleration. Puzzle blocks and pushable objects move in response to applied forces but remain restricted to simple linear motion for consistency and predictability.
+Player motion uses velocity-based physics for responsiveness rather than realistic acceleration.
+Levitatable or pushable objects move along predefined axes to maintain predictability and consistency during puzzles, ensuring clarity of intent and avoiding chaotic physics behavior.
 
 •	Environmental Hazards and Boundaries:
-Falling into void areas or outside the playable world results in an immediate reset. Dynamic objects such as moving platforms follow predetermined motion paths, ensuring puzzle timing remains consistent and learnable rather than random.
+Falling outside the playable world triggers the guiding-light recovery sequence, visually directing the player back to the main route.
+Moving platforms and dynamic elements follow consistent, looped motion paths to ensure puzzles depend on timing and observation, not randomness.
+During the boss encounter, projectiles exert physical knockback and can be reflected to damage the boss, reinforcing interactive physics as both threat and tool.
 
 •	Interaction Logic:
-All physics-based interactions are mediated through color. The player’s ability to stand, push, or activate an object depends entirely on matching color states. This creates a unique and intuitive rule system, making color-switching both a mechanical challenge and a core part of the narrative identity.
+All physical interactions are governed by the portal and world-state system.
+The player’s ability to stand on, push, levitate, or reflect an object depends entirely on the current world visibility and overlap rules.
+This transforms world-switching from a visual effect into a core physical law — the foundation of both the gameplay’s puzzle design and its thematic identity.
 
 ### Art and Audio
 **•	Art Style**:
-The visual style of our game takes inspiration from It Takes Two - stylised, slightly surreal, and handcrafted , giving the world a playful yet emotionally impactful atmosphere. The overall color palette of our scene changes as the game progresses. It begins with cold, muted blues and greys symbolising sadness. As the player collects new colors, warmer tones gradually infuse the scene, visually representing healing and growth. The final scene will be orange in color representing triumph and renewal. 
+Our game has a stylised, low-poly aesthetic set inside a household environment inspired by modern apartment interiors. All props - from desk and beanbags to stacks of books and computers - are built from simplified geometry with clean, angular edges and flat shading.
 
-Objects along the path in the scene - such as pencils, books, soda cans - maintain exaggerated, oversized forms to emphasize the miniature theme. Their textures evolve alongisde the player's progress in the game - dull and worn in the beginningm, then gradually infused with brightness, saturation and playful colors as the world evolves into a warm tone. 
+The game draws inspiration from It Takes Two - particularly its sense of scale, imaginative household settings and playful tone. However, unlike It Takes Two's detailed, painterly visuals, our world uses low-poly approach that simplifies shapes and textures.
+
+The game begins in the dark, evoking a late-night atmosphere through cool blues, greys, and muted browns. When the player activates the portal sphere, it expands outwards surrounding the player, transforming the world from night to day.
+
+Objects along the path in the scene - such as pencils, books, computers - maintain exaggerated, oversized forms to emphasize the miniature theme. Their colors evolve alongisde the player's progress in the game - dull and desaturated at the beginning, then becoming brighter, more saturated and playful as the portal opens. The color palette of the environment shifts dramatically into warm sunlight, oranges, and yellows, symbolising renewal and hope after completing the dues.
+
+Overall, the aesthetic blends the imaginative scale and narrative charm of It Takes Two with the clarity and warmth of low-poly design, delivering a miniature world that feels handcrafted. playful, and emotionally uplifting.
 
 Visual References from *It Takes Two*
 
@@ -88,51 +119,77 @@ Visual References from *It Takes Two*
 | *Visual 1*                          | *Visual 2*                          |
 
 **•	Sound and Music**:
-The game's sound design is deliberately tied to the player's emotional progression and the color-based puzzle mechanic. In early stages, the maze feels hollow and fragile filled with soft wind, and sparse piano notes to reinforce the sense of emptiness and sadness. As new colors are collected, the environment grows richer, so does the music. Gentle chimes, faint hums, and brighter harmonies layer into the soundscape. By the final stage, the world is filled with uplifting and lively ambiences - sparkling tones and birdsong, symbolising renewal and hope.
+The sound reflects the player's emotional journey, from quiet isolation, to discovery, to truimph. The goal is to have the sound evolve with the visual tone of the surroundings.
+
+Background Music
+1. Night Phase - "Sad and emotional"
+- plays at the beginning of the game when it is in night mode
+- slow tempo, soft piano and ambient synths
+
+2. Portal Phase - "Bright and uplifting"
+- begins when portal sphere is activated 
+- slightly faster tempo 
+- symbolises optimism as the room fills with daylight and world becomes colorful
+
+3. Victory Phase - "Celebration"
+- plays when player reaches glowing teddy bear
+- energetic rhythm with upbeat melodies
+- marks emotional closure and joy after completing all assignments and completing university journey
+
+Sound Effects
+- footsteps of the player
+
+UI interaction:
+- interactive digital button clicks when player clicks on buttons in the UI 
 
 **•	Assets**:
-We will use a combination of custom-created, AI-generated, and sourced assets. 
+We combine low-poly 3D models, hand-placed props, and sourced effects to create a cohesive miniature world.
 
-3D Models - Rigged and animated player character through Mixamo and surrounding objects and collectibles sourced through Unity asset store
-Sound - Freesound (https://freesound.org) for sound effects and ambiences, OpenGameArt (https://opengameart.org)
+3D Models - Rigged and animated player character through Mixamo and surrounding objects and collectibles sourced through Unity Asset Store
+Sound - Freesound (https://freesound.org) for sound effects and ambiences, OpenGameArt (https://opengameart.org), Unity Asset Store, Pixabay (https://pixabay.com)
 
 ### UI/UX Design
 1. 📖 **Information Architecture**
 - Main Menu
-  - Game Start
-  - Chapter Select
-  - Settings (Volume / Language)
-  - About (Credits)
+  - Play
+  - Settings (Volume / Quality)
+  - Quit
 - Game Flow
-  - Player enters → Select Chapter → In-game → Complete Level → Return to Chapter Menu
+  - Player enters → Click "Play" → In-game → Complete Game → Return to Menu
 - Navigation Logic
-  - In-game → Pause Menu → Return to Chapter / Continue
+  - In-game → Pause Menu → Resume / Settings / Quit
 	
 2. 🎯 **HUD (Minimalist Style)**
-- Minimalist style (almost no HUD, only necessary hints).
+- Minimalist style
+- Only essential hints appear on screen - such as "Press E" prompts when near interactable objects
 - Tap feedback (light spark)  
 - Path guidance arrows  
-- Level complete prompt (minimal text / icon)
+- Victory is indicated through an on-screen prompt and return to menu button
 
 3. 🖥 **Menus & Screens**
 - Main Menu
-  - Minimal logo + "Start" button (centered)
-  - Soft background music
-- Chapter Select
-  - Card-style thumbnails (geometric architecture illustrations)
-  - Locked vs. unlocked distinction (bright vs. grayscale)
+  - Minimal game title + "Start", "Settings", "Quit" buttons (centered)
+  - darkened game environment image as background
 - Settings
   - Volume slider
-  - Language switch
+  - Quality dropdown
 - Pause Menu
-  - Continue
-  - Return to Chapter
+  - Resume
+  - Settings
+  - Quit
+- Victory Screen
+  - Congratulatory message
+  - Return to Menu button
 
 4. 🎮 **Interaction Design**
 - Controls
-  - Tap: Move character
+  - WASD/Arrow keys: Move character
+  - Spacebar - jump
+  - E - view instructions when near prompts
+  - Esc - Pause Menu
   - Swipe/Rotate: Manipulate structures
 - Feedback
+  - Interact prompts appear automatically when player is near active objects
   - Valid tap area → light spark feedback
   - Mechanisms → animation + sound
 - Transitions
@@ -140,19 +197,17 @@ Sound - Freesound (https://freesound.org) for sound effects and ambiences, OpenG
   - Menus → scale/fade transitions
 
 5. 💡**User Experience**
-- **Onboarding:** first level serves as natural tutorial  
+- **Onboarding:** Intro story pop-up explains the story behind this game  
 
 6. 🎨**UI Visual Style Guide**
-- Color Palette: soft pastel tones  
-- Typography: minimalist sans-serif 
+- Color Palette: soft pastel tones (mainly green, orange and blue)
+- Typography: minimalist sans-serif (Luckiest Guy, Titan One)
 
 ### Technology and Tools
 - Unity 6.1x - core engine for development of game
 - Github - version control, merge codes, code reviews
 - Slack - daily team communications and task assignments
 - Mixamo - quick rigging and character animations 
-- Tripo AI - generate base 3D models from concepts 
-- Blender - optimise mesges , refine textures, and polish models 
 
 ### Team Communication
 We will use Slack as our main communication platform for daily updates, discussion, organising and assigning tasks. All communication will be in English to ensure inclusivity and transparency for both the team and teaching staff.
@@ -162,6 +217,7 @@ Timeline:
 - Week 8-10: Assets integration and imported to unity, core gameplay loop developed (jumping, movements, challenges)
 - Week 11: Work on gameplay video and upload to youtube 
 - Week 12: Final polishes to the game 
+- SWOTVAC: Fix minor erros and bugs in the game so that it's ready to be build and run in WebGL
 
 ### Possible Challenges
 - WebGL Performance: Models generated through Tripo may be too heavy causing longer loading times
