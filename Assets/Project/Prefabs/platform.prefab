@@ -199,7 +199,7 @@ MonoBehaviour:
   greyTint: {r: 0.6, g: 0.6, b: 0.6, a: 1}
   collisionParticles: {fileID: 6857516980690768813, guid: 7012da659976f4819b46cf5a20780cba, type: 3}
   rend: {fileID: 2231849567507075333}
-  firstJumpMaterial: {fileID: 2100000, guid: 91f5212b3a96042e59d1d9553997d254, type: 2}
+  firstJumpMaterial: {fileID: 2100000, guid: c3b1ceb6a4e7d4d1a8acf5767961b35c, type: 2}
   fireParticlePrefab: {fileID: 7410526085682847027, guid: 3c0a1ffa5527a491c8e5cdded26cbc3f, type: 3}
   fireExplosionPrefab: {fileID: 1547313440927309249, guid: 7012da659976f4819b46cf5a20780cba, type: 3}
   canFloat: 1

@@ -3,9 +3,8 @@ using System.Collections;
 
 public class TimedDespawn : MonoBehaviour
 {
-    public float lifetime = 10f;               // 生存时间
-    public bool useOutroAnimation = true;      // 是否播放消失动画
-
+    public float lifetime = 10f;               
+    public bool useOutroAnimation = true;      
     private PopInBounce _anim;
 
     private void OnEnable()
@@ -22,11 +21,11 @@ public class TimedDespawn : MonoBehaviour
         _anim = GetComponent<PopInBounce>();
         if (useOutroAnimation && _anim != null)
         {
-            _anim.PlayOutAndDestroy(); // 动画+销毁
+            _anim.PlayOutAndDestroy(); 
         }
         else
         {
-            Destroy(gameObject);       // 直接销毁
+            Destroy(gameObject);       
         }
     }
 }

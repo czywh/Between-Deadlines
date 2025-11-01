@@ -1,28 +1,27 @@
 using System.Collections;
 using UnityEngine;
 
-/// 生成：从下往上+衰减震荡；
-/// 销毁：先做短暂震荡，再下沉消失（可回调销毁）
+
 public class PopInBounce : MonoBehaviour
 {
-    [Header("Rise (上升/下沉幅度)")]
+    
     public float riseDistance = 1.0f;
     public float riseDuration = 0.35f;
     public AnimationCurve riseCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
-    [Header("Shake (震荡)")]
+   
     public float shakeAmplitude = 0.15f;
     public float shakeFrequency = 10f;
     public float shakeDamping = 4f;
     public float shakeDuration = 0.6f;
 
-    [Header("Scale (缩放可选)")]
+    
     public bool scaleOvershoot = true;
     public float scaleAmount = 0.08f;
     public float scaleDamping = 5f;
     public float scaleFrequency = 8f;
 
-    [Header("Options")]
+    
     public bool useLocal = false;
     public bool autoPlayOnEnable = true;
     public bool temporaryKinematic = true;
@@ -77,7 +76,7 @@ public class PopInBounce : MonoBehaviour
         if (useLocal) transform.localPosition = _basePos;
         else transform.position = _basePos;
 
-        // 上升
+     
         float t = 0f;
         while (t < 1f)
         {
@@ -93,7 +92,7 @@ public class PopInBounce : MonoBehaviour
             yield return null;
         }
 
-        // 震荡
+ 
         float time = 0f;
         while (time < shakeDuration)
         {
@@ -133,12 +132,12 @@ public class PopInBounce : MonoBehaviour
             _rb.angularVelocity = Vector3.zero;
         }
 
-        // 目标位置
+        
         Vector3 pos0 = useLocal ? transform.localPosition : transform.position;
         _targetPos = pos0;
-        _basePos = pos0 - Vector3.up * riseDistance; // 下沉目标
+        _basePos = pos0 - Vector3.up * riseDistance; 
 
-        // 简短的反向震荡（先上后下，幅度逐渐减小）
+        
         float time = 0f;
         float outDuration = Mathf.Max(0.2f, shakeDuration * 0.5f);
         while (time < outDuration)
@@ -159,7 +158,7 @@ public class PopInBounce : MonoBehaviour
             yield return null;
         }
 
-        // 下沉消失
+        
         float t = 0f;
         while (t < 1f)
         {

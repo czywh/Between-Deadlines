@@ -3,26 +3,22 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody), typeof(Collider))]
 public class ReflectableBullet : MonoBehaviour
 {
-    [Header("Bullet Settings")]
-    public float speed = 16f;
+        public float speed = 16f;
     public float lifeTime = 6f;
     public int damage = 1;
-    [Tooltip("只有被反弹过才会伤害 Boss")]
-    public bool requireReflectedToDamageBoss = true;
+        public bool requireReflectedToDamageBoss = true;
 
-    [Header("Homing")]
+    
     [Range(0f, 1f)] public float homingStrength = 0.06f;
 
-    [Tooltip("子弹被任何东西销毁/命中时的通用粒子（可空）")]
+   
     public GameObject impactEffectPrefab;
-    [Tooltip("子弹寿命到期时播放的消散特效（可空）")]
+    
     public GameObject vanishEffectPrefab;
 
-    [Header("Player Knockback")]
-    [Tooltip("击中玩家时的击退力度")]
+    
     public float knockbackForce = 12f;
-    [Tooltip("击中玩家时附加的向上力度")]
-    public float knockbackUpward = 3f;
+       public float knockbackUpward = 3f;
 
     private Rigidbody _rb;
     private bool _reflected = false;
@@ -67,7 +63,7 @@ public class ReflectableBullet : MonoBehaviour
         }
     }
 
-    /// 由 ReflectWall 调用：按法线反弹，并开始追踪 Boss（Tag）
+   
     public void ReflectBy(Vector3 normal)
     {
         Vector3 v = _rb.linearVelocity;
@@ -93,11 +89,11 @@ public class ReflectableBullet : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        // 让墙体自己处理反弹（它会调用 ReflectBy）
+      
         if (collision.collider.GetComponentInParent<ReflectWall>() != null)
             return;
 
-        // ① 撞到 Boss
+        
         if (collision.collider.CompareTag("Boss"))
         {
             if (!_reflected && requireReflectedToDamageBoss)
@@ -118,7 +114,6 @@ public class ReflectableBullet : MonoBehaviour
             return;
         }
 
-        // === ② 撞到 Player：施加击退 ===
         if (collision.collider.CompareTag("Player"))
         {
             
@@ -145,12 +140,12 @@ public class ReflectableBullet : MonoBehaviour
         }
 
 
-        // ③ 其他物体 → 默认播放通用击中 VFX 后销毁
+        
         SpawnImpact(collision);
         Destroy(gameObject);
     }
 
-    //—— 工具 ——//
+   
     private void SpawnImpact(Collision c)
     {
         if (!impactEffectPrefab) return;
@@ -162,7 +157,7 @@ public class ReflectableBullet : MonoBehaviour
     {
         if (!prefab) return;
         var go = Object.Instantiate(prefab, pos, rot);
-        // 可选：给特效加自毁
+        
         Object.Destroy(go, 5f);
     }
 }
