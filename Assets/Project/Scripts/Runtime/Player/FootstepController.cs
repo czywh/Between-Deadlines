@@ -23,6 +23,7 @@ public class FootstepController : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
 
+        // setup audio source if not assigned 
         if (audioSource == null)
         {
             audioSource = GetComponent<AudioSource>();
@@ -33,7 +34,7 @@ public class FootstepController : MonoBehaviour
         audioSource.playOnAwake = false;
         audioSource.spatialBlend = 1f;
 
-        // ensure distances are valid
+        // ensure distances are valid for 3D sound 
         if (audioSource.minDistance < 0.3f) audioSource.minDistance = 0.8f;
         if (audioSource.maxDistance < 20f) audioSource.maxDistance = 50f;
     }
@@ -43,19 +44,22 @@ public class FootstepController : MonoBehaviour
         float speed = controller.velocity.magnitude;
         bool grounded = IsGroundedStable();
 
-        // check if player is actually pressing movement keys
+        // check if movement keys are pressed 
         float inputMagnitude = Mathf.Abs(Input.GetAxisRaw("Horizontal")) + Mathf.Abs(Input.GetAxisRaw("Vertical"));
         bool hasInput = inputMagnitude > 0.1f;
 
+        // player considered moving only if grounded and has input
         bool moving = (speed > moveThreshold || hasInput) && grounded;
 
         if (grounded && moving)
         {
+            // adjust interval based on player speed 
             float t = Mathf.InverseLerp(0f, expectedMaxSpeed, speed);
             float dynamicInterval = Mathf.Lerp(baseStepInterval, minStepInterval, t);
 
             stepTimer += Time.deltaTime;
 
+            // play footsteps when timer exceeds current interval
             if (stepTimer >= dynamicInterval)
             {
                 PlayFootstep();
@@ -64,6 +68,7 @@ public class FootstepController : MonoBehaviour
         }
         else
         {
+            // reset timer if not grounded or not moving 
             stepTimer = 0f;
         }
     }
@@ -77,6 +82,7 @@ public class FootstepController : MonoBehaviour
         return grounded;
     }
 
+    // plays random footstep sound with slight pitch variation
     void PlayFootstep()
     {
         if (audioSource == null || footstepClips == null || footstepClips.Length == 0)
@@ -87,6 +93,7 @@ public class FootstepController : MonoBehaviour
             index = (index + 1) % footstepClips.Length;
         lastClipIndex = index;
 
+        // pitch variation
         audioSource.pitch = Random.Range(0.96f, 1.04f);
         audioSource.PlayOneShot(footstepClips[index]);
     }

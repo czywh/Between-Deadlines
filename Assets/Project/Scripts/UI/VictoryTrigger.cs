@@ -29,12 +29,11 @@ public class VictoryTrigger : MonoBehaviour
 
         // show the UI
         if (victoryUI) victoryUI.SetActive(true);
-
     }
 
     public void ReturnToMainMenu()
     {
-        // Resume normal time before switching scenes
+        // resume normal time before switching scenes
         Time.timeScale = 1f;
         SceneManager.LoadScene("MainMenuScene");
     }

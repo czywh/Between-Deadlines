@@ -29,6 +29,7 @@ public class DanceModeSwitcher : MonoBehaviour
         foreach (var s in list) if (s) s.enabled = on;
     }
 
+    // switch to dance mode (for gameplay video only)
     public void EnterDanceMode()
     {
         SetEnabled(movementAndCameraScripts, false);
@@ -37,6 +38,7 @@ public class DanceModeSwitcher : MonoBehaviour
         if (animationSwitcher) animationSwitcher.enabled = true;
     }
 
+    // return to normal player movement mode 
     public void ExitDanceMode()
     {
         if (locomotionController) animator.runtimeAnimatorController = locomotionController;
@@ -47,7 +49,7 @@ public class DanceModeSwitcher : MonoBehaviour
 
     void Update()
     {
-        // Use T/Y only
+        // toggle modes using T (enter dance mode) / Y (exit dance mode)
         bool enter = Input.GetKeyDown(KeyCode.T);
         bool exit  = Input.GetKeyDown(KeyCode.Y);
 

@@ -16,10 +16,11 @@ public class IntroStory : MonoBehaviour
     [Header("Story Settings")]
     [TextArea(5, 10)]
     public string story = 
-        "After a long night of coding and coffee,\n" +
-        "you wake up to find yourself shrunk inside your own apartment.\n\n" +
-        "Navigate the miniature world and finish your deadlines\n" +
-        "before sunrise.";
+        "Another late night. The assignment's due soon - but something feels off.\n" +
+        "Your focus slips, your thoughts twist, and suddenly... you begin to shrink.\n\n" +
+        "You find yourself trapped on your own study desk - a vast miniature world of papers, pens, and a glowing computer screen.\n\n" +
+        "Two realities overlap: a dull, lifeless world bound by pressure, and a vibrant one filled with clarity and calm.\n\n" +
+        "Switch between them, solve the puzzles of your mind, and find your way back to balance.";
 
     public float typingSpeed = 0.03f;
 
@@ -28,10 +29,12 @@ public class IntroStory : MonoBehaviour
 
     void Start()
     {
-        // Freeze gameplay while intro runs
+        // pause gameplay while intro runs
         Time.timeScale = 0f;
         storyPanel.SetActive(true);
         continueButton.gameObject.SetActive(true);
+
+        // start typing animation
         typingCoroutine = StartCoroutine(TypeStory());
         continueButton.onClick.AddListener(CloseStory);
     }
@@ -45,7 +48,7 @@ public class IntroStory : MonoBehaviour
         {
             storyText.text += c;
 
-            // Play typing sound occasionally
+            // play typing sound randomly for natural effect
             if (typingAudioSource && !char.IsWhiteSpace(c) && Random.value > 0.7f)
             {
                 typingAudioSource.pitch = Random.Range(0.95f, 1.05f);
@@ -55,13 +58,14 @@ public class IntroStory : MonoBehaviour
             yield return new WaitForSecondsRealtime(typingSpeed);
         }
 
+        // finish typing - show continue button (x)
         isTyping = false;
         continueButton.gameObject.SetActive(true);
     }
 
     void Update()
     {
-        // Skip typing if clicked
+        // skip typing if player clicked
         if (isTyping && Input.GetMouseButtonDown(0))
         {
             StopCoroutine(typingCoroutine);
@@ -73,6 +77,7 @@ public class IntroStory : MonoBehaviour
 
     void CloseStory()
     {
+        // stop typing and hide panel
         if (typingCoroutine != null)
         {
             StopCoroutine(typingCoroutine);

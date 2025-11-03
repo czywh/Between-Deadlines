@@ -10,10 +10,10 @@ public class BlockBehaviour : MonoBehaviour
 
     [Header("FX")]
     [SerializeField] private ParticleSystem collisionParticles;
-    [SerializeField] private Renderer rend;               // 可拖拽 MeshRenderer（留空则自动搜）
-    [SerializeField] private Material firstJumpMaterial;  // 第一次踩后使用的材质
-    [SerializeField] private GameObject fireParticlePrefab;   // 常驻火焰（子物体）
-    [SerializeField] private GameObject fireExplosionPrefab;  // 破碎爆炸
+    [SerializeField] private Renderer rend;
+    [SerializeField] private Material firstJumpMaterial;
+    [SerializeField] private GameObject fireParticlePrefab;
+    [SerializeField] private GameObject fireExplosionPrefab;
 
     [Header("Motion (optional)")]
     [SerializeField] private bool canFloat = true;
@@ -21,7 +21,6 @@ public class BlockBehaviour : MonoBehaviour
     private float floatAmplitude;
     private Vector3 startPos;
 
-    // platform carry delta
     public Vector3 Delta { get; private set; } = Vector3.zero;
     private Vector3 _lastPos;
 
@@ -42,17 +41,15 @@ public class BlockBehaviour : MonoBehaviour
         if (!rend) rend = GetComponentInChildren<Renderer>();
         if (rend)
         {
-            // 缓存原始材质与颜色，便于复位
             originalMaterial = rend.material;
             baseColor = originalMaterial.HasProperty("_BaseColor")
                 ? originalMaterial.GetColor("_BaseColor")
                 : (originalMaterial.HasProperty("_Color") ? originalMaterial.GetColor("_Color") : rend.material.color);
         }
 
-        // —— 编辑器中的视觉提示：即爆块默认染成灰色（仅提示）
+        // tint explodable blocks 
         if (explodeOnLanding && rend)
         {
-            // 仅改颜色，不替换材质实例
             if (rend.material.HasProperty("_BaseColor"))
                 rend.material.SetColor("_BaseColor", greyTint);
             else if (rend.material.HasProperty("_Color"))
@@ -69,14 +66,14 @@ public class BlockBehaviour : MonoBehaviour
         floatAmplitude = Random.Range(0.1f, 0.3f);
         _lastPos = transform.position;
 
-        // ★ 即爆块：从一开始就保持火焰常驻
+        // for explodable blocks, keep fire effect active from start
         if (explodeOnLanding)
             EnsureFireLoop();
     }
 
     void Update()
     {
-        /* 如需漂浮，解开注释
+        /* uncomment to enable floating motion
         if (canFloat && !IsBroken)
         {
             float offset = Mathf.Sin(Time.time * floatSpeed) * floatAmplitude;
@@ -90,7 +87,6 @@ public class BlockBehaviour : MonoBehaviour
 
     public void OnPortalActive(bool active)
     {
-        // pause/resume floating and re-anchor so it doesn't snap
         canFloat = active;
         startPos = transform.position;
         _lastPos = transform.position;
@@ -98,13 +94,12 @@ public class BlockBehaviour : MonoBehaviour
 
         if (!active)
         {
-            // —— 关闭时：重置外观&状态，移除火焰
+            // reset state and appearance when deactivated
             steps = 0;
             firstJumpDone = false;
 
             if (rend)
             {
-                // 还原原始材质与颜色
                 if (originalMaterial != null) rend.material = originalMaterial;
 
                 if (rend.material.HasProperty("_BaseColor"))
@@ -128,7 +123,7 @@ public class BlockBehaviour : MonoBehaviour
         }
         else
         {
-            // —— 重新开启：若是即爆块则恢复常驻火焰
+            // restore fire effect for explodable blocks on activation
             if (explodeOnLanding)
                 EnsureFireLoop();
         }
@@ -136,9 +131,7 @@ public class BlockBehaviour : MonoBehaviour
 
     public void ApplyFirstStepIfNeeded()
     {
-        Debug.Log($"[Block] FirstStep? explodeOnLanding={explodeOnLanding} steps(before)={steps}", this);
-
-        // 即爆块不进入第一步流程（立即爆的逻辑由外部或第二步触发）
+        // explodable blocks skip first step logic
         if (explodeOnLanding) return;
 
         if (IsBroken || IsActivated) return;
@@ -153,7 +146,6 @@ public class BlockBehaviour : MonoBehaviour
             firstJumpDone = true;
         }
 
-        Debug.Log($"[Block] FirstStep APPLIED steps(now)={steps}", this);
     }
 
     public void ApplySecondStepIfReady()
@@ -162,21 +154,21 @@ public class BlockBehaviour : MonoBehaviour
         BreakNow();
     }
 
-    public void BreakNow()   // must be public
+    public void BreakNow()
     {
         Debug.Log($"[Block] BreakNow CALLED steps(before)={steps} IsBroken={IsBroken}", this);
 
         if (IsBroken) return;
         steps = 2;
 
-        // 停止常驻火焰
+        // stop fire effect
         if (currentFire != null)
         {
             Destroy(currentFire);
             currentFire = null;
         }
 
-        // 爆炸/碎裂特效（二选一）
+        // play explosion or collision effect 
         if (fireExplosionPrefab != null)
         {
             Instantiate(fireExplosionPrefab, transform.position, Quaternion.identity);
@@ -188,7 +180,6 @@ public class BlockBehaviour : MonoBehaviour
             if (rend)
             {
                 Color useColor = baseColor;
-                // 取当前材质颜色作为粒子主色（尽量兼容）
                 if (rend.material.HasProperty("_BaseColor")) useColor = rend.material.GetColor("_BaseColor");
                 else if (rend.material.HasProperty("_Color")) useColor = rend.material.GetColor("_Color");
                 main.startColor = useColor;
@@ -196,14 +187,13 @@ public class BlockBehaviour : MonoBehaviour
             Destroy(fx.gameObject, main.duration + main.startLifetime.constantMax + 0.25f);
         }
 
-        // 关闭碰撞与渲染
+        // disable collision and rendering 
         foreach (var c in GetComponentsInChildren<Collider>(true))  c.enabled = false;
         foreach (var r in GetComponentsInChildren<Renderer>(true))  r.enabled = false;
 
         Destroy(gameObject, 1f);
     }
 
-    // —— 常驻火焰保证：若没有就生成 —— //
     private void EnsureFireLoop()
     {
         if (fireParticlePrefab != null && currentFire == null)
@@ -212,7 +202,7 @@ public class BlockBehaviour : MonoBehaviour
                 fireParticlePrefab,
                 transform.position + Vector3.up * 0.5f,
                 Quaternion.identity,
-                transform // 作为子物体，跟随方块移动/销毁
+                transform
             );
         }
     }
