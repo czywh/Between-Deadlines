@@ -124,8 +124,8 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecFeather: 0.24
     - _SpecMainOnly: 0
-    - _SpecStrength: 0.5
-    - _SpecThreshold: 0
+    - _SpecStrength: 0
+    - _SpecThreshold: 1
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
@@ -144,7 +144,7 @@ Material:
     - _HueVariation: {r: 1, g: 0.5, b: 0, a: 0.1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 0.735849, g: 0.4683212, b: 0.16313633, a: 1}
-    - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+    - _SpecColor: {r: 0.8584906, g: 0, b: 0.04121193, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &4943265376381336584
