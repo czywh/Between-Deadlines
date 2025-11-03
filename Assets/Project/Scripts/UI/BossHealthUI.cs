@@ -9,13 +9,13 @@ public class BossHealthUI : MonoBehaviour
 
     void Update()
     {
-        // Make sure boss and fill exist before updating
+        // ensure boss and fill exist before updating
         if (boss == null || fillImage == null) return;
 
-        // Calculate ratio of current HP
+        // calculate ratio of current HP
         float ratio = (float)boss.CurrentHP / boss.MaxHP;
 
-        // Apply ratio to fill amount
+        // apply ratio to health bar fill amount
         fillImage.fillAmount = ratio;
     }
 }

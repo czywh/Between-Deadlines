@@ -12,13 +12,14 @@ public class PauseMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // toggle pause state when pressing ESC 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (isPaused)
             {
                 Resume();
-            } 
-            else 
+            }
+            else
             {
                 Pause();
             }
@@ -43,11 +44,14 @@ public class PauseMenu : MonoBehaviour
         isPaused = true;
     }
 
+    // switch from pause menu to settings screen 
     public void OpenSettings()
     {
         pauseMenuUI.SetActive(false);
         settingsPanel.SetActive(true);
     }
+
+    // return from settings back to pause menu
     public void CloseSettings()
     {
         settingsPanel.SetActive(false);

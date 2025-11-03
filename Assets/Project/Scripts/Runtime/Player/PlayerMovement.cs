@@ -196,6 +196,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    // detect which block the player is currently standing on
     void UpdateCurrentBlockUnderFeet(bool isGrounded)
     {
         Vector3 origin = transform.position + Vector3.up * 0.3f;
@@ -204,6 +205,7 @@ public class PlayerMovement : MonoBehaviour
 
         BlockBehaviour detectedBlock = null;
 
+        // perform a sphere cast downward to detect a block directly
         if (Physics.SphereCast(origin, radius, Vector3.down, out RaycastHit hit, distance))
         {
             detectedBlock =
@@ -212,6 +214,7 @@ public class PlayerMovement : MonoBehaviour
                 hit.collider.GetComponentInChildren<BlockBehaviour>();
         }
 
+        // if no block detected by sphere cast, do a secondary check near player's feet
         if (detectedBlock == null)
         {
             Vector3 feet = transform.position +
@@ -225,18 +228,23 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+        // update currrent block only if player is grounded 
         if (isGrounded)
             currentBlock = detectedBlock;
 
+        // track changes in the currently grounded block 
         var thisFrameBlock = isGrounded ? currentBlock : null;
         if (thisFrameBlock != lastGroundedBlock)
             lastGroundedBlock = thisFrameBlock;
     }
 
+    // handles player sliding down steep slopes 
     void HandleSlopeSliding()
     {
+        // skip sliding if standing on a block 
         if (currentBlock != null) return;
 
+        // cast ray downward to detect the surface below the player 
         Vector3 rayOrigin = transform.position + Vector3.up * 0.1f;
         if (Physics.Raycast(rayOrigin, Vector3.down, out slopeHit, controller.height / 2f + 0.5f))
         {
@@ -247,7 +255,8 @@ public class PlayerMovement : MonoBehaviour
                     Vector3.Cross(slopeHit.normal, Vector3.down),
                     slopeHit.normal
                 ).normalized;
-
+                
+                // move player slightly along the slope direction
                 controller.Move(slideDir * slideSpeed * Time.deltaTime);
             }
         }

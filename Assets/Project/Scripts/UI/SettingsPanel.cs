@@ -20,7 +20,7 @@ public class SettingsPanel : MonoBehaviour
         AudioListener.volume = savedVol;
         QualitySettings.SetQualityLevel(savedQuality);
 
-        // update UI
+        // sync UI with saved settings 
         volumeSlider.value = savedVol;
         qualityDropdown.value = savedQuality;
 
@@ -28,6 +28,7 @@ public class SettingsPanel : MonoBehaviour
         qualityDropdown.onValueChanged.AddListener(SetQuality);
     }
 
+    // called when volume slider adjusted 
     public void SetVolume(float value)
     {
         AudioListener.volume = value;
@@ -35,6 +36,7 @@ public class SettingsPanel : MonoBehaviour
         PlayerPrefs.Save();
     }
 
+    // called when quality dropdown selection changes 
     public void SetQuality(int index)
     {
         QualitySettings.SetQualityLevel(index);

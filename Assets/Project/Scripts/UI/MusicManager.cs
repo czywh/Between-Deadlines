@@ -31,17 +31,19 @@ public class MusicManager : MonoBehaviour
         victoryMusic.Pause();
     }
 
-    //  called when enter world b
+    //  called when sphere opened
     public void OnSphereOpened()
     {
         StopAllCoroutines();
         StartCoroutine(FadeToHappy());
     }
 
+    // fade out sad music and faede in happy music 
     private IEnumerator FadeToHappy()
     {
         float time = 0f;
 
+        // start musc from 20 second onwards 
         if (!hasPlayedOnce)
         {
             happyMusic.time = 20f;
@@ -52,6 +54,7 @@ public class MusicManager : MonoBehaviour
         float sadStart = sadMusic.volume;
         float happyStart = happyMusic.volume;
 
+        // gradually adjust volumes over fadeDuration
         while (time < fadeDuration)
         {
             time += Time.deltaTime;
@@ -67,7 +70,7 @@ public class MusicManager : MonoBehaviour
         happyMusic.volume = happyMaxVolume;
     }
 
-    // called when return from world b
+    // called when sphere is closed - triggers transition back to sad music
     public void OnSphereClosed()
     {
         StopAllCoroutines();
@@ -75,6 +78,7 @@ public class MusicManager : MonoBehaviour
         StartCoroutine(FadeBackToSad());
     }
 
+    // fade out happy music and fade in sad music
     private IEnumerator FadeBackToSad()
     {
         float time = 0f;
@@ -82,6 +86,7 @@ public class MusicManager : MonoBehaviour
         float sadStart = sadMusic.volume;
         float happyStart = happyMusic.volume;
 
+        // gradually adjust volumes over fadeDuration seconds
         while (time < fadeDuration)
         {
             time += Time.deltaTime;
@@ -98,24 +103,26 @@ public class MusicManager : MonoBehaviour
         happyMusic.volume = 0f;
     }
 
-    // called when player reaches teddy bear 
+    // called when player reaches teddy bear - triggers victory music
     public void OnVictory()
     {
         StopAllCoroutines();
         StartCoroutine(FadeToVictory());
     }
 
+    // fade in victory music while stopping all other tracks
     private IEnumerator FadeToVictory()
     {
         float time = 0f;
 
-        // Stop or fade out other music
+        // stop other music
         sadMusic.Pause();
         happyMusic.Pause();
 
         victoryMusic.UnPause();
         float victoryStart = 0f;
 
+        // gradually fade in victory music over fadeDuration seconds
         while (time < fadeDuration)
         {
             time += Time.deltaTime;
@@ -126,5 +133,4 @@ public class MusicManager : MonoBehaviour
 
         victoryMusic.volume = victoryMaxVolume;
     }
-
 }
