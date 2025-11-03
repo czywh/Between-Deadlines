@@ -15,7 +15,7 @@
 
 
 ### Game Overview
-**•	Core Concept**: The core concept of the game is escaping a miniature dual-world that represents the mental state of a student rushing to finish an assignment. The player takes on the role of a University of Melbourne student who has been mysteriously shrunken and trapped on his own study desk as the deadline approaches. To return to normal size and restore color to his world, he must navigate between two contrasting miniature realities — the grey, rainy World A, symbolizing stress and pressure, and the colorful World B, representing relief and clarity after completing the task. By switching between these two worlds, solving puzzles, and overcoming platforming challenges, the player symbolically experiences the journey of overcoming academic stress and finding balance again.
+**•	Core Concept**: The core concept of the game is escaping a miniature dual-world that represents the mental state of a student rushing to finish an assignment. The player takes on the role of a University of Melbourne student who has been mysteriously shrunken and trapped on his own study desk as the deadline approaches. To return to normal size and restore color to his world, he must navigate between two contrasting miniature realities — the dim, late-night World A, illuminated by cool blue light and cluttered with unfinished work, symbolizing stress and pressure, and the colorful World B, representing relief and clarity after the deadline. By switching between these two worlds, solving puzzles, and overcoming platforming challenges, the player symbolically experiences the journey of overcoming academic stress and finding balance again.
 
 **•	Related genre**: The game is a 3D puzzle-platformer genre, with influences from narrative-driven exploration games. Similar games includes It Takes Two (for stylized world and cooperative puzzle feeling) and Monument Valley (for spatial puzzles). Unlike other puzzle-platformers, this game has the combination of world switching, levitation based interaction, and the symbolic contrast between the grey “due world” and the colorful “after-due world” gives the game a distinct emotional and visual identity that ties everyday student struggles to a creative and immersive gameplay experience.
 
@@ -25,14 +25,14 @@
 
 • World-switching system – Objects, platforms, and bridges appear or disappear depending on the active world (A or B), creating dynamic and perspective based spatial puzzles.
 
-• Emotional storytelling integration – The transition from the grey, rainy world to the colorful world symbolizes the player’s emotional journey from stress to relief as the assignment nears completion.
+• Emotional storytelling integration – The transition from the grey, dim world to the colorful, bright, sun-lit world symbolizes the player’s emotional journey from stress to relief as the assignment nears completion.
 
 • Replayability – Time trials encourage speedrunning and mastery beyond the first playthrough.
 
 ### Story and Narrative
-**•	Backstory**: The story follows a University of Melbourne student who has been mysteriously shrunken and trapped within a miniature version of his study desk. As the deadline for his assignment approaches, his mind fractures the world into two contrasting realities — World A, a grey, stormy space that mirrors his stress and exhaustion, and World B, a colorful, peaceful world representing focus and relief after finishing his work. The entire game takes place on a miniature study desk world, where everyday objects like books, stationery, coffee mugs, and papers become giant structures, platforms, and obstacles. Rain, reflections, and lighting effects help distinguish the emotional tone of each world.
+**•	Backstory**: The story follows a University of Melbourne student who has been mysteriously shrunken and trapped within a miniature version of his study desk. As the deadline for his assignment approaches, his mind fractures the world into two contrasting realities — World A, a dim, late-night space that mirrors his stress and exhaustion, and World B, a bright, warm, and peaceful world representing focus and relief after finishing his work. The game unfolds across a miniature apartment environment, expanding beyond the study desk into surrounding areas such as the floor, furniture, and living space. Everyday household objects like books, stationery, coffee mugs, and papers become giant structures, platforms, and obstacles. Reflections and lighting effects help distinguish the emotional tone of each world.
 
-**•	Characters**: In our game, there is only one character—the player character, named Luma. Luma is a University of Melbourne student, a hardworking but overwhelmed individual trapped in a miniature version of his study desk. He wears simple everyday clothes — a hoodie, jeans, and sneakers — and his appearance reflects his emotional state: dull and desaturated in World A, colorful and lively in World B. His motivation is to finish his assignment and escape the stormy, stressful world that represents his anxiety. The student’s journey symbolizes determination, perseverance, and emotional growth through self-discipline and problem-solving.
+**•	Characters**: In our game, there is only one character—the player character, named Luma. Luma is a University of Melbourne student, a hardworking but overwhelmed individual trapped in a miniature version of his study desk. He wears simple everyday clothes — a hoodie, jeans, and sneakers — and his appearance reflects his emotional state: dull and desaturated in World A, colorful and lively in World B. His motivation is to finish his assignment and escape the dull, stressful world that represents his anxiety. The student’s journey symbolizes determination, perseverance, and emotional growth through self-discipline and problem-solving.
 
 ### Gameplay and Mechanics
 **•	Player Perspective**:
@@ -102,7 +102,7 @@ This transforms world-switching from a visual effect into a core physical law �
 
 ### Art and Audio
 **•	Art Style**:
-Our game has a stylised, low-poly aesthetic set inside a household environment inspired by modern apartment interiors. All props - from desk and beanbags to stacks of books and computers - are built from simplified geometry with clean, angular edges and flat shading.
+Our game has a stylised, low-poly aesthetic set inside a household environment inspired by modern apartment interiors. All props - from desk and beanbags to stacks of books and computers - are built from simplified geometry with clean, angular edges and flat shading. The contrast between the dull blue tones of World A and the warm light of World B visually conveys the emotional shift from late-night stress to morning relief.
 
 The game draws inspiration from It Takes Two - particularly its sense of scale, imaginative household settings and playful tone. However, unlike It Takes Two's detailed, painterly visuals, our world uses low-poly approach that simplifies shapes and textures.
 

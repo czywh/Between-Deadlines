@@ -16,11 +16,12 @@ public class IntroStory : MonoBehaviour
     [Header("Story Settings")]
     [TextArea(5, 10)]
     public string story = 
-        "After a long night of coding and coffee,\n" +
-        "you wake up to find yourself shrunk inside your own apartment.\n\n" +
-        "Navigate the miniature world and finish your deadlines\n" +
-        "before sunrise.";
-
+        "Another late night. The assignment's due soon - but something feels off.\n" +
+        "Your focus slips, your thoughts twist, and suddenly... you begin to shrink.\n\n" +
+        "You find yourself trapped on your own study desk - a vast miniature world of papers, pens, and a glowing computer screen.\n\n" +
+        "Two realities overlap: a dull, lifeless world bound by pressure, and a vibrant one filled with clarity and calm.\n\n" +
+        "Switch between them, solve the puzzles of your mind, and find your way back to balance.";
+        
     public float typingSpeed = 0.03f;
 
     private bool isTyping;

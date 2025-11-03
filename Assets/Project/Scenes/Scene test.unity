@@ -11032,16 +11032,21 @@ MonoBehaviour:
   storyText: {fileID: 809395418}
   continueButton: {fileID: 1159675872}
   typingAudioSource: {fileID: 504463067}
-  story: 'After a long night of coding and coffee,
-
-    you wake up to find yourself
-    shrunk inside your own apartment.
+  story: 'Another late night. The assignment''s due soon - but something feels off.
+    Your focus slips, your throughts twist, and suddenly... you begin to shrink.
 
 
-    Navigate the miniature world and finish
-    your deadlines
+    You
+    find yourself trapped on your own study desk - a vast miniature world of papers,
+    pens, and glowing computer screen.
 
-    before sunrise.'
+
+    Two realities overlap: a dull, lifeless
+    world bound by pressure, and a vibrant one filled with clarity and calm.
+
+
+    Switch
+    between them, solve the puzzles of your mind, and find your way back to balance. '
   typingSpeed: 0.03
 --- !u!114 &504463069
 MonoBehaviour:
@@ -17261,8 +17266,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 500, y: 500}
+  m_AnchoredPosition: {x: 0, y: 30}
+  m_SizeDelta: {x: 550, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &809395417
 CanvasRenderer:
@@ -17292,9 +17297,21 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "After a long night of coding and coffee,\\n\" \n        \"you wake up
-    to find yourself shrunk inside your own apartment.\\n\\n\"\n        \"Navigate
-    the miniature world and finish your deadlines\\n\"\n        \"before sunrise.\";\n"
+  m_text: 'Another late night. The assignment''s due soon - but something feels off.
+    Your focus slips, your throughts twist, and suddenly... you begin to shrink.
+
+
+    You
+    find yourself trapped on your own study desk - a vast miniature world of papers,
+    pens, and glowing computer screen.
+
+
+    Two realities overlap: a dull, lifeless
+    world bound by pressure, and a vibrant one filled with clarify and calm.
+
+
+    Switch
+    between them, solve the puzzles of your mind, and find your way back to balance. '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f9e445c921f146fe8170ec2c017cd66, type: 2}
   m_sharedMaterial: {fileID: -8287655162260363224, guid: 8f9e445c921f146fe8170ec2c017cd66, type: 2}
@@ -17303,8 +17320,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4283113237
+  m_fontColor: {r: 0.08235294, g: 0.12156863, b: 0.29411766, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -17321,8 +17338,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25
-  m_fontSizeBase: 25
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -25164,7 +25181,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 110, y: 110}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1148627584
 MonoBehaviour:
@@ -25739,7 +25756,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 300, y: 300}
+  m_AnchoredPosition: {x: 330, y: 330}
   m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1160228075
