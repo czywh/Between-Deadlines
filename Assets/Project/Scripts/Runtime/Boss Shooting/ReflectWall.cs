@@ -24,11 +24,6 @@ public class ReflectWall : MonoBehaviour
         GetComponentsInChildren(true, _colliders);
 
         
-        foreach (var col in _colliders)
-        {
-            if (col.isTrigger)
-                Debug.LogWarning($"[ReflectWall] {name} 的某些 Collider 是 Trigger。建议使用非Trigger来获取准确法线。");
-        }
     }
 
     void OnCollisionEnter(Collision collision)

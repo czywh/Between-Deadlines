@@ -33,7 +33,12 @@ public class BossShooter : MonoBehaviour
 
     public LayerMask losObstacles = ~0;
 
-    
+    [Header("Aiming / Rotation")]
+    public bool facePlayer = true;
+    public bool yawOnly = true;
+    public float turnSpeed = 360f;
+    public bool rotateOnlyWhenAggro = true;
+
     private int _hp;
     private Coroutine _fireCo;
     private Collider _bossCollider;
@@ -41,9 +46,8 @@ public class BossShooter : MonoBehaviour
     private MaterialPropertyBlock _mpb;
     private static readonly int _ColorPropBase = Shader.PropertyToID("_BaseColor");
     private static readonly int _ColorPropStd = Shader.PropertyToID("_Color");
-    private Color[] _origColors; // 每个 renderer 的原始颜色缓存
+    private Color[] _origColors;
 
-    // 激活开关
     private bool _aggro = false;
 
     public int CurrentHP => _hp;
@@ -53,7 +57,7 @@ public class BossShooter : MonoBehaviour
     public bool showGizmos = true;
     public Color activateColor = new Color(0f, 1f, 0.6f, 1f);
     public Color deactivateColor = new Color(1f, 0.7f, 0f, 1f);
-    public bool drawWhenUnselected = false; 
+    public bool drawWhenUnselected = false;
 
     void Awake()
     {
@@ -68,7 +72,6 @@ public class BossShooter : MonoBehaviour
 
         _mpb = new MaterialPropertyBlock();
 
-       
         if (flashRenderers != null && flashRenderers.Length > 0)
         {
             _origColors = new Color[flashRenderers.Length];
@@ -77,7 +80,6 @@ public class BossShooter : MonoBehaviour
                 var r = flashRenderers[i];
                 if (!r) { _origColors[i] = Color.white; continue; }
 
-                
                 r.GetPropertyBlock(_mpb);
                 if (_mpb != null && (_mpb.GetVector(_ColorPropBase) != Vector4.zero))
                     _origColors[i] = _mpb.GetColor(_ColorPropBase);
@@ -95,8 +97,6 @@ public class BossShooter : MonoBehaviour
                 else _origColors[i] = Color.white;
             }
         }
-
-        
     }
 
     void OnEnable()
@@ -116,9 +116,10 @@ public class BossShooter : MonoBehaviour
     void Update()
     {
         UpdateAggro();
+        UpdateAimRotation();
     }
 
-       IEnumerator FireLoop()
+    IEnumerator FireLoop()
     {
         var wait = new WaitForSeconds(fireInterval);
         while (true)
@@ -129,18 +130,13 @@ public class BossShooter : MonoBehaviour
         }
     }
 
-   
     void TryFire()
     {
         if (player == null || bulletPrefab == null || firePoint == null) return;
 
-       
         Vector3 dir = (player.position - firePoint.position).normalized;
-
-        
         var go = Instantiate(bulletPrefab, firePoint.position, Quaternion.LookRotation(dir, Vector3.up));
 
-       
         var bullet = go.GetComponent<ReflectableBullet>();
         if (bullet != null)
         {
@@ -152,19 +148,16 @@ public class BossShooter : MonoBehaviour
         }
     }
 
-        public void TakeDamage(int amount, Vector3 hitPoint)
+    public void TakeDamage(int amount, Vector3 hitPoint)
     {
         _hp -= Mathf.Max(1, amount);
         _hp = Mathf.Max(0, _hp);
 
-       
         if (hitEffectPrefab)
         {
-            var fx = Instantiate(hitEffectPrefab, hitPoint, Quaternion.identity);
-            
+            Instantiate(hitEffectPrefab, hitPoint, Quaternion.identity);
         }
 
-       
         if (flashRenderers != null && flashRenderers.Length > 0)
             StartCoroutine(FlashOnce());
 
@@ -173,28 +166,24 @@ public class BossShooter : MonoBehaviour
         if (_hp <= 0) Die();
     }
 
-        public void TakeDamage(int amount) => TakeDamage(amount, transform.position + Vector3.up * 1f);
+    public void TakeDamage(int amount) => TakeDamage(amount, transform.position + Vector3.up * 1f);
 
-       private void Die()
+    private void Die()
     {
-       
         if (_fireCo != null)
         {
             StopCoroutine(_fireCo);
             _fireCo = null;
         }
 
-        
         if (deathEffectPrefab != null)
         {
             Instantiate(deathEffectPrefab, transform.position, transform.rotation);
         }
 
-        
         Destroy(gameObject, 0.25f);
     }
 
-   
     private IEnumerator FlashOnce()
     {
         if (flashRenderers == null || flashRenderers.Length == 0) yield break;
@@ -205,7 +194,6 @@ public class BossShooter : MonoBehaviour
             if (!r) continue;
 
             r.GetPropertyBlock(_mpb);
-            
             _mpb.SetColor(_ColorPropBase, flashColor);
             r.SetPropertyBlock(_mpb);
         }
@@ -217,12 +205,10 @@ public class BossShooter : MonoBehaviour
             var r = flashRenderers[i];
             if (!r) continue;
 
-           
             var restore = (_origColors != null && i < _origColors.Length) ? _origColors[i] : Color.white;
             r.GetPropertyBlock(_mpb);
             if (_mpb != null)
             {
-                
                 _mpb.SetColor(_ColorPropBase, restore);
                 _mpb.SetColor(_ColorPropStd, restore);
                 r.SetPropertyBlock(_mpb);
@@ -238,21 +224,16 @@ public class BossShooter : MonoBehaviour
         while (elapsed < shakeDuration)
         {
             elapsed += Time.deltaTime;
-
-            
             float offsetX = Random.Range(-1f, 1f) * shakeIntensity;
             float offsetY = Random.Range(-1f, 1f) * shakeIntensity;
-            float offsetZ = Random.Range(-1f, 1f) * shakeIntensity * 0.5f; // 轻微Z向抖动
-
+            float offsetZ = Random.Range(-1f, 1f) * shakeIntensity * 0.5f;
             transform.position = originalPos + new Vector3(offsetX, offsetY, offsetZ);
-
             yield return null;
         }
 
         transform.position = originalPos;
     }
 
-   
     private void UpdateAggro()
     {
         if (player == null)
@@ -265,13 +246,11 @@ public class BossShooter : MonoBehaviour
 
         if (_aggro)
         {
-            
             if (d > deactivateRange || !HasLineOfSight())
                 _aggro = false;
         }
         else
         {
-            
             if (d <= activateRange && HasLineOfSight())
                 _aggro = true;
         }
@@ -288,11 +267,34 @@ public class BossShooter : MonoBehaviour
         if (dist <= 0.001f) return true;
 
         Vector3 dir = toPlayer / Mathf.Max(dist, 0.0001f);
-        
         return !Physics.Raycast(origin, dir, dist, losObstacles, QueryTriggerInteraction.Ignore);
     }
 
-    
+    private void UpdateAimRotation()
+{
+    if (!facePlayer) return;
+    if (player == null) return;
+    if (rotateOnlyWhenAggro && !_aggro) return;
+
+    // Direction on horizontal plane only
+    Vector3 toPlayer = player.position - transform.position;
+    toPlayer.y = 0f;
+    if (toPlayer.sqrMagnitude < 0.0001f) return;
+
+    // Base horizontal rotation toward player
+    Quaternion targetRot = Quaternion.LookRotation(toPlayer.normalized, Vector3.up);
+
+    // Add a fixed 90° tilt on the X-axis
+    Quaternion tilt = Quaternion.Euler(-90f, 0f, 90f);
+    targetRot = targetRot * tilt;
+
+    // Smoothly rotate toward that orientation
+    transform.rotation = Quaternion.RotateTowards(
+        transform.rotation,
+        targetRot,
+        turnSpeed * Time.deltaTime
+    );
+}
     void OnDrawGizmos()
     {
         if (!drawWhenUnselected || !showGizmos) return;
@@ -308,26 +310,21 @@ public class BossShooter : MonoBehaviour
     private void DrawRangesGizmo()
     {
         Vector3 p = transform.position;
-
-        
         Gizmos.color = activateColor;
         Gizmos.DrawWireSphere(p, Mathf.Max(0f, activateRange));
 
         Gizmos.color = deactivateColor;
         Gizmos.DrawWireSphere(p, Mathf.Max(0f, deactivateRange));
 
-        
         if (player != null)
         {
             Gizmos.color = Color.cyan;
             Gizmos.DrawLine(p, player.position);
-            
             Gizmos.DrawWireSphere(player.position, 0.2f);
         }
     }
 
 #if UNITY_EDITOR
-  
-    private void OnSceneGUI() { } // 占位避免警告
+    private void OnSceneGUI() { }
 #endif
 }
