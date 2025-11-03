@@ -15,7 +15,7 @@ public struct RenderPathContext
 
     public LayerMask portalCameraCulling;
     public string sphereRTProperty;
-    public RenderTexture portalRT;                 // 仅用于传入旧值（不会在内部被写回）
+    public RenderTexture portalRT;                 
     public Material sphereMaterialForRT;
     public float rtResolutionScale;
     public bool useDistanceFade;

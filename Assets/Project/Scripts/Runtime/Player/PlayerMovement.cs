@@ -38,10 +38,6 @@ public class PlayerMovement : MonoBehaviour
     private BlockBehaviour currentBlock;
     private BlockBehaviour lastGroundedBlock;
 
-    // New tracking sets
-    private int lastActivatedBlockId = -1;         // which block we first landed on
-    private bool leftGroundAfterActivate = false;
-
     private readonly HashSet<int> landedBlockIdsThisLanding = new();
 
     [SerializeField] private KnockbackReceiver knockback;
