@@ -75,28 +75,22 @@ The goal of our evaluation was to identifu usability problems, gameplay clarify 
 **•	Findings and improvemnts**:
 
 • Objective and gameplay clarity: Many players were unsure about their goals when a level started and could not easily distinguish interactable objects.
-
 Improvements: Added instructional panels explaining level objectives. Glowing phones were made interactive, and proximity prompts now trigger new gameplay mechanics to help players understand progression.
 
 • Atmosphere and immersion: Players noted the absence of a background story and music, which made the experience feel flat and less engaging.
-
 Improvements: Introduced a short background story at game start, added background music and movement sound effects, and implemented additional shaders to make visuals more appealing and immersive.
 
 • Game design and navigation: Some players reported getting lost or needing to walk long distances to return after falling off the table. Others found early puzzles too simple.
-
 Improvements:
 Added guiding particle effects and shortcuts to help players return to the correct path quickly. Designed three new levels with progressive difficulty and introduced new puzzle elements, such as movable books that open paths, traps that break after jumps, and more interactions between World A and World B objects.
 
 • Feedback and reward system: Players were uncertain when they had successfully completed an objective, as there was no clear success indicator.
-
 Improvements: Added visual “Victory” message and audio feedback for successful interactions at the end of the game to clearly signal completion.
 
 • Controls and responsiveness: Participants found the controls not straightforward. And the absence of smooth mouse control for adjusting the camera limited participants' navigation flexibility.
-
 Improvements: Implemented mouse-based camera control, allowing players to freely and smoothly adjust their view during gameplay. Added on-screen UI prompts such as “Press E to view the instruction”, guiding players through core controls and improving overall responsiveness.
 
 • Bug and collision issues: Some players were able to pass through certain obstacles or triggers failed to activate.
-
 Improvements: Refined collider boundaries, adjusted trigger sizes, and tested all interactable objects to ensure consistent activation.
 
 ## Shaders and Special Effects
