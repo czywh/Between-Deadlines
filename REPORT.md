@@ -104,8 +104,6 @@ TODO - see specification for details
 
 ## Summary of Contributions
 
-TODO - see specification for details
-
 **Rebecca**: Primarily responsible for character implementation, user interface design, and sound integration.
 - Character Implementation: Imported and configured the main player model from Mixamo, including all associated animations (walk, run, jump). Developed and refined the player movement script to ensure smooth transitions between animations and responsive control.
 - Camera Follow & Additional Animations: Helped with adjusting third-person camera follow system to achieve smoother movement and mouse control. Additionally implemented the player's dance animation switcher - allowing player to trigger and switch between multiple animations such as HipHop dance and Sad idle - to visually express the player's emotions throughout the game, enhancing the storytelling and presentation in the gameplay video.
@@ -113,6 +111,26 @@ TODO - see specification for details
 - Background Music & Sound Effects: Imported and integrated multiple background music tracks (sad, happy, victory) and sound effects such as footsteps for the player, button clicks, and keyboard typing sounds for the story panel. Implemented the logic for background music switching bewteen both worlds (A and B) and synchronized UI sound feedback.
 - Puzzle Logic: Developed one puzzle interactions - when player jumps on a stack of books, the stack changes color on the first jump and explodes on the second. Also incorporated the particle effect for the explosion, the particle system effect for the explosion was implementation by another teammate. 
 
+**Tom**: Primarily responsible for level design, lighting setup, and core gameplay system implementation (Block and Boss Shooting systems).  
+- Level Design: Designed and constructed the full playable level layout, including platform arrangement, spatial pacing, and puzzle flow between World A and World B. Ensured that the progression maintains both challenge and clarity, providing visual and gameplay guidance for the player.  
+- Lighting Setup: Configured and fine-tuned the Directional Light to achieve consistent illumination and shadow quality across the scene. Adjusted light angles, intensity, and color tone to highlight key gameplay areas and enhance the game’s overall atmosphere.  
+- Block System Implementation: Developed and maintained several interactive block scripts — `ClickCycleMover_Curve.cs`, `PopInBounce.cs`, and `TimedDespawn.cs`. These scripts control block movement cycles, activation timing, and visual feedback, contributing to dynamic puzzle mechanics and environmental responsiveness.  
+- Boss Shooting System: Implemented the complete boss combat logic, including `BossShooter.cs`, `KnockBackReceiver.cs`, `PlayerHitReceiver.cs`, `ReflectableBullet.cs`, and `ReflectWall.cs`. These scripts manage boss projectile attacks, bullet reflection, player knockback feedback, and wall collision responses.  
+
+
 ## References and External Resources
 
-TODO - see specification for details
+### Asset References
+
+- **Bezier Solution** – by *Yasirkula*. Version 2.3.4 (Updated: Mar 10, 2025).  
+  Used for implementing smooth Bezier curve path generation and control systems in Unity.  
+  [Unity Asset Store Link](https://assetstore.unity.com/packages/tools/level-design/bezier-solution-113074)
+
+- **Bedroom / Interior – Low Poly** – by *Fries and Seagull*. Version 1.1.6 (Updated: Jan 8, 2025).  
+  Used for low-poly interior environment design and furnishing props (e.g., desks, chairs, decor).  
+  [Unity Asset Store Link](https://assetstore.unity.com/packages/3d/props/interior/bedroom-interior-low-poly-assets-295074)
+
+- **Office Supplies Low Poly** – by *Sten Ulfsson*. Version 1.01 (Updated: Jan 3, 2018).  
+  Used for additional small scene details such as pens, papers, and stationery props.  
+  [Unity Asset Store Link](https://assetstore.unity.com/packages/3d/props/office-supplies-low-poly-105519)
+
