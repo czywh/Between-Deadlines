@@ -100,7 +100,37 @@ Improvements: Refined collider boundaries, adjusted trigger sizes, and tested al
 
 ## Shaders and Special Effects
 
-TODO - see specification for details
+The core gameplay of this project is fundamentally based on transitions between different states. The game world is composed of two main types of objects: decorative elements and puzzle objects. To achieve a more stylized visual effect, this project employs two types of shaders: 
+
+1. `PortalShader.Shader`: A shader specifically designed for the portal effect between. world A to world B. 
+2. `CustomCelToon.Shader`: A toon shader applied to specific puzzle objects to realize a distinctive color scheme, toon-style lighting, and material effects.
+
+
+##  Particle Effects
+When **Barry (beer)** fires a bullet, a unique **explosive particle effect** is triggered.  
+Similar **high-temperature explosion effects** also occur when players destroy certain parts of the *Books blocks*.  
+
+In addition, to enhance visual presentation, when the player attempts to pass the book path for the first time, a vertical flame spray will appear.
+
+The explosion effect is implemented by generating approximately thirty spherical emission particles at the moment an object disappears.  
+
+To simulate the release of energy, the explosion effect combines:
+- **Deceleration (damping)** of particle emission speed  
+- **Additional particle systems** such as flames, flame light, and light particles  
+
+These layers together create a and dynamic visual effect that enhances the sense of impact.
+
+---
+
+### Visual References from *Particle System in Action*
+
+| ![Bullet Fire](images/ParticleImage/Particle1.png) | ![Object Explosion](images/ParticleImage/Particle2.png) | ![Path Sparks](images/ParticleImage/Particle3.png) |
+|----------------------------------------------------|----------------------------------------------------------|----------------------------------------------------|
+| *Bullet firing particle effect*                    | *Object explosion effect*                                | *Path spark & flame spray effect*                  |
+
+
+related Particle prefabs are stored under the following path: Project -> Prefabs -> Particle
+
 
 ## Summary of Contributions
 
@@ -117,6 +147,12 @@ TODO - see specification for details
 - Block System Implementation: Developed and maintained several interactive block scripts — `ClickCycleMover_Curve.cs`, `PopInBounce.cs`, and `TimedDespawn.cs`. These scripts control block movement cycles, activation timing, and visual feedback, contributing to dynamic puzzle mechanics and environmental responsiveness.  
 - Boss Shooting System: Implemented the complete boss combat logic, including `BossShooter.cs`, `KnockBackReceiver.cs`, `PlayerHitReceiver.cs`, `ReflectableBullet.cs`, and `ReflectWall.cs`. These scripts manage boss projectile attacks, bullet reflection, player knockback feedback, and wall collision responses.  
 
+**Jason**:  Primarily responsible for visual design and technical graphics implementation, including portal and toon shader development, World B visual and interaction design, post-rendering effects for world transitions, scene layout construction, and particle effect implementation.
+- Shader Development: Created and optimized both the `PortalShader.Shader` and `CustomCelToon.Shader`. The portal shader enables seamless visual transitions between WorldShared and World B, while the toon shader enhances the stylized rendering of characters and environments, ensuring a cohesive art direction.
+- Portal & World B Visual Design: Designed and implemented all visual and interactive elements exclusive to World B, including the portal’s appearance, material transitions when players move between worlds.
+- Post-Rendering Transition Effects: Developed post-processing effects for world switching, ensuring smooth visual blending and distinct atmosphere contrast between the two worlds.
+- Scene Layout & Environment Setup: Responsible for overall scene composition and layout, arranging spatial elements and environmental details to achieve both aesthetic balance and gameplay clarity.
+- Particle Effects: Implemented the explosion particle system, refining particle behavior, timing, and visual intensity to synchronize with gameplay events and enhance immersion.
 
 ## References and External Resources
 

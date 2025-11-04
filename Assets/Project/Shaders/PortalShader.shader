@@ -182,7 +182,7 @@ Shader "Custom/PortalSphere"
                 // screen uv
                 float2 uvScreen = i.screenPos.xy / i.screenPos.w;
 
-                // noise → shake
+                // noise shake
                 float2 noiseUV = i.positionWS.xz * 0.6 + _Time.yy * 0.6;
                 float2 nrg = SAMPLE_TEXTURE2D(_NoiseTex, sampler_NoiseTex, noiseUV).rg * 2 - 1;
 
