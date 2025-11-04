@@ -100,7 +100,7 @@ Improvements: Refined collider boundaries, adjusted trigger sizes, and tested al
 
 ## Shaders and Special Effects
 
-The core gameplay of this project is fundamentally based on transitions between different states. The game world is composed of two main types of objects: decorative elements and puzzle objects. To achieve a more stylized visual effect, this project employs two types of shaders `PortalShader.Shader` and `CustomCelToon.Shader`: 
+The core gameplay of this project is fundamentally based on transitions between different states. The game world is composed of two main types of objects: decorative elements and puzzle objects. To achieve a more stylized visual effect, this project employs two types of shaders `PortalShader.Shader` and `CustomCelToon.Shader` (file Path: Project -> Shaders) 
 
 ### 1. PortalShader.Shader
 A shader specifically designed for the portal effect between world A (WorldShared) to world B. 
@@ -125,24 +125,24 @@ In addition, to enhance the surreal contrast between the two worlds, after sampl
 A toon shader applied to specific puzzle objects to realize a distinctive color scheme, toon-style lighting, and material effects. General effects are list below
 
 
-1. **Outline**
+1. **Outline**:
  	generates an outline by offsetting each vertex along its view-space normal direction, createting a solid black contour that wraps around the model.
 
-2. **Cel Shading (Diffuse Quantization)**
+2. **Cel Shading (Diffuse Quantization)**:
 	The base diffuse term uses the Lambert reflection model (`I_diffuse = k_d * (N · L) * I_L`)
 
 	It is then quantized into discrete brightness stepsquantized into discrete brightness steps, transforming smooth lighting gradients into flat light and shadow regions 
 
-3. **Specular Highlight**
+3. **Specular Highlight**:
 	A thresholded Blinn-Phong model is used for stylized specular highlights. 
 	C_specular = I_spec_toon * SpecStrength * SpecColor * LightColor * Attenuation
 	This approach provides strong artistic control over highlight shape, brightness, and softness.
 
-4. **Rim Light**
+4. **Rim Light**:
 The rim light is calculated based on view direction and surface normal(`1 - dot(N, V)`). 
 By applying rim color `I_rim = (1 - N · V)^RimPower`, it adds a subtle glow along the model’s edges. 
 
-5. **Shadow Fade** 
+5. **Shadow Fade**:
 	To avoid harsh shadows in distant areas, lighting fades with distance from the camera `Fade = 1 - smoothstep(ShadowFadeStart, ShadowFadeEnd, CameraDistance)`. 
 	Final diffuse term after fading: `I_final = I_toon * Fade` This technic maintains consistent brightness and ensures soft, readable shading transitions
 
@@ -176,7 +176,7 @@ These layers together create a and dynamic visual effect that enhances the sense
 
 ### Visual References from *Particle System in Action*
 
-| ![Visual 1](images/ParticleImage /Particle1.png)| ![Object Explosion](images/ParticleImage /Particle2.png) | ![Path Sparks](images/ParticleImage /Particle3.png) |
+| ![Visual 1](images/ParticleImage /Particle1)| ![Object Explosion](images/ParticleImage /Particle2) | ![Path Sparks](images/ParticleImage /Particle3) |
 |----------------------------------------------------|----------------------------------------------------------|----------------------------------------------------|
 | *Bullet firing particle effect*                    | *Object explosion effect*                                | *Path spark & flame spray effect*                  |
 
