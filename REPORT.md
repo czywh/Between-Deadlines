@@ -103,12 +103,12 @@ Improvements: Refined collider boundaries, adjusted trigger sizes, and tested al
 The core gameplay of this project is fundamentally based on transitions between different states. The game world is composed of two main types of objects: decorative elements and puzzle objects. To achieve a more stylized visual effect, this project employs two types of shaders `PortalShader.Shader` and `CustomCelToon.Shader`: 
 
 ### 1. PortalShader.Shader
-:A shader specifically designed for the portal effect between. world A (WorldShared) to world B. 
+A shader specifically designed for the portal effect between world A (WorldShared) to world B. 
 
-The portal effect is achieved through two cameras. Main camera captures the world Shared, while the other only renders the objects in world B. The image from the second camera is passed to the portal shader through "Render to Texture"  and further calculations to generate the visual effect of the portal.
+The portal effect is achieved through two cameras. Main camera captures the world Shared, while the other only renders the objects in world B. The image from the second camera is passed to the portal shader through "Render to Texture" technic  and further calculations to generate the visual effect of the portal.
 
 To create the magical and smooth feeling of a portal, we applied the ApplyWave() function in the vertex shader. This function mainly moves the vertices along the x-axis and z-axis, thereby generating a similar wave-like motion effect.
-In addition, to enhance the surreal contrast between the two worlds, after sampling the rendered texture that belongs only to world B, we applied a shake effect in the fragment shader, making the objects in world B exhibit a unique vibration sensation, thereby highlighting their otherworldly characteristics.
+In addition, to enhance the surreal contrast between the two worlds, after sampling the rendered texture that belongs only to world B, we applied a shake effect in the fragment shader, making the objects in world B exhibit a unique vibration sensation, highlighting their otherworldly characteristics.
 
 **Exposed Shader Parameters (PortalShader)**
 
@@ -122,18 +122,29 @@ In addition, to enhance the surreal contrast between the two worlds, after sampl
 
 
 ### 2. CustomCelToon.Shader
-: A toon shader applied to specific puzzle objects to realize a distinctive color scheme, toon-style lighting, and material effects.
+A toon shader applied to specific puzzle objects to realize a distinctive color scheme, toon-style lighting, and material effects. General effects are list below
 
 
-1. **Outline**: generates an outline by offsetting each vertex along its view-space normal direction, createting a solid black contour that wraps around the model.
+1. **Outline**
+ 	generates an outline by offsetting each vertex along its view-space normal direction, createting a solid black contour that wraps around the model.
 
-2. **Cel Shading (Diffuse Quantization)**:  The diffuse term (`N·L`) is quantized into discrete brightness steps,  transforming smooth lighting gradients into flat light and shadow regions and giving models a frame-by-frame aesthetic.
+2. **Cel Shading (Diffuse Quantization)**
+	The base diffuse term uses the Lambert reflection model (`I_diffuse = k_d * (N · L) * I_L`)
 
-3. **Specular Highlight**: 
+	It is then quantized into discrete brightness stepsquantized into discrete brightness steps, transforming smooth lighting gradients into flat light and shadow regions 
 
-4. **Rim Light**: The rim light is calculated based on view direction and surface normal(`1 - dot(N, V)`). It adds a subtle glow along the model’s edges.
+3. **Specular Highlight**
+	A thresholded Blinn-Phong model is used for stylized specular highlights. 
+	C_specular = I_spec_toon * SpecStrength * SpecColor * LightColor * Attenuation
+	This approach provides strong artistic control over highlight shape, brightness, and softness.
 
-5. **Shadow Fade**: reducing shadows' contrast as objects move further from the camera, preventing overly dark or harsh shadows in the background. This technic maintains consistent brightness and ensures soft, readable shading transitions
+4. **Rim Light**
+The rim light is calculated based on view direction and surface normal(`1 - dot(N, V)`). 
+By applying rim color `I_rim = (1 - N · V)^RimPower`, it adds a subtle glow along the model’s edges. 
+
+5. **Shadow Fade** 
+	To avoid harsh shadows in distant areas, lighting fades with distance from the camera `Fade = 1 - smoothstep(ShadowFadeStart, ShadowFadeEnd, CameraDistance)`. 
+	Final diffuse term after fading: `I_final = I_toon * Fade` This technic maintains consistent brightness and ensures soft, readable shading transitions
 
 
 **Exposed Shader Parameters (CelToonShader)**
@@ -165,7 +176,7 @@ These layers together create a and dynamic visual effect that enhances the sense
 
 ### Visual References from *Particle System in Action*
 
-| ![Bullet Fire](images/ParticleImage /Particle1.png) | ![Object Explosion](images/ParticleImage /Particle2.png) | ![Path Sparks](images/ParticleImage /Particle3.png) |
+| ![Visual 1](images/ParticleImage /Particle1.png)| ![Object Explosion](images/ParticleImage /Particle2.png) | ![Path Sparks](images/ParticleImage /Particle3.png) |
 |----------------------------------------------------|----------------------------------------------------------|----------------------------------------------------|
 | *Bullet firing particle effect*                    | *Object explosion effect*                                | *Path spark & flame spray effect*                  |
 
