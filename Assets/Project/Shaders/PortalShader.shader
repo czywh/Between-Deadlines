@@ -56,6 +56,7 @@ Shader "Custom/PortalSphere"
             #pragma vertex vert
             #pragma fragment frag
             #pragma target 3.0
+            #pragma prefer_hlslcc gles
 
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 
@@ -182,8 +183,8 @@ Shader "Custom/PortalSphere"
                 // screen uv
                 float2 uvScreen = i.screenPos.xy / i.screenPos.w;
 
-                // noise shake
-                float2 noiseUV = i.positionWS.xz * 0.6 + _Time.yy * 0.6;
+                // noise → shake
+                float2 noiseUV = i.positionWS.xz * 0.6 + float2(_Time.y, _Time.y) * 0.6;
                 float2 nrg = SAMPLE_TEXTURE2D(_NoiseTex, sampler_NoiseTex, noiseUV).rg * 2 - 1;
 
                 // camera inside check
