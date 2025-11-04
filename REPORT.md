@@ -104,14 +104,27 @@ TODO - see specification for details
 
 ## Summary of Contributions
 
-TODO - see specification for details
-
 **Rebecca**: Primarily responsible for character implementation, user interface design, and sound integration.
 - Character Implementation: Imported and configured the main player model from Mixamo, including all associated animations (walk, run, jump). Developed and refined the player movement script to ensure smooth transitions between animations and responsive control.
 - Camera Follow & Additional Animations: Helped with adjusting third-person camera follow system to achieve smoother movement and mouse control. Additionally implemented the player's dance animation switcher - allowing player to trigger and switch between multiple animations such as HipHop dance and Sad idle - to visually express the player's emotions throughout the game, enhancing the storytelling and presentation in the gameplay video.
 - User Interface Design: Designed and implemented - Main Menu, Settings Menu, Pause Menu, Boss Health Bar, Victory Screen, and Introduction Story panel. Each interface was integrated with button logic for navigation and settings control. 
 - Background Music & Sound Effects: Imported and integrated multiple background music tracks (sad, happy, victory) and sound effects such as footsteps for the player, button clicks, and keyboard typing sounds for the story panel. Implemented the logic for background music switching bewteen both worlds (A and B) and synchronized UI sound feedback.
 - Puzzle Logic: Developed one puzzle interactions - when player jumps on a stack of books, the stack changes color on the first jump and explodes on the second. Also incorporated the particle effect for the explosion, the particle system effect for the explosion was implementation by another teammate. 
+
+**Grace**: Primarily responsible for user instruction interface design, shader effects, and interactive object implementation.
+
+- UI and Player Guidance:
+Designed and implemented the user instruction system to guide players through each level’s controls and objectives. Developed and integrated key scripts including HelpAddonController.cs, PickupPrompt.cs, and ProximityTriggerRelay.cs, which display contextual prompts and interaction cues in the game.
+
+- Visual Design:
+Created a glowing shader for the bear character using Shader Graph, enhancing visual feedback and emphasizing interactivity through dynamic glow effects.
+
+- Gameplay Interaction:
+Implemented movable objects and interactive mechanics through the scripts Levitatable.cs and WandController_Joint.cs, allowing players to manipulate objects within the environment to solve puzzles.
+
+- Documentation and Evaluation:
+Authored the Game Overview and Story and Narrative sections in the Game Design Document (GDD).
+Contributed to the Evaluation Plan and Evaluation Report, outlining user testing methods, findings, and design improvements based on player feedback.
 
 ## References and External Resources
 
