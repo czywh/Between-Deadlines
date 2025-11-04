@@ -170,7 +170,7 @@ Shader "Custom/PortalSphere"
 
                 // Fresnel:  F = ((1 - N·V) ^ _FresnelPow) × _FresnelBoost
 				// The more inclined the angle, the brighter the edges.
-                float fres = pow(i.fresnelRaw, _FresnelPow) * _FresnelBoost;
+                float fres = pow(abs(i.fresnelRaw), _FresnelPow) * _FresnelBoost;
                 float rim  = saturate(fres);
 
 				// Toon Ramp: C_base = Tint * Ramp(rim + U)
