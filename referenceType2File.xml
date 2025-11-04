@@ -171,7 +171,7 @@
   <TypeDate>
     <guid>6785f0a5b856a014bbd4cd0192f82742</guid>
     <fileName>Assets/Project/Scripts/Block/ClickCycleMover_Curve.cs</fileName>
-    <timeStamp>2025-11-03T13:51:22.4538649+11:00</timeStamp>
+    <timeStamp>2025-11-04T13:11:37.6035733+11:00</timeStamp>
     <typeFullName>
       <string>ClickCycleMover_Curve</string>
     </typeFullName>
@@ -198,7 +198,7 @@
   <TypeDate>
     <guid>c05b53e1e658742749b34dc06ab5aa12</guid>
     <fileName>Assets/Project/Scripts/Boss Shooting/BossShooter.cs</fileName>
-    <timeStamp>2025-11-03T13:51:22.4542874+11:00</timeStamp>
+    <timeStamp>2025-11-03T18:34:23.1568357+11:00</timeStamp>
     <typeFullName>
       <string>BossShooter</string>
     </typeFullName>
@@ -207,7 +207,7 @@
   <TypeDate>
     <guid>4d2260e419ee04d82897817cc1e3337c</guid>
     <fileName>Assets/Project/Scripts/Boss Shooting/PlayerHitReceiver.cs</fileName>
-    <timeStamp>2025-11-03T13:51:22+11:00</timeStamp>
+    <timeStamp>2025-11-03T17:47:56.5714922+11:00</timeStamp>
     <typeFullName>
       <string>PlayerHitReceiver</string>
     </typeFullName>
@@ -216,7 +216,7 @@
   <TypeDate>
     <guid>abb51c8bee6b348f0b42eb6caae8ac17</guid>
     <fileName>Assets/Project/Scripts/Boss Shooting/ReflectWall.cs</fileName>
-    <timeStamp>2025-11-03T13:51:22.4544911+11:00</timeStamp>
+    <timeStamp>2025-11-03T18:14:58.9500141+11:00</timeStamp>
     <typeFullName>
       <string>ReflectWall</string>
     </typeFullName>
@@ -225,7 +225,7 @@
   <TypeDate>
     <guid>e98faab7a9859458b95c0898935ac00c</guid>
     <fileName>Assets/Project/Scripts/Boss Shooting/ReflectableBullet.cs</fileName>
-    <timeStamp>2025-11-03T13:51:22.4545917+11:00</timeStamp>
+    <timeStamp>2025-11-04T15:08:57.3544656+11:00</timeStamp>
     <typeFullName>
       <string>ReflectableBullet</string>
     </typeFullName>
@@ -234,7 +234,7 @@
   <TypeDate>
     <guid>5457fb1d6d3794c6aa589cb136d194e3</guid>
     <fileName>Assets/Project/Scripts/UI/BossHealthUI.cs</fileName>
-    <timeStamp>2025-11-03T13:51:22.4574024+11:00</timeStamp>
+    <timeStamp>2025-11-04T12:51:51.7890423+11:00</timeStamp>
     <typeFullName>
       <string>BossHealthUI</string>
     </typeFullName>
@@ -243,7 +243,7 @@
   <TypeDate>
     <guid>237b407d22e4f46c595dafba619de2e3</guid>
     <fileName>Assets/Project/Scripts/UI/IntroStory.cs</fileName>
-    <timeStamp>2025-11-03T13:51:22.457505+11:00</timeStamp>
+    <timeStamp>2025-11-04T12:51:51.7893738+11:00</timeStamp>
     <typeFullName>
       <string>IntroStory</string>
     </typeFullName>
@@ -252,7 +252,7 @@
   <TypeDate>
     <guid>f4c37641edca6431680c17a9afb1da26</guid>
     <fileName>Assets/Project/Scripts/UI/MainMenu.cs</fileName>
-    <timeStamp>2025-11-03T13:51:22.457618+11:00</timeStamp>
+    <timeStamp>2025-11-04T12:51:51.7896086+11:00</timeStamp>
     <typeFullName>
       <string>MainMenu</string>
     </typeFullName>
@@ -261,7 +261,7 @@
   <TypeDate>
     <guid>246a35effb2854db1905213e7209317e</guid>
     <fileName>Assets/Project/Scripts/UI/MusicManager.cs</fileName>
-    <timeStamp>2025-11-03T13:51:22.4577431+11:00</timeStamp>
+    <timeStamp>2025-11-04T12:51:51.7897952+11:00</timeStamp>
     <typeFullName>
       <string>MusicManager</string>
     </typeFullName>
@@ -270,7 +270,7 @@
   <TypeDate>
     <guid>1271ca0f43f2448eb9227230119db823</guid>
     <fileName>Assets/Project/Scripts/UI/PauseMenu.cs</fileName>
-    <timeStamp>2025-11-03T13:51:22.4578494+11:00</timeStamp>
+    <timeStamp>2025-11-04T12:51:51.7899644+11:00</timeStamp>
     <typeFullName>
       <string>PauseMenu</string>
     </typeFullName>
@@ -279,7 +279,7 @@
   <TypeDate>
     <guid>bf60cc46d6fad4976b6437df2de18577</guid>
     <fileName>Assets/Project/Scripts/UI/SettingsPanel.cs</fileName>
-    <timeStamp>2025-11-03T13:51:22.4579479+11:00</timeStamp>
+    <timeStamp>2025-11-04T12:51:51.7901755+11:00</timeStamp>
     <typeFullName>
       <string>SettingsPanel</string>
     </typeFullName>
@@ -288,7 +288,7 @@
   <TypeDate>
     <guid>22ecadecddd3745d89e25ba75b8aa7d1</guid>
     <fileName>Assets/Project/Scripts/UI/UISoundManager.cs</fileName>
-    <timeStamp>2025-11-03T13:51:22.4580483+11:00</timeStamp>
+    <timeStamp>2025-11-04T12:51:51.7904098+11:00</timeStamp>
     <typeFullName>
       <string>UISoundManager</string>
     </typeFullName>
@@ -297,7 +297,7 @@
   <TypeDate>
     <guid>b50d9dcecf3b84ecfb78c0800eeaf26c</guid>
     <fileName>Assets/Project/Scripts/UI/VictoryTrigger.cs</fileName>
-    <timeStamp>2025-11-03T13:51:22.458158+11:00</timeStamp>
+    <timeStamp>2025-11-04T12:51:51.7906093+11:00</timeStamp>
     <typeFullName>
       <string>VictoryTrigger</string>
     </typeFullName>
@@ -861,7 +861,7 @@
   <TypeDate>
     <guid>b57677ec6f0d14fd2ac25c3db98b5a04</guid>
     <fileName>Assets/Project/Scripts/Runtime/Block/BlockBehaviour.cs</fileName>
-    <timeStamp>2025-11-03T13:51:22.4559053+11:00</timeStamp>
+    <timeStamp>2025-11-04T12:51:51.7865802+11:00</timeStamp>
     <typeFullName>
       <string>BlockBehaviour</string>
     </typeFullName>
@@ -888,7 +888,7 @@
   <TypeDate>
     <guid>9545cf5ed420d4c989f660f96dff72c4</guid>
     <fileName>Assets/Project/Scripts/Runtime/Player/AnimationSwitcher.cs</fileName>
-    <timeStamp>2025-11-03T13:51:22.4564111+11:00</timeStamp>
+    <timeStamp>2025-11-04T12:51:51.7872789+11:00</timeStamp>
     <typeFullName>
       <string>KeyAnimationSwitcher</string>
     </typeFullName>
@@ -897,7 +897,7 @@
   <TypeDate>
     <guid>09fec0d0c5af241a28bdb1153be6cb09</guid>
     <fileName>Assets/Project/Scripts/Runtime/Player/FootstepController.cs</fileName>
-    <timeStamp>2025-11-03T13:51:22.4565159+11:00</timeStamp>
+    <timeStamp>2025-11-04T12:51:51.7876269+11:00</timeStamp>
     <typeFullName>
       <string>FootstepController</string>
     </typeFullName>
@@ -906,7 +906,7 @@
   <TypeDate>
     <guid>c0bec3bfe7453496796b26851cd9668c</guid>
     <fileName>Assets/Project/Scripts/Runtime/Player/ModeSwitcher.cs</fileName>
-    <timeStamp>2025-11-03T13:51:22.4566193+11:00</timeStamp>
+    <timeStamp>2025-11-04T12:51:51.7879403+11:00</timeStamp>
     <typeFullName>
       <string>DanceModeSwitcher</string>
     </typeFullName>
@@ -915,7 +915,7 @@
   <TypeDate>
     <guid>119cabb19c7ad428098793686c47f5aa</guid>
     <fileName>Assets/Project/Scripts/Runtime/Player/PlayerMovement.cs</fileName>
-    <timeStamp>2025-11-03T13:51:22.4567311+11:00</timeStamp>
+    <timeStamp>2025-11-04T12:51:51.7882517+11:00</timeStamp>
     <typeFullName>
       <string>PlayerMovement</string>
     </typeFullName>
@@ -943,7 +943,7 @@
   <TypeDate>
     <guid>45f6ed9f9dfd6414abdd54f5754b2a42</guid>
     <fileName>Assets/Project/Scripts/Runtime/World/WorldB_Graph_InteractionUtil.cs</fileName>
-    <timeStamp>2025-11-03T13:51:22.4572234+11:00</timeStamp>
+    <timeStamp>2025-11-04T12:51:51.7887349+11:00</timeStamp>
     <typeFullName>
       <string>RenderPath</string>
       <string>RenderPathContext</string>
