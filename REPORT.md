@@ -176,7 +176,7 @@ These layers together create a and dynamic visual effect that enhances the sense
 
 ### Visual References from *Particle System in Action*
 
-| ![Visual 1](images/ParticleImage /Particle1)| ![Object Explosion](images/ParticleImage /Particle2) | ![Path Sparks](images/ParticleImage /Particle3) |
+| ![Visual 1](images/ParticleImage/Particle1.png)| ![Object Explosion](images/ParticleImage/Particle2.png) | ![Path Sparks](images/ParticleImage/Particle3.png) |
 |----------------------------------------------------|----------------------------------------------------------|----------------------------------------------------|
 | *Bullet firing particle effect*                    | *Object explosion effect*                                | *Path spark & flame spray effect*                  |
 
@@ -204,6 +204,21 @@ related Particle prefabs are stored under the following path: Project -> Prefabs
 - Post-Rendering Transition Effects: Developed post-processing effects for world switching, ensuring smooth visual blending and distinct atmosphere contrast between the two worlds.
 - Scene Layout & Environment Setup: Responsible for overall scene composition and layout, arranging spatial elements and environmental details to achieve both aesthetic balance and gameplay clarity.
 - Particle Effects: Implemented the explosion particle system, refining particle behavior, timing, and visual intensity to synchronize with gameplay events and enhance immersion.
+
+**Grace**: Primarily responsible for user instruction interface design, shader effects, and interactive object implementation.
+
+- UI and Player Guidance:
+Designed and implemented the user instruction system to guide players through each level’s controls and objectives. Developed and integrated key scripts including HelpAddonController.cs, PickupPrompt.cs, and ProximityTriggerRelay.cs, which display contextual prompts and interaction cues in the game.
+
+- Visual Design:
+Created a glowing shader for the bear character using Shader Graph, enhancing visual feedback and emphasizing interactivity through dynamic glow effects.
+
+- Gameplay Interaction:
+Implemented movable objects and interactive mechanics through the scripts Levitatable.cs and WandController_Joint.cs, allowing players to manipulate objects within the environment to solve puzzles.
+
+- Documentation and Evaluation:
+Authored the Game Overview and Story and Narrative sections in the Game Design Document (GDD).
+Contributed to the Evaluation Plan and Evaluation Report, outlining user testing methods, findings, and design improvements based on player feedback.
 
 ## References and External Resources
 
