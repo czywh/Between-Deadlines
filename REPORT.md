@@ -139,7 +139,7 @@ related Particle prefabs are stored under the following path: Project -> Prefabs
 - Camera Follow & Additional Animations: Helped with adjusting third-person camera follow system to achieve smoother movement and mouse control. Additionally implemented the player's dance animation switcher - allowing player to trigger and switch between multiple animations such as HipHop dance and Sad idle - to visually express the player's emotions throughout the game, enhancing the storytelling and presentation in the gameplay video.
 - User Interface Design: Designed and implemented - Main Menu, Settings Menu, Pause Menu, Boss Health Bar, Victory Screen, and Introduction Story panel. Each interface was integrated with button logic for navigation and settings control. 
 - Background Music & Sound Effects: Imported and integrated multiple background music tracks (sad, happy, victory) and sound effects such as footsteps for the player, button clicks, and keyboard typing sounds for the story panel. Implemented the logic for background music switching bewteen both worlds (A and B) and synchronized UI sound feedback.
-- Puzzle Logic: Developed one puzzle interactions - when player jumps on a stack of books, the stack changes color on the first jump and explodes on the second. Also incorporated the particle effect for the explosion, the particle system effect for the explosion was implementation by another teammate. 
+- Puzzle Logic: Developed one puzzle interactions - when player jumps on a stack of books, the stack changes color on the first jump and explodes on the second. Also incorporated the particle effect for the explosion, the particle system effect for the explosion was implemented by another teammate. 
 
 **Tom**: Primarily responsible for level design, lighting setup, and core gameplay system implementation (Block and Boss Shooting systems).  
 - Level Design: Designed and constructed the full playable level layout, including platform arrangement, spatial pacing, and puzzle flow between World A and World B. Ensured that the progression maintains both challenge and clarity, providing visual and gameplay guidance for the player.  
@@ -181,4 +181,49 @@ related Particle prefabs are stored under the following path: Project -> Prefabs
 - **Particle System Tutorial** – from *Bilibili Video (BV14V411m7P5)*.  
   Tutorial reference used to learn and refine custom particle system behavior and shader control.  
   [Watch on Bilibili](https://www.bilibili.com/video/BV14V411m7P5/?spm_id_from=333.1391.0.0&vd_source=45ce09ea2751fe2431720b2d64de6d34)
+
+- **Character & Animations** – from *Mixamo*
+Used for character model and movements animations 
+[Character] (https://www.mixamo.com/#/?page=1&query=timmy&type=Character)
+[Idle Animation] (https://www.mixamo.com/#/?page=1&query=idle&type=Motion%2CMotionPack)
+[Run Animation] (https://www.mixamo.com/#/?page=1&query=running&type=Motion%2CMotionPack)
+[Fast Run] (https://www.mixamo.com/#/?page=1&query=fast+run&type=Motion%2CMotionPack)
+[Jump] (https://www.mixamo.com/#/?page=1&query=jump&type=Motion%2CMotionPack)
+[House Dancing] (https://www.mixamo.com/#/?page=1&query=dance&type=Motion%2CMotionPack)
+[Excited] (https://www.mixamo.com/#/?page=1&query=excited&type=Motion%2CMotionPack)
+[Hip Hop Dancing] (https://www.mixamo.com/#/?page=1&query=hip+hop+dancing+&type=Motion%2CMotionPack)
+[Sad Idle] (https://www.mixamo.com/#/?page=1&query=sad+idle&type=Motion%2CMotionPack)
+[Sitting Disbelief] (https://www.mixamo.com/#/?page=1&query=sitting+disbelief&type=Motion%2CMotionPack)
+[Rejected] (https://www.mixamo.com/#/?page=1&query=rejected&type=Motion%2CMotionPack)
+
+- **Teddy Bear Model** - from *Tripo Studio*
+[Tripo Studio Link](https://studio.tripo3d.ai/home?utm_source=google&utm_medium=cpc&utm_campaign=studioall-1&utm_term=&gad_source=1&gad_campaignid=22631109747&gbraid=0AAAAA-fm6S4MQmrT4Bm7M9MISMrSTr2MM&gclid=CjwKCAiAwqHIBhAEEiwAx9cTeZR9GwMllg9bUiBTeBID9I8nJeKu4PfjL932pKzui7Wof3lBv_SonBoCOpIQAvD_BwE
+)
+
+- **Sound Effects** 
+  Used for sad, happy, and victory background music. Sound effects for player's footsteps and button clicks.  
+  - **Footsteps - Essentials** 
+  [Unity Asset Store Link](https://assetstore.unity.com/packages/audio/sound-fx/foley/footsteps-essentials-189879)
+  - **Free UI Click Sound Pack** 
+  [Unity Asset Store Link](https://assetstore.unity.com/packages/audio/sound-fx/free-ui-click-sound-pack-244644)
+  
+- **Background Music** 
+  - **Sad BGM for World A** - by *Clavier-Music* 
+  [Pixabay Link](https://pixabay.com/music/ambient-relaxing-ambient-music-nostalgic-memories-310690/)
+  - **Victory Music** - by *Tatamusic* 
+  [Pixabay Link](https://pixabay.com/music/main-title-winner-victory-champions-background-music-394839/)
+  - **Happy BGM for World B**
+  [Pixabay Link](https://pixabay.com/music/ambient-wondrous-waters-119518/)
+  
+- **Health and Hearts Bar** – by *VampireGirl*
+For the health bar of teddy bear boss shooter  
+[itch.io Link](https://fliflifly.itch.io/hearts-and-health-bar)
+
+- **UI Icons - 3D Low Poly Style** - by *Frangoroo*
+For UI instruction panels.
+[Unity Asset Store Link](https://assetstore.unity.com/packages/2d/gui/icons/ui-icons-3d-low-poly-style-244283)
+
+- **Fonts** 
+[Google Font Link](https://fonts.google.com/specimen/Luckiest+Guy?query=luckiest+guy+)
+[Google Font Link](https://fonts.google.com/specimen/Titan+One?query=titan+one+)
 
