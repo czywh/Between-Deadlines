@@ -2692,11 +2692,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1644841235}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &174765131 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6043459138727919911, guid: 435a6c528046a4a64889d356240eccab, type: 3}
-  m_PrefabInstance: {fileID: 1740423531}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &177547363
 GameObject:
   m_ObjectHideFlags: 0
@@ -3607,7 +3602,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 225861394}
-  - component: {fileID: 225861395}
   m_Layer: 0
   m_Name: 'World Manager '
   m_TagString: Untagged
@@ -3630,18 +3624,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1944914228}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &225861395
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 225861393}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee36c20e5f5904d0da1a4d46ffa97893, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &227265404
 GameObject:
   m_ObjectHideFlags: 0
@@ -12229,7 +12211,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 706982845}
-  - component: {fileID: 706982846}
   m_Layer: 8
   m_Name: WorldB_Root
   m_TagString: Untagged
@@ -12253,18 +12234,6 @@ Transform:
   - {fileID: 319334246}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &706982846
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 706982844}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bd91dae6aac3463eba5e78ad0d48d5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &707812110
 GameObject:
   m_ObjectHideFlags: 0
@@ -17507,7 +17476,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 980698874}
-  - component: {fileID: 980698873}
   m_Layer: 0
   m_Name: WorldA_Root
   m_TagString: Untagged
@@ -17515,18 +17483,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &980698873
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 980698872}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bd91dae6aac3463eba5e78ad0d48d5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &980698874
 Transform:
   m_ObjectHideFlags: 0
@@ -28514,35 +28470,19 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6043459138727919911, guid: 435a6c528046a4a64889d356240eccab, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1740423537}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 435a6c528046a4a64889d356240eccab, type: 3}
 --- !u!114 &1740423532 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1102182968310382153, guid: 435a6c528046a4a64889d356240eccab, type: 3}
   m_PrefabInstance: {fileID: 1740423531}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 174765131}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c05b53e1e658742749b34dc06ab5aa12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1740423537
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 174765131}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09e804cd176a448a5bd1ce1535bc5ab7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  boss: {fileID: 1740423532}
 --- !u!1001 &1744165027
 PrefabInstance:
   m_ObjectHideFlags: 0
