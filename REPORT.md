@@ -102,8 +102,24 @@ Improvements: Refined collider boundaries, adjusted trigger sizes, and tested al
 
 The core gameplay of this project is fundamentally based on transitions between different states. The game world is composed of two main types of objects: decorative elements and puzzle objects. To achieve a more stylized visual effect, this project employs two types of shaders: 
 
-1. `PortalShader.Shader`: A shader specifically designed for the portal effect between. world A to world B. 
+1. `PortalShader.Shader`: A shader specifically designed for the portal effect between. world A (WorldShared) to world B. 
 2. `CustomCelToon.Shader`: A toon shader applied to specific puzzle objects to realize a distinctive color scheme, toon-style lighting, and material effects.
+
+The portal effect is achieved through two cameras. Main camera captures the world Shared, while the other only renders the objects in world B. The image from the second camera is passed to the portal shader through "Render to Texture"  and further calculations to generate the visual effect of the portal.
+
+To create the magical and smooth feeling of a portal, we applied the ApplyWave() function in the vertex shader. This function mainly moves the vertices along the x-axis and z-axis, thereby generating a similar wave-like motion effect.
+In addition, to enhance the surreal contrast between the two worlds, after sampling the rendered texture that belongs only to world B, we applied a jitter effect in the fragment shader, making the objects in world B exhibit a unique vibration sensation, thereby highlighting their otherworldly characteristics.
+
+# Exposed Shader Parameters (PortalShader)
+
+| Category | Key Parameters | Description |
+|-----------|----------------|--------------|
+| **Color & Opacity** | `_Tint`, `_Opacity` | Control overall color and transparency of the portal. |
+| **Lighting & Style** | `_RampTex`, `_RampU`, `_FresnelPow`, `_FresnelBoost` | Define toon shading ramp and edge highlight strength. |
+| **Wave Motion** | `_WaveAmp`, `_WaveFreq`, `_WaveSpeed`, `_WaveDir1`, `_WaveDir2`, `_WaveSizeComp` | Control surface distortion for the magical fluid look. |
+| **World B Rendering** | `_PortalRT`, `_PortalColorBlend`, `_EdgeFeather` | Manage render texture blending and smooth edge transitions. |
+| **Noise & Shake** | `_NoiseTex`, `_InsideShakeStrength`, `_ShakePixels` | Add pixel jitter and instability inside the portal for World B. |
+
 
 
 ##  Particle Effects
@@ -127,7 +143,6 @@ These layers together create a and dynamic visual effect that enhances the sense
 | ![Bullet Fire](images/ParticleImage/Particle1.png) | ![Object Explosion](images/ParticleImage/Particle2.png) | ![Path Sparks](images/ParticleImage/Particle3.png) |
 |----------------------------------------------------|----------------------------------------------------------|----------------------------------------------------|
 | *Bullet firing particle effect*                    | *Object explosion effect*                                | *Path spark & flame spray effect*                  |
-
 
 related Particle prefabs are stored under the following path: Project -> Prefabs -> Particle
 
