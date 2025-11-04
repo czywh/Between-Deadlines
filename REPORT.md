@@ -134,3 +134,15 @@ TODO - see specification for details
   Used for additional small scene details such as pens, papers, and stationery props.  
   [Unity Asset Store Link](https://assetstore.unity.com/packages/3d/props/office-supplies-low-poly-105519)
 
+- **Polygon Office – Low Poly 3D Art** – by *Synty Studios*.  
+  Used for 3D office environment modeling and decorative assets within the playable level.  
+  [Unity Asset Store Link](https://assetstore.unity.com/packages/3d/props/interior/polygon-office-low-poly-3d-art-by-synty-159492)
+
+- **ForceField Effects (Noisy & Ramp)** – by *Archanor VFX*.  
+  Used for creating particle effects of portal.  
+  [Unity Asset Store Link](https://assetstore.unity.com/packages/vfx/particles/spells/forcefield-effects-123431)
+
+- **Particle System Tutorial** – from *Bilibili Video (BV14V411m7P5)*.  
+  Tutorial reference used to learn and refine custom particle system behavior and shader control.  
+  [Watch on Bilibili](https://www.bilibili.com/video/BV14V411m7P5/?spm_id_from=333.1391.0.0&vd_source=45ce09ea2751fe2431720b2d64de6d34)
+
