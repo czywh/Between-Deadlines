@@ -100,17 +100,17 @@ Improvements: Refined collider boundaries, adjusted trigger sizes, and tested al
 
 ## Shaders and Special Effects
 
-The core gameplay of this project is fundamentally based on transitions between different states. The game world is composed of two main types of objects: decorative elements and puzzle objects. To achieve a more stylized visual effect, this project employs two types of shaders: 
+The core gameplay of this project is fundamentally based on transitions between different states. The game world is composed of two main types of objects: decorative elements and puzzle objects. To achieve a more stylized visual effect, this project employs two types of shaders `PortalShader.Shader` and `CustomCelToon.Shader`: 
 
-1. `PortalShader.Shader`: A shader specifically designed for the portal effect between. world A (WorldShared) to world B. 
-2. `CustomCelToon.Shader`: A toon shader applied to specific puzzle objects to realize a distinctive color scheme, toon-style lighting, and material effects.
+### 1. PortalShader.Shader
+:A shader specifically designed for the portal effect between. world A (WorldShared) to world B. 
 
 The portal effect is achieved through two cameras. Main camera captures the world Shared, while the other only renders the objects in world B. The image from the second camera is passed to the portal shader through "Render to Texture"  and further calculations to generate the visual effect of the portal.
 
 To create the magical and smooth feeling of a portal, we applied the ApplyWave() function in the vertex shader. This function mainly moves the vertices along the x-axis and z-axis, thereby generating a similar wave-like motion effect.
-In addition, to enhance the surreal contrast between the two worlds, after sampling the rendered texture that belongs only to world B, we applied a jitter effect in the fragment shader, making the objects in world B exhibit a unique vibration sensation, thereby highlighting their otherworldly characteristics.
+In addition, to enhance the surreal contrast between the two worlds, after sampling the rendered texture that belongs only to world B, we applied a shake effect in the fragment shader, making the objects in world B exhibit a unique vibration sensation, thereby highlighting their otherworldly characteristics.
 
-# Exposed Shader Parameters (PortalShader)
+**Exposed Shader Parameters (PortalShader)**
 
 | Category | Key Parameters | Description |
 |-----------|----------------|--------------|
@@ -118,8 +118,33 @@ In addition, to enhance the surreal contrast between the two worlds, after sampl
 | **Lighting & Style** | `_RampTex`, `_RampU`, `_FresnelPow`, `_FresnelBoost` | Define toon shading ramp and edge highlight strength. |
 | **Wave Motion** | `_WaveAmp`, `_WaveFreq`, `_WaveSpeed`, `_WaveDir1`, `_WaveDir2`, `_WaveSizeComp` | Control surface distortion for the magical fluid look. |
 | **World B Rendering** | `_PortalRT`, `_PortalColorBlend`, `_EdgeFeather` | Manage render texture blending and smooth edge transitions. |
-| **Noise & Shake** | `_NoiseTex`, `_InsideShakeStrength`, `_ShakePixels` | Add pixel jitter and instability inside the portal for World B. |
+| **Noise & Shake** | `_NoiseTex`, `_InsideShakeStrength`, `_ShakePixels` | Add pixel shake and instability inside the portal for World B. |
 
+
+### 2. CustomCelToon.Shader
+: A toon shader applied to specific puzzle objects to realize a distinctive color scheme, toon-style lighting, and material effects.
+
+
+1. **Outline**: generates an outline by offsetting each vertex along its view-space normal direction, createting a solid black contour that wraps around the model.
+
+2. **Cel Shading (Diffuse Quantization)**:  The diffuse term (`N·L`) is quantized into discrete brightness steps,  transforming smooth lighting gradients into flat light and shadow regions and giving models a frame-by-frame aesthetic.
+
+3. **Specular Highlight**: 
+
+4. **Rim Light**: The rim light is calculated based on view direction and surface normal(`1 - dot(N, V)`). It adds a subtle glow along the model’s edges.
+
+5. **Shadow Fade**: reducing shadows' contrast as objects move further from the camera, preventing overly dark or harsh shadows in the background. This technic maintains consistent brightness and ensures soft, readable shading transitions
+
+
+**Exposed Shader Parameters (CelToonShader)**
+| Category |Key Parameters | Description |
+|---------------|--------------------|------------------|
+| **Base Color** | `_MainTex`, `_Color` | Defines the base texture and overall tint color. |
+| **Outline** | `_OutlineColor`, `_OutlineWidthPx` | Controls the outline color and its thickness in screen space. |
+| **Cel Lighting (Diffuse Quantization)** | `_Steps`, `_Feather` | Determines the number of light bands and the smoothness between them; lower steps create a stronger toon look. |
+| **Specular Highlight** | `_SpecColor`, `_SpecStrength`, `_SpecThreshold`, `_SpecFeather`, `_Gloss` | Controls the color, intensity, threshold, and softness of the specular highlight; `_Gloss` affects sharpness. |
+| **Rim Lighting** | `_RimColor`, `_RimPower` | Defines rim light color and intensity, creating glow facing away from the camera. |
+| **Shadow Control** | `_ShadowFadeStart`, `_ShadowFadeEnd`, `_MinShadow` | Controls shadow fading based on camera distance and the minimum brightness of shaded regions. |
 
 
 ##  Particle Effects
@@ -140,7 +165,7 @@ These layers together create a and dynamic visual effect that enhances the sense
 
 ### Visual References from *Particle System in Action*
 
-| ![Bullet Fire](images/ParticleImage/Particle1.png) | ![Object Explosion](images/ParticleImage/Particle2.png) | ![Path Sparks](images/ParticleImage/Particle3.png) |
+| ![Bullet Fire](images/ParticleImage /Particle1.png) | ![Object Explosion](images/ParticleImage /Particle2.png) | ![Path Sparks](images/ParticleImage /Particle3.png) |
 |----------------------------------------------------|----------------------------------------------------------|----------------------------------------------------|
 | *Bullet firing particle effect*                    | *Object explosion effect*                                | *Path spark & flame spray effect*                  |
 
