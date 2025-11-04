@@ -18996,6 +18996,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 858944954}
+  - component: {fileID: 858944953}
   m_Layer: 8
   m_Name: WorldB_Root
   m_TagString: Untagged
@@ -19003,6 +19004,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &858944953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 858944952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bd91dae6aac3463eba5e78ad0d48d5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &858944954
 Transform:
   m_ObjectHideFlags: 0
@@ -27647,6 +27660,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1252081753}
+  - component: {fileID: 1252081754}
   m_Layer: 0
   m_Name: 'World Manager '
   m_TagString: Untagged
@@ -27669,6 +27683,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1538028291}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1252081754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1252081752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee36c20e5f5904d0da1a4d46ffa97893, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1253469519 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4606709419992978, guid: 6c58b9fbb6ab1ca4399843d44a681bbb, type: 3}
