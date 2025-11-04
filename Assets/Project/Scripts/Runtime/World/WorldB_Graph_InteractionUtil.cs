@@ -22,8 +22,6 @@ public struct RenderPathContext
 
 public static class WorldB_Graph_InteractionUtil
 {
-    // ===== Fallback helpers ===================================================
-
     private static readonly Texture2D s_BlackTex = Texture2D.blackTexture;
 
     private static string SafeRTProp(string prop) => string.IsNullOrEmpty(prop) ? "_PortalRT" : prop;
@@ -85,7 +83,6 @@ public static class WorldB_Graph_InteractionUtil
 
         if (ctx.mainCamera == null || ctx.portalCamera == null)
         {
-            // Camera 不可用时，确保材质上有合法贴图（黑贴图）
             EnsureFallbackBinding(ctx.sphereMaterialForRT, prop);
             ReleaseRT(ref portalRT, ctx.portalCamera, ctx.sphereMaterialForRT, prop);
             return RenderPath.RT;
@@ -112,7 +109,6 @@ public static class WorldB_Graph_InteractionUtil
 
         EnsureRTBinding(portalRT, in ctx);
 
-        // 如果仍然没有 RT（例如 useRenderTexture=false），也保证材质不为空
         if (portalRT == null)
             EnsureFallbackBinding(ctx.sphereMaterialForRT, prop);
 
@@ -137,13 +133,12 @@ public static class WorldB_Graph_InteractionUtil
 
         if (!useRenderTexture || !portalCamera)
         {
-            // 关闭 RT 路径或相机无效时，强制材质使用黑贴图
             EnsureFallbackBinding(sphereMaterialForRT, prop);
             ReleaseRT(ref rt, portalCamera);
             return false;
         }
 
-        // 强制 WebGL 友好设置
+        
         portalCamera.allowHDR  = false;
         portalCamera.allowMSAA = false;
 
@@ -200,7 +195,6 @@ public static class WorldB_Graph_InteractionUtil
         }
         else
         {
-            // 无 RT 时也要保证材质不为空
             EnsureFallbackBinding(ctx.sphereMaterialForRT, prop);
             if (ctx.portalCamera.targetTexture != null)
                 ctx.portalCamera.targetTexture = null;
@@ -222,7 +216,6 @@ public static class WorldB_Graph_InteractionUtil
 
     public static void ReleaseRT(ref RenderTexture rt, Camera portalCamera, Material boundMat, string prop = "_PortalRT")
     {
-        // 释放 RT 的同时，确保材质槽有黑贴图而不是空
         EnsureFallbackBinding(boundMat, SafeRTProp(prop));
         ReleaseRT(ref rt, portalCamera);
     }
@@ -247,7 +240,7 @@ public static class WorldB_Graph_InteractionUtil
         mat.DisableKeyword("_RENDERPATH_CLIP");
     }
 
-    /// Utility for multiple sphere visuals: 把 RT 绑定到一批渲染器的材质上
+    /// Utility for multiple sphere visuals
     public static void BindRTToSphereMaterials(IEnumerable<Renderer> renderers, RenderTexture rt, string propertyName = "_PortalRT", bool keepWhenNull = true)
     {
         if (renderers == null || string.IsNullOrEmpty(propertyName)) return;
@@ -267,7 +260,6 @@ public static class WorldB_Graph_InteractionUtil
                     if (!keepWhenNull)
                         m.SetTexture(propertyName, null);
 
-                    // 无论 keepWhenNull 与否，都兜底保证非空
                     if (m.GetTexture(propertyName) == null)
                         m.SetTexture(propertyName, s_BlackTex);
                 }
