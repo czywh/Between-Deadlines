@@ -2,30 +2,30 @@ using UnityEngine;
 using System.Collections.Generic;
 
 /// <summary>
-/// Utility class for managing the rendering of "World B Only" objects
-/// and synchronizing the portal camera with the main camera.
+/// Utility for managing "World B Only" rendering via a portal RenderTexture,
+/// and for synchronizing the portal camera with the main camera.
+/// This version is WebGL-safe (no HDR, no MSAA, RGBA8 + Depth24Stencil8).
 /// </summary>
-public enum RenderPath { RT } // ★ Always RT mode
+public enum RenderPath { RT }
 
 public struct RenderPathContext
 {
-    public Camera mainCamera;
-    public Camera portalCamera;
-    public int worldBLayer;
-
-    public LayerMask portalCameraCulling;
-    public string sphereRTProperty;
-    public RenderTexture portalRT;                 // 仅用于传入旧值（不会在内部被写回）
-    public Material sphereMaterialForRT;
-    public float rtResolutionScale;
-    public bool useDistanceFade;
-    public bool useRenderTexture;
+    public Camera mainCamera;                 // Main camera rendering World A
+    public Camera portalCamera;               // Portal camera rendering World B
+    public int worldBLayer;                   // Layer index for "World B Only"
+    public LayerMask portalCameraCulling;     // What the portal camera should render
+    public string sphereRTProperty;           // Shader property name to bind the RT (e.g., "_PortalRT")
+    public RenderTexture portalRT;            // Existing portal RT (will be recreated if size changes)
+    public Material sphereMaterialForRT;      // Material used on the portal sphere that samples the RT
+    public float rtResolutionScale;           // Scale relative to screen resolution (0~1)
+    public bool useDistanceFade;              // (Not used here, reserved for effects)
+    public bool useRenderTexture;             // Master switch to enable/disable RT path
 }
 
 public static class WorldB_Graph_InteractionUtil
 {
     /// <summary>
-    /// Enable or disable physics interactions for "World B" objects.
+    /// Enable or disable physics interactions for objects under a root transform.
     /// </summary>
     public static void SetInteractive(Transform root, bool interactive)
     {
@@ -37,6 +37,7 @@ public static class WorldB_Graph_InteractionUtil
         foreach (var c in colliders)
         {
             if (!c) continue;
+            // Always keep collider enabled; use trigger when non-interactive
             c.enabled = true;
             c.isTrigger = !interactive;
         }
@@ -44,6 +45,7 @@ public static class WorldB_Graph_InteractionUtil
         foreach (var rb in rigidbodies)
         {
             if (!rb) continue;
+            // Kinematic when interactive so external physics won't affect it
             rb.isKinematic = interactive;
             if (!interactive)
             {
@@ -54,43 +56,51 @@ public static class WorldB_Graph_InteractionUtil
         }
     }
 
-    
+    /// <summary>
+    /// Always use the RenderTexture path. Disables HDR/MSAA on the portal camera,
+    /// sets culling masks, ensures RT existence and binding, and returns the current path.
+    /// </summary>
     public static RenderPath UpdatePath_AlwaysRT(ref RenderTexture portalRT, in RenderPathContext ctx)
     {
         if (ctx.mainCamera == null || ctx.portalCamera == null)
         {
-            // 在无法渲染时确保释放（避免泄漏）
             ReleaseRT(ref portalRT, ctx.portalCamera, ctx.sphereMaterialForRT, SafeRTProp(ctx.sphereRTProperty));
             return RenderPath.RT;
         }
+
+        // Force-disable HDR/MSAA on the portal camera for WebGL safety
+        ctx.portalCamera.allowHDR = false;
+        ctx.portalCamera.allowMSAA = false;
 
         int worldBMask = 1 << ctx.worldBLayer;
 
         // Main camera never renders World B layer
         ctx.mainCamera.cullingMask &= ~worldBMask;
 
-        // Portal camera only renders World B layer
+        // Portal camera only renders what is specified (typically World B)
         ctx.portalCamera.enabled = ctx.useRenderTexture;
         ctx.portalCamera.cullingMask = ctx.portalCameraCulling;
 
-        // ★ Ensure RT creation and binding (含关闭时释放)
+        // Ensure RT creation and binding (WebGL-safe descriptor)
         CheckOrRecreateRT(
             ref portalRT,
             ctx.portalCamera,
             ctx.useRenderTexture,
             Mathf.Clamp01(ctx.rtResolutionScale <= 0 ? 1f : ctx.rtResolutionScale),
             ctx.sphereMaterialForRT,
-            SafeRTProp(ctx.sphereRTProperty)
+            SafeRTProp(ctx.sphereRTProperty),
+            "PortalSphere_RT_WebGL"
         );
 
-        // ★ 用“最新”的 portalRT 进行绑定，而不是 ctx.portalRT
         EnsureRTBinding(portalRT, in ctx);
 
         return RenderPath.RT;
     }
 
-
-    
+    /// <summary>
+    /// WebGL-safe RT creation: RGBA8 + Depth24Stencil8, no MSAA, no MipMap, Tex2D.
+    /// Set the created RT to the portal camera's targetTexture and bind to the sphere material.
+    /// </summary>
     public static bool CheckOrRecreateRT(
         ref RenderTexture rt,
         Camera portalCamera,
@@ -98,12 +108,8 @@ public static class WorldB_Graph_InteractionUtil
         float resolutionScale,
         Material sphereMaterialForRT = null,
         string sphereRTProperty = "_PortalRT",
-        string rtName = "PortalSphere_RT",
-        RenderTextureFormat format = RenderTextureFormat.ARGB32,
-        int depthBufferBits = 16
-    )
+        string rtName = "PortalSphere_RT_WebGL")
     {
-        // 不使用 RT 或相机不可用：释放 + 解绑
         if (!useRenderTexture || !portalCamera)
         {
             if (sphereMaterialForRT && !string.IsNullOrEmpty(sphereRTProperty))
@@ -113,15 +119,17 @@ public static class WorldB_Graph_InteractionUtil
             return false;
         }
 
-        int w = Mathf.Max(1, Mathf.RoundToInt(Screen.width * resolutionScale));
-        int h = Mathf.Max(1, Mathf.RoundToInt(Screen.height * resolutionScale));
+        // Force-disable HDR/MSAA on the portal camera (WebGL limitation)
+        portalCamera.allowHDR = false;
+        portalCamera.allowMSAA = false;
 
-        // 如需更严谨，可把 format / depthBufferBits / MSAA 变化也纳入判断
+        int w = Mathf.Max(1, Mathf.RoundToInt(Screen.width  * (resolutionScale <= 0 ? 1f : resolutionScale)));
+        int h = Mathf.Max(1, Mathf.RoundToInt(Screen.height * (resolutionScale <= 0 ? 1f : resolutionScale)));
+
         bool needRecreate = (rt == null) || (rt.width != w) || (rt.height != h);
 
         if (!needRecreate)
         {
-            // 确保已绑定
             if (sphereMaterialForRT && !string.IsNullOrEmpty(sphereRTProperty))
                 sphereMaterialForRT.SetTexture(sphereRTProperty, rt);
 
@@ -131,15 +139,23 @@ public static class WorldB_Graph_InteractionUtil
             return false;
         }
 
-        // 重建
         ReleaseRT(ref rt, portalCamera);
 
-        rt = new RenderTexture(w, h, depthBufferBits, format)
+        var desc = new RenderTextureDescriptor(w, h)
         {
-            name = rtName,
-            antiAliasing = Mathf.Max(QualitySettings.antiAliasing, 1),
-            useMipMap = false,
-            autoGenerateMips = false
+            graphicsFormat     = UnityEngine.Experimental.Rendering.GraphicsFormat.R8G8B8A8_UNorm, // Color: RGBA8
+            depthStencilFormat = UnityEngine.Experimental.Rendering.GraphicsFormat.D24_UNorm_S8_UInt, // Depth24Stencil8
+            msaaSamples        = 1,                 // No MSAA for RT on WebGL
+            useMipMap          = false,
+            autoGenerateMips   = false,
+            sRGB               = (QualitySettings.activeColorSpace == ColorSpace.Linear),
+            dimension          = UnityEngine.Rendering.TextureDimension.Tex2D,
+            enableRandomWrite  = false              // No compute on WebGL
+        };
+
+        rt = new RenderTexture(desc)
+        {
+            name = rtName
         };
         rt.Create();
 
@@ -152,6 +168,7 @@ public static class WorldB_Graph_InteractionUtil
     }
 
     /// <summary>
+    /// Ensure that the portal RT is bound both to the sphere material and the portal camera.
     /// </summary>
     public static void EnsureRTBinding(RenderTexture rt, in RenderPathContext ctx)
     {
@@ -165,6 +182,7 @@ public static class WorldB_Graph_InteractionUtil
     }
 
     /// <summary>
+    /// Release and destroy a RenderTexture and detach it from the camera if needed.
     /// </summary>
     public static void ReleaseRT(ref RenderTexture rt, Camera portalCamera = null)
     {
@@ -180,7 +198,7 @@ public static class WorldB_Graph_InteractionUtil
     }
 
     /// <summary>
-    /// 新增重载：释放时顺便把绑定到材质的属性清空（避免残留引用）。
+    /// Release RT and also clear the bound texture from a material property.
     /// </summary>
     public static void ReleaseRT(ref RenderTexture rt, Camera portalCamera, Material boundMat, string prop = "_PortalRT")
     {
@@ -190,7 +208,9 @@ public static class WorldB_Graph_InteractionUtil
         ReleaseRT(ref rt, portalCamera);
     }
 
-
+    /// <summary>
+    /// Enable the RT rendering keyword on all renderers under a given root that are on the World B layer.
+    /// </summary>
     public static void ApplyMaterialPath(Transform worldBOnlyRoot, int worldBLayer, RenderPath path)
     {
         if (!worldBOnlyRoot) return;
@@ -203,6 +223,9 @@ public static class WorldB_Graph_InteractionUtil
         }
     }
 
+    /// <summary>
+    /// Enable RT rendering keywords on a material (and disable clip-only path).
+    /// </summary>
     public static void EnableRTPath(Material mat)
     {
         if (!mat) return;
@@ -211,7 +234,7 @@ public static class WorldB_Graph_InteractionUtil
     }
 
     /// <summary>
-    /// Utility for multiple sphere visuals: 把 RT 绑定到一批渲染器的材质上
+    /// Bind a portal RT to a batch of renderers' materials for a given property.
     /// </summary>
     public static void BindRTToSphereMaterials(IEnumerable<Renderer> renderers, RenderTexture rt, string propertyName = "_PortalRT", bool keepWhenNull = true)
     {
@@ -231,6 +254,8 @@ public static class WorldB_Graph_InteractionUtil
         }
     }
 
-    
+    /// <summary>
+    /// Fallback for null/empty material property names.
+    /// </summary>
     private static string SafeRTProp(string prop) => string.IsNullOrEmpty(prop) ? "_PortalRT" : prop;
 }
