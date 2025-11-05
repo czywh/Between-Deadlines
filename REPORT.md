@@ -176,7 +176,7 @@ These layers together create a and dynamic visual effect that enhances the sense
 
 ### Visual References from *Particle System in Action*
 
-| ![Visual 1](images/ParticleImage/Particle1.png)| ![Object Explosion](images/ParticleImage/Particle2.png) | ![Path Sparks](images/ParticleImage/Particle3.png) |
+| ![Visual 1](images/Particle1.png)| ![Object Explosion](images/Particle2.png) | ![Path Sparks](images/Particle3.png) |
 |----------------------------------------------------|----------------------------------------------------------|----------------------------------------------------|
 | *Bullet firing particle effect*                    | *Object explosion effect*                                | *Path spark & flame spray effect*                  |
 
