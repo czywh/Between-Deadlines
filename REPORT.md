@@ -174,7 +174,7 @@ These layers together create a and dynamic visual effect that enhances the sense
 
 ---
 
-### Visual References from *Particle System in Action*
+### Visual References of *Particle System in Action*
 
 | ![Visual 1](images/Particle1.png)| ![Object Explosion](images/Particle2.png) | ![Path Sparks](images/Particle3.png) |
 |----------------------------------------------------|----------------------------------------------------------|----------------------------------------------------|
@@ -184,9 +184,9 @@ related Particle prefabs are stored under the following path: Project -> Prefabs
 
 ### Visual References of *Shaders*
 
-| <img src="images/CelToonShader.png" width="100%"> | <img src="images/portaleffect.png" width="100%"> |
-|:-------------------------------------------------:|:------------------------------------------------:|
-| *Celtoon Shader* | *Sphere Portal Shader* |
+| ![Visual 1](images/CelToonShader.png)| ![Visual 2](images/portaleffect.png) |
+|----------------------------------------------------|----------------------------------------------------------|
+| *Celtoon Shader*                    | *Sphere Portal Shader*                                | 
 
 
 ## Summary of Contributions
