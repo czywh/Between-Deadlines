@@ -1,11 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-/// <summary>
 /// Utility for managing "World B Only" rendering via a portal RenderTexture,
 /// and for synchronizing the portal camera with the main camera.
-/// This version is WebGL-safe (no HDR, no MSAA, RGBA8 + Depth24Stencil8).
-/// </summary>
 public enum RenderPath { RT }
 
 public struct RenderPathContext
@@ -24,9 +21,7 @@ public struct RenderPathContext
 
 public static class WorldB_Graph_InteractionUtil
 {
-    /// <summary>
     /// Enable or disable physics interactions for objects under a root transform.
-    /// </summary>
     public static void SetInteractive(Transform root, bool interactive)
     {
         if (!root) return;
@@ -56,10 +51,8 @@ public static class WorldB_Graph_InteractionUtil
         }
     }
 
-    /// <summary>
     /// Always use the RenderTexture path. Disables HDR/MSAA on the portal camera,
     /// sets culling masks, ensures RT existence and binding, and returns the current path.
-    /// </summary>
     public static RenderPath UpdatePath_AlwaysRT(ref RenderTexture portalRT, in RenderPathContext ctx)
     {
         if (ctx.mainCamera == null || ctx.portalCamera == null)
@@ -68,7 +61,6 @@ public static class WorldB_Graph_InteractionUtil
             return RenderPath.RT;
         }
 
-        // Force-disable HDR/MSAA on the portal camera for WebGL safety
         ctx.portalCamera.allowHDR = false;
         ctx.portalCamera.allowMSAA = false;
 
@@ -97,10 +89,7 @@ public static class WorldB_Graph_InteractionUtil
         return RenderPath.RT;
     }
 
-    /// <summary>
-    /// WebGL-safe RT creation: RGBA8 + Depth24Stencil8, no MSAA, no MipMap, Tex2D.
     /// Set the created RT to the portal camera's targetTexture and bind to the sphere material.
-    /// </summary>
     public static bool CheckOrRecreateRT(
         ref RenderTexture rt,
         Camera portalCamera,
@@ -143,8 +132,8 @@ public static class WorldB_Graph_InteractionUtil
 
         var desc = new RenderTextureDescriptor(w, h)
         {
-            graphicsFormat     = UnityEngine.Experimental.Rendering.GraphicsFormat.R8G8B8A8_UNorm, // Color: RGBA8
-            depthStencilFormat = UnityEngine.Experimental.Rendering.GraphicsFormat.D24_UNorm_S8_UInt, // Depth24Stencil8
+            graphicsFormat     = UnityEngine.Experimental.Rendering.GraphicsFormat.R8G8B8A8_UNorm, 
+            depthStencilFormat = UnityEngine.Experimental.Rendering.GraphicsFormat.D24_UNorm_S8_UInt, 
             msaaSamples        = 1,                 // No MSAA for RT on WebGL
             useMipMap          = false,
             autoGenerateMips   = false,
@@ -167,9 +156,7 @@ public static class WorldB_Graph_InteractionUtil
         return true;
     }
 
-    /// <summary>
     /// Ensure that the portal RT is bound both to the sphere material and the portal camera.
-    /// </summary>
     public static void EnsureRTBinding(RenderTexture rt, in RenderPathContext ctx)
     {
         if (!ctx.useRenderTexture || !ctx.portalCamera) return;
@@ -181,9 +168,7 @@ public static class WorldB_Graph_InteractionUtil
             ctx.portalCamera.targetTexture = rt;
     }
 
-    /// <summary>
     /// Release and destroy a RenderTexture and detach it from the camera if needed.
-    /// </summary>
     public static void ReleaseRT(ref RenderTexture rt, Camera portalCamera = null)
     {
         if (portalCamera && portalCamera.targetTexture == rt)
@@ -197,9 +182,7 @@ public static class WorldB_Graph_InteractionUtil
         }
     }
 
-    /// <summary>
     /// Release RT and also clear the bound texture from a material property.
-    /// </summary>
     public static void ReleaseRT(ref RenderTexture rt, Camera portalCamera, Material boundMat, string prop = "_PortalRT")
     {
         if (boundMat && !string.IsNullOrEmpty(prop))
@@ -208,9 +191,7 @@ public static class WorldB_Graph_InteractionUtil
         ReleaseRT(ref rt, portalCamera);
     }
 
-    /// <summary>
     /// Enable the RT rendering keyword on all renderers under a given root that are on the World B layer.
-    /// </summary>
     public static void ApplyMaterialPath(Transform worldBOnlyRoot, int worldBLayer, RenderPath path)
     {
         if (!worldBOnlyRoot) return;
@@ -223,9 +204,7 @@ public static class WorldB_Graph_InteractionUtil
         }
     }
 
-    /// <summary>
     /// Enable RT rendering keywords on a material (and disable clip-only path).
-    /// </summary>
     public static void EnableRTPath(Material mat)
     {
         if (!mat) return;
@@ -233,9 +212,7 @@ public static class WorldB_Graph_InteractionUtil
         mat.DisableKeyword("_RENDERPATH_CLIP");
     }
 
-    /// <summary>
     /// Bind a portal RT to a batch of renderers' materials for a given property.
-    /// </summary>
     public static void BindRTToSphereMaterials(IEnumerable<Renderer> renderers, RenderTexture rt, string propertyName = "_PortalRT", bool keepWhenNull = true)
     {
         if (renderers == null || string.IsNullOrEmpty(propertyName)) return;
@@ -254,8 +231,6 @@ public static class WorldB_Graph_InteractionUtil
         }
     }
 
-    /// <summary>
     /// Fallback for null/empty material property names.
-    /// </summary>
     private static string SafeRTProp(string prop) => string.IsNullOrEmpty(prop) ? "_PortalRT" : prop;
 }
