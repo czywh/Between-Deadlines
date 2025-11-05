@@ -120,6 +120,16 @@ In addition, to enhance the surreal contrast between the two worlds, after sampl
 | **World B Rendering** | `_PortalRT`, `_PortalColorBlend`, `_EdgeFeather` | Manage render texture blending and smooth edge transitions. |
 | **Noise & Shake** | `_NoiseTex`, `_InsideShakeStrength`, `_ShakePixels` | Add pixel shake and instability inside the portal for World B. |
 
+## Portal Rendering Limitation (WebGL)
+
+> **Note for Markers:**  
+> The portal effect in our project relies on **RenderTexture** combined with the **URP pipeline**.  
+> However, **WebGL imposes strict limitations** on depth and opaque texture sampling.  
+> As a result, the WebGL build cannot accurately display the intended rendering effect shown below.  
+>  
+> Please **open and run the project in the local Unity Editor** to view the correct visual and functional behavior.  
+> This issue is caused by **WebGL’s restricted render target formats** and currently exceeds our team’s ability to fully resolve within the project timeline.
+
 
 ### 2. CustomCelToon.Shader
 A toon shader applied to specific puzzle objects to realize a distinctive color scheme, toon-style lighting, and material effects. General effects are list below
