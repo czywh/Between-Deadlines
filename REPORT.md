@@ -182,6 +182,14 @@ These layers together create a and dynamic visual effect that enhances the sense
 
 related Particle prefabs are stored under the following path: Project -> Prefabs -> Particle
 
+### Visual References of *Shaders*
+
+| ![Visual 1](images/CelToonShader.png)| ![Visual 2](images/portaleffect.png) |
+|----------------------------------------------------|----------------------------------------------------------|
+| *Celtoon Shader*                    | *Sphere Portal Shader*                                | 
+
+related Particle prefabs are stored under the following path: Project -> Prefabs -> Particle
+
 
 ## Summary of Contributions
 
