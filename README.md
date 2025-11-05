@@ -149,7 +149,7 @@ We combine low-poly 3D models, hand-placed props, and sourced effects to create 
 Sound - Freesound (https://freesound.org) for sound effects and ambiences, OpenGameArt (https://opengameart.org), Unity Asset Store, Pixabay (https://pixabay.com)
 
 ### UI/UX Design
-1. 📖 **Information Architecture**
+1. **Information Architecture**
 - Main Menu
   - Play
   - Settings (Volume / Quality)
@@ -159,14 +159,14 @@ Sound - Freesound (https://freesound.org) for sound effects and ambiences, OpenG
 - Navigation Logic
   - In-game → Pause Menu → Resume / Settings / Quit
 	
-2. 🎯 **HUD (Minimalist Style)**
+2. **HUD (Minimalist Style)**
 - Minimalist style
 - Only essential hints appear on screen - such as "Press E" prompts when near interactable objects
 - Tap feedback (light spark)  
 - Path guidance arrows  
 - Victory is indicated through an on-screen prompt and return to menu button
 
-3. 🖥 **Menus & Screens**
+3. **Menus & Screens**
 - Main Menu
   - Minimal game title + "Start", "Settings", "Quit" buttons (centered)
   - darkened game environment image as background
@@ -181,7 +181,7 @@ Sound - Freesound (https://freesound.org) for sound effects and ambiences, OpenG
   - Congratulatory message
   - Return to Menu button
 
-4. 🎮 **Interaction Design**
+4. **Interaction Design**
 - Controls
   - WASD/Arrow keys: Move character
   - Spacebar - jump
@@ -196,10 +196,10 @@ Sound - Freesound (https://freesound.org) for sound effects and ambiences, OpenG
   - Scene changes → smooth fade-in/out
   - Menus → scale/fade transitions
 
-5. 💡**User Experience**
+5.**User Experience**
 - **Onboarding:** Intro story pop-up explains the story behind this game  
 
-6. 🎨**UI Visual Style Guide**
+6.**UI Visual Style Guide**
 - Color Palette: soft pastel tones (mainly green, orange and blue)
 - Typography: minimalist sans-serif (Luckiest Guy, Titan One)
 
