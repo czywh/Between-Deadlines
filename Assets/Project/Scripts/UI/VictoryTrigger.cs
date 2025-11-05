@@ -35,6 +35,6 @@ public class VictoryTrigger : MonoBehaviour
     {
         // resume normal time before switching scenes
         Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenuScene");
+        SceneManager.LoadScene("StartScene");
     }
 }
