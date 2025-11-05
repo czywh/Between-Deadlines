@@ -184,11 +184,9 @@ related Particle prefabs are stored under the following path: Project -> Prefabs
 
 ### Visual References of *Shaders*
 
-| ![Visual 1](images/CelToonShader.png)| ![Visual 2](images/portaleffect.png) |
-|----------------------------------------------------|----------------------------------------------------------|
-| *Celtoon Shader*                    | *Sphere Portal Shader*                                | 
-
-related Particle prefabs are stored under the following path: Project -> Prefabs -> Particle
+| <img src="images/CelToonShader.png" width="100%"> | <img src="images/portaleffect.png" width="100%"> |
+|:-------------------------------------------------:|:------------------------------------------------:|
+| *Celtoon Shader* | *Sphere Portal Shader* |
 
 
 ## Summary of Contributions
