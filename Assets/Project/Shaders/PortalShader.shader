@@ -36,7 +36,7 @@ Shader "Custom/PortalSphere"
     SubShader
     {
         Tags {
-            "RenderPipeline"="UniversalRenderPipeline"
+            "RenderPipeline"="UniversalPipeline"
             "Queue"="Transparent"
             "RenderType"="Transparent"
             "IgnoreProjector"="True"
@@ -50,7 +50,7 @@ Shader "Custom/PortalSphere"
         Pass
         {
             Name "PORTAL_MAIN"
-            Tags { "LightMode"="UniversalForward" }
+            Tags { "LightMode"="SRPDefaultUnlit" }
 
             HLSLPROGRAM
             #pragma vertex vert
@@ -116,10 +116,9 @@ Shader "Custom/PortalSphere"
                 float  waveSpeed, float waveSizeComp,
                 float  portalRadius)
             {
-                float radius = max(portalRadius, 0.001);
 
                 // scale x,z for consistent wave size across different portal radius
-                float2 xz = posWS.xz * pow(radius, -waveSizeComp);
+                float2 xz = posWS.xz * pow(max(portalRadius, 0.001), -waveSizeComp);
 
                 // moving around x,z plane
                 float2 d1 = normalize(waveDir1.xz);

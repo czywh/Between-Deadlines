@@ -126,7 +126,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _DstBlendAlpha: 0
-    - _EdgeFeather: 1.82
+    - _EdgeFeather: 2
     - _EnvironmentReflections: 1
     - _FresnelBoost: 3
     - _FresnelPow: 5.66
@@ -149,7 +149,7 @@ Material:
     - _RimBands: 7
     - _RippleStrength: 0.193
     - _RippleTiling: 10
-    - _ShakePixels: 16
+    - _ShakePixels: 4.4
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SparkleHi: 0.911
@@ -160,7 +160,7 @@ Material:
     - _Surface: 0
     - _WaveAmp: 0.2
     - _WaveFreq: 2.73
-    - _WaveSizeComp: 0.02
+    - _WaveSizeComp: 1.29
     - _WaveSpeed: 3.11
     - _WorkflowMode: 1
     - _WorldNoiseScale: 0.1
